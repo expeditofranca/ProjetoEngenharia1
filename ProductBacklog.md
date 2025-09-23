@@ -165,7 +165,7 @@
 |**Teste de Aceitação (TA)**||
 |------------|-----------|
 | Código     | Descrição |
-| TA06.01    | (DEPOIS)  |
+| TA06.01    | O usuário, na tela Gerar Relatório de Dívidas, ao clicar em "gerar relatório" recebe uma mensagem de sucesso e um arquivo com o relatório desejado. Mensagem: Relatório gerado com sucesso.|
 | TA06.02    |           |
 | TA06.03    |           |
 | TA06.04    |           |
@@ -192,7 +192,7 @@
 |**Teste de Aceitação (TA)**||
 |------------|-----------|
 | Código     | Descrição |
-| TA07.01    | (DEPOIS)  |
+| TA07.01    | O usuário, ao cadastrar uma dívida para um cliente, caso este ultrapasse o limite de dívidas, recebe uma mensagem de aviso. Mensagem: Cliente 'xxxxx" ultrapassou o limite de dívidas. Em seguida recebe outra mensagem de aviso. Mensagem: Deseja prosseguir com a ação?. Ao clicar em 'sim', o usuário cadastra a dívida com sucesso. Ao clicar em 'não' o usuário retorna a tela Cadastrar Dívida.|
 | TA07.02    |           |
 | TA07.03    |           |
 | TA07.04    |           |
@@ -219,7 +219,7 @@
 |**Teste de Aceitação (TA)**||
 |------------|-----------|
 | Código     | Descrição |
-| TA08.01    | (DEPOIS)  |
+| TA08.01    | Diariamente, após 30 dias de inadimplência de uma dívida, o usuário é notificado com uma mensagem de aviso. Mensagem: Cliente 'xxxxx" ultrapassou o limite de inadimplência.|
 | TA08.02    |           |
 | TA08.03    |           |
 | TA08.04    |           |
