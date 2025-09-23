@@ -111,10 +111,10 @@
 |**Teste de Aceitação (TA)**||
 |------------|-----------|
 | Código     | Descrição |
-| TA04.01    | (DEPOIS)  |
-| TA04.02    |           |
-| TA04.03    |           |
-| TA04.04    |           |
+| TA04.01    | O usuário informa, na tela Gerar Relatório Geral, o filtro que deseja aplicar. Ao clicar no filtro desejado é gerado um relátorio de acordo com o filtro.|
+| TA04.02    | O usuário, na tela Gerar Relatório, ao clicar no filtro "Pagamentos na última semana" recebe uma mensagem de sucesso e um arquivo com o relatório desejado. Mensagem: Relatório gerado com sucesso.|
+| TA04.03    | O usuário, na tela Gerar Relatório, ao clicar no filtro "Pagamentos no último mês" recebe uma mensagem de sucesso e um arquivo com o relatório desejado. Mensagem: Relatório gerado com sucesso.|
+| TA04.04    | O usuário, na tela Gerar Relatório, ao clicar no filtro "Pagamentos nos últimos 6 meses" recebe uma mensagem de sucesso e um arquivo com o relatório desejado. Mensagem: Relatório gerado com sucesso.|
 | TA04.05    |           |
 
 ---
@@ -138,8 +138,8 @@
 |**Teste de Aceitação (TA)**||
 |------------|-----------|
 | Código     | Descrição |
-| TA05.01    | (DEPOIS)  |
-| TA05.02    |           |
+| TA05.01    | O usuário informa, na tela Gerar Relatório Detalhado, os dados para identificar o cliente desejado, o cliente existe. O usuário é notificado com uma mensagem de sucesso e recebe um arquivo com o relátorio desejado. Mensagem: Relatório gerado com sucesso.|
+| TA05.02    | O usuário informa, na tela Gerar Relatório Detalhado, os dados para identificar o cliente desejado, o cliente não existe. O usuário é notificado com uma mensagem de erro. Mensagem: Cliente não encontrado|
 | TA05.03    |           |
 | TA05.04    |           |
 | TA05.05    |           |
