@@ -246,8 +246,8 @@
 |**Teste de Aceitação (TA)**||
 |------------|-----------|
 | Código     | Descrição |
-| TA09.01    | (DEPOIS)  |
-| TA09.02    |           |
+| TA09.01    |  O usuário informa, na tela Histórico do Cliente, os dados para identificar o cliente desejado, o cliente existe. O usuário é notificado com uma mensagem de sucesso e recebe um arquivo com o relátorio desejado. Mensagem: Histórico gerado com sucesso.|
+| TA09.02    |  O usuário informa, na tela Histórico do Cliente, os dados para identificar o cliente desejado, o cliente não existe. O usuário é notificado com uma mensagem de erro. Mensagem: Cliente não encontrado|
 | TA09.03    |           |
 | TA09.04    |           |
 | TA09.05    |           |
@@ -273,8 +273,8 @@
 |**Teste de Aceitação (TA)**||
 |------------|-----------|
 | Código     | Descrição |
-| TA10.01    | (DEPOIS)  |
-| TA10.02    |           |
-| TA10.03    |           |
-| TA10.04    |           |
-| TA10.05    |           |
+| TA10.01    | O usuário informa, na tela Buscar Cliente, o filtro que deseja aplicar. Ao clicar no filtro desejado é gerado um relátorio de acordo com o filtro.|
+| TA10.02    |  O usuário, na tela Buscar Cliente, ao clicar no filtro "Nome" informa os dados para identificar o cliente desejado. O usuário recebe uma lista de clientes que atendem a busca.|
+| TA10.03    |  O usuário, na tela Buscar Cliente, ao clicar no filtro "CPF" informa os dados para identificar o cliente desejado. O usuário recebe uma lista de clientes que atendem a busca.||
+| TA10.04    |  O usuário, na tela Buscar Cliente, ao clicar no filtro "Status" informa os dados para identificar o cliente desejado. O usuário recebe uma lista de clientes que atendem a busca.||
+| TA10.05    |  O usuário, na tela Buscar Cliente, ao clicar nos filtros "Nome" ou "CPF" informa dados que não correspondem a nenhum cliente e recebe uma mensagem de aviso; Mensagem: Nenhum cliente encontrado.|
