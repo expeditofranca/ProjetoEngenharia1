@@ -84,7 +84,7 @@
 |**Teste de Aceitação (TA)**||
 |------------|-----------|
 | Código     | Descrição |
-| TA03.01    |           |
+| TA03.01    | O usuário informa, na tela Pagamento, ao cadastrar um pagamento total ou parcial de uma dívida o valor a ser pago. Ao clicar em 'abater valor' o usuário é notificado com uma mensagem de sucesso. É mostrada a dívida antiga e a dívida após o pagamento. Mensagem: Pagamento realizado com sucesso.|
 | TA03.02    |           |
 | TA03.03    |           |
 | TA03.04    |           |
