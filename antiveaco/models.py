@@ -25,18 +25,6 @@ class Divida(models.Model):
 
     def __str__(self):
         return f'Dívida {self.id} - Cliente: {self.cliente.name} - Valor: {self.valor}'
-
-class Compra(models.Model):
-    cod_compra = models.AutoField(primary_key=True)
-    cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
-    divida = models.ForeignKey(Divida, on_delete=models.SET_NULL, null=True, blank=True)
-    data_compra = models.DateField(auto_now_add=True)
-    valor_total = models.DecimalField(max_digits=10, decimal_places=2, default=0)
-    fiado = models.BooleanField(default=False)
-    status = models.CharField(max_length=20, default='Pendente')
-
-    def __str__(self):
-        return f'Compra {self.id} - Cliente: {self.cliente.name} - Data: {self.data_compra}'
     
 class Pagamento(models.Model):
     cod_pagamento = models.AutoField(primary_key=True)
