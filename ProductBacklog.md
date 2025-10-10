@@ -230,7 +230,7 @@
 ## 📦 RF09 - Consultar Histórico de Cliente
 |||
 |-|-|
-|**Descrição:**| Listar o histórico completo de compras e pagamentos de um cliente específico.|
+|**Descrição:**| Listar o histórico completo de pagamentos de um cliente específico.|
 
 | Campo               | Informação         |
 |---------------------|--------------------|
@@ -280,31 +280,3 @@
 | TA10.05    |  O usuário, na tela Buscar Cliente, ao clicar nos filtros "Nome" ou "CPF" informa dados que não correspondem a nenhum cliente e recebe uma mensagem de aviso; Mensagem: Nenhum cliente encontrado.|
 
 ---
-
-## 📦 RF11 - Manter Compra
-|||
-|-|-|
-|**Descrição:**| O sistema deve permitir finalizar, editar, visualizar e excluir compras.|
-
-| Campo               | Informação         |
-|---------------------|--------------------|
-| Prioridade          | Importante         |
-| Estimativa          | 4h                 |
-| Tempo Gasto (real)  |                    |
-| Tamanho Funcional   |                    |
-| Analista            | Expedito           |
-| Desenvolvedor       | Júlia              |
-| Revisor             | Gean               |
-| Testador            | Ivyson             |
-
-|**Teste de Aceitação (TA)**||
-|------------|-----------|
-| Código     | Descrição |
-| TA11.01    |  O usuário informa, na tela Realizar Compra, todos os dados para realizar corretamente a compra, ao clicar em salvar ele é notificado com uma mensagem de sucesso. Mensagem: Compra realizada com sucesso.|
-| TA11.02    |  O usuário informa, na tela Editar Compra, corretamente os dados para edição. Ao clicar em salvar ele é notificado com uma mensagem de sucesso. Mensagem: Edição realizada com sucesso.|
-| TA11.03    |  O usuário informa, na tela Editar Compra incorretamente os dados para edição. Ao clicar em salvar ele é notificado com uma mensagem de erro. Mensagem: Edição não realizada, o campo “xxxx” não foi informado corretamente.|
-| TA11.04    |  O usuário informa, na tela Pesquisar Compra, os dados para identificar a compra desejada, a compra existe, o usuário seleciona a compra, em seguida são mostradas as informações sobre a compra.|
-| TA11.05    |  O usuário informa, na tela Pesquisar Compra, os dados para identificar a compra desejada, a compra não existe. O usuário é notificado com uma mensagem de erro. Mensagem: Compra não encontrada.|
-| TA11.06    |  |
-| TA11.07    |  |
-| TA11.08    |  |
