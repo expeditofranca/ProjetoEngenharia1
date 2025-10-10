@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Cliente, Compra, Divida, Pagamento
+from .models import Cliente, Divida, Pagamento
 
 class ClienteSerializer(serializers.ModelSerializer):
     class Meta:
