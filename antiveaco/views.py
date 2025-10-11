@@ -49,3 +49,27 @@ def divida_manager(request):
                 return Response(status=status.HTTP_400_BAD_REQUEST)
         except Divida.DoesNotExist:
             return Response(status=status.HTTP_400_BAD_REQUEST)
+    
+    elif request.method == 'POST':
+        new_divida_data = request.data
+
+        serializer = DividaSerializer(data=new_divida_data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+    elif request.method == 'PUT':
+        cod_divida = request.data.get('cod_divida')
+
+        try:
+            update_divida_data = Divida.objects.get(pk=cod_divida)
+        except Divida.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+        
+        serializer = DividaSerializer(update_divida_data, data=request.data)
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
+
+    return Response(status=status.HTTP_400_BAD_REQUEST)
