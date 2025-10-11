@@ -30,3 +30,22 @@ def get_divida_by_id(request, cod_divida):
         serializer = DividaSerializer(divida)
         return Response(serializer.data)
     return Response(status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['GET', 'POST', 'PUT', 'DELETE'])
+def divida_manager(request):
+    if request.method == 'GET':
+        try:
+            if request.GET.get('divida'):
+                cod_divida = request.GET.get('divida')
+
+                try:
+                    divida = Divida.objects.get(pk=cod_divida)
+                except Divida.DoesNotExist:
+                    return Response(status=status.HTTP_404_NOT_FOUND)
+                
+                serializer = DividaSerializer(divida)
+                return Response(serializer.data)
+            else:
+                return Response(status=status.HTTP_400_BAD_REQUEST)
+        except Divida.DoesNotExist:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
