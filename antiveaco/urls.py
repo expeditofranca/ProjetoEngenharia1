@@ -1,10 +1,9 @@
-from django.contrib import admin
-from django.urls import path, include
+from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('dividas/', views.get_dividas, name='get_all_dividas'),
-    path('dividas/<int:cod_divida>/', views.get_divida_by_id, name='get_divida_by_id'),
-    path('data/', views.divida_manager, name='divida_manager'),
-    path('dividas/cadastrar/', views.divida_manager, name='divida_manager'),
+    path('dividas/', views.lista_dividas, name='lista_dividas'),
+    path('dividas/adicionar/', views.adicionar_divida, name='adicionar_divida'),
+    path('dividas/editar/<int:cod_divida>/', views.editar_divida, name='editar_divida'),
+    path('dividas/deletar/<int:cod_divida>/', views.deletar_divida, name='deletar_divida'),
 ]
