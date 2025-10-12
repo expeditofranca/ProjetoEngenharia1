@@ -8,6 +8,8 @@ from rest_framework import status
 from .models import Cliente, Divida, Pagamento
 from .serializers import ClienteSerializer, DividaSerializer
 
+from .forms import DividaForm
+
 import json
 
 @api_view(['GET'])
@@ -34,29 +36,18 @@ def get_divida_by_id(request, cod_divida):
 @api_view(['GET', 'POST', 'PUT', 'DELETE'])
 def divida_manager(request):
     if request.method == 'GET':
-        try:
-            if request.GET.get('divida'):
-                cod_divida = request.GET.get('divida')
-
-                try:
-                    divida = Divida.objects.get(pk=cod_divida)
-                except Divida.DoesNotExist:
-                    return Response(status=status.HTTP_404_NOT_FOUND)
-                
-                serializer = DividaSerializer(divida)
-                return Response(serializer.data)
-            else:
-                return Response(status=status.HTTP_400_BAD_REQUEST)
-        except Divida.DoesNotExist:
-            return Response(status=status.HTTP_400_BAD_REQUEST)
+        return render(request, 'divida/cadastrar_divida.html', {
+            'form': DividaForm()
+        })
     
     elif request.method == 'POST':
-        new_divida_data = request.data
-
-        serializer = DividaSerializer(data=new_divida_data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        form = DividaForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return render(request, 'divida/cadastrar_divida.html', {
+                'form': DividaForm(),
+                'mensagem': 'Dívida cadastrada com sucesso!'
+            })
 
     elif request.method == 'PUT':
         cod_divida = request.data.get('cod_divida')
