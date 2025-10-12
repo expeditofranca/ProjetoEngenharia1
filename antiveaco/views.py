@@ -14,12 +14,23 @@ import json
 
 @api_view(['GET'])
 def get_dividas(request):
-    if request.method == 'GET':
-        dividas = Divida.objects.all()
+    dividas = Divida.objects.all()
 
-        serializer = DividaSerializer(dividas, many=True)
-        return Response(serializer.data)
-    return Response(status=status.HTTP_400_BAD_REQUEST)
+    cpf = request.GET.get('cpf_cliente')
+    status = request.GET.get('status')
+    valor_min = request.GET.get('valor_min')
+    valor_max = request.GET.get('valor_max')
+
+    if cpf:
+        dividas = dividas.filter(cliente__cpf__icontains=cpf)
+    if status:
+        dividas = dividas.filter(status=status)
+    if valor_min:
+        dividas = dividas.filter(valor__gte=valor_min)
+    if valor_max:
+        dividas = dividas.filter(valor__lte=valor_max)
+
+    return render(request, 'divida/pesquisar_divida.html', {'dividas': dividas})
 
 @api_view(['GET'])
 def get_divida_by_id(request, cod_divida):
