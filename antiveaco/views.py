@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.shortcuts import render, redirect, get_object_or_404
 from django.db.models import Q
 from .models import Divida
@@ -22,9 +23,11 @@ def adicionar_divida(request):
         form = DividaForm(request.POST)
         if form.is_valid():
             form.save()
+            messages.success(request, 'Dívida cadastrada com sucesso!')
             return redirect('lista_dividas')
     else:
         form = DividaForm()
+
     context = {'form': form}
     return render(request, 'divida/cadastrar_divida.html', context)
 
@@ -35,9 +38,11 @@ def editar_divida(request, cod_divida):
         form = DividaForm(request.POST, instance=divida)
         if form.is_valid():
             form.save()
+            messages.success(request, 'Dívida atualizada com sucesso!')
             return redirect('lista_dividas')
     else:
         form = DividaForm(instance=divida)
+
     context = {'form': form, 'divida': divida}
     return render(request, 'divida/cadastrar_divida.html', context)
 
@@ -46,6 +51,8 @@ def deletar_divida(request, cod_divida):
     divida = get_object_or_404(Divida, pk=cod_divida)
     if request.method == 'POST':
         divida.delete()
+        messages.success(request, 'Dívida excluída com sucesso!')
         return redirect('lista_dividas')
+
     context = {'divida': divida}
     return render(request, 'divida/confirmar_exclusao.html', context)
