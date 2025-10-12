@@ -1,74 +1,51 @@
-from django.shortcuts import render
-from django.http import JsonResponse, HttpResponse
-
-from rest_framework.decorators import api_view
-from rest_framework.response import Response
-from rest_framework import status
-
-from .models import Cliente, Divida, Pagamento
-from .serializers import ClienteSerializer, DividaSerializer
-
+from django.shortcuts import render, redirect, get_object_or_404
+from django.db.models import Q
+from .models import Divida
 from .forms import DividaForm
 
-import json
+# View para LISTAR e BUSCAR todas as dívidas
+def lista_dividas(request):
+    busca = request.GET.get('busca')
+    dividas = Divida.objects.all()
+    if busca:
+        dividas = dividas.filter(
+            Q(cliente__nome__icontains=busca) |
+            Q(cliente__cpf__icontains=busca) |
+            Q(status__icontains=busca)
+        )
+    context = {'dividas': dividas}
+    return render(request, 'divida/lista_dividas.html', context)
 
-@api_view(['GET'])
-def get_dividas(request):
-    if request.method == 'GET':
-        dividas = Divida.objects.all()
-
-        serializer = DividaSerializer(dividas, many=True)
-        return Response(serializer.data)
-    return Response(status=status.HTTP_400_BAD_REQUEST)
-
-@api_view(['GET'])
-def get_divida_by_id(request, cod_divida):
-    try:
-        divida = Divida.objects.get(pk=cod_divida)
-    except Divida.DoesNotExist:
-        return Response(status=status.HTTP_404_NOT_FOUND)
-
-    if request.method == 'GET':
-        serializer = DividaSerializer(divida)
-        return Response(serializer.data)
-    return Response(status=status.HTTP_400_BAD_REQUEST)
-
-@api_view(['GET', 'POST', 'PUT', 'DELETE'])
-def divida_manager(request):
-    if request.method == 'GET':
-        return render(request, 'divida/cadastrar_divida.html', {
-            'form': DividaForm()
-        })
-    
-    elif request.method == 'POST':
+# View para ADICIONAR uma nova dívida
+def adicionar_divida(request):
+    if request.method == 'POST':
         form = DividaForm(request.POST)
         if form.is_valid():
             form.save()
-            return render(request, 'divida/cadastrar_divida.html', {
-                'form': DividaForm(),
-                'mensagem': 'Dívida cadastrada com sucesso!'
-            })
+            return redirect('lista_dividas')
+    else:
+        form = DividaForm()
+    context = {'form': form}
+    return render(request, 'divida/cadastrar_divida.html', context)
 
-    elif request.method == 'PUT':
-        cod_divida = request.data.get('cod_divida')
+# View para EDITAR uma dívida existente
+def editar_divida(request, cod_divida):
+    divida = get_object_or_404(Divida, pk=cod_divida)
+    if request.method == 'POST':
+        form = DividaForm(request.POST, instance=divida)
+        if form.is_valid():
+            form.save()
+            return redirect('lista_dividas')
+    else:
+        form = DividaForm(instance=divida)
+    context = {'form': form, 'divida': divida}
+    return render(request, 'divida/cadastrar_divida.html', context)
 
-        try:
-            update_divida_data = Divida.objects.get(pk=cod_divida)
-        except Divida.DoesNotExist:
-            return Response(status=status.HTTP_404_NOT_FOUND)
-        
-        serializer = DividaSerializer(update_divida_data, data=request.data)
-
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
-        
-    elif request.method == 'DELETE':
-        try:
-            divida_to_delete = Divida.objects.get(pk=request.data.get('cod_divida'))
-            divida_to_delete.delete()
-            return Response(status=status.HTTP_202_ACCEPTED)
-        except Divida.DoesNotExist:
-            return Response(status=status.HTTP_400_BAD_REQUEST)
-
-    return Response(status=status.HTTP_400_BAD_REQUEST)
+# View para DELETAR uma dívida
+def deletar_divida(request, cod_divida):
+    divida = get_object_or_404(Divida, pk=cod_divida)
+    if request.method == 'POST':
+        divida.delete()
+        return redirect('lista_dividas')
+    context = {'divida': divida}
+    return render(request, 'divida/confirmar_exclusao.html', context)
