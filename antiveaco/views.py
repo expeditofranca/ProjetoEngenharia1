@@ -83,3 +83,9 @@ def divida_manager(request):
             return Response(status=status.HTTP_400_BAD_REQUEST)
 
     return Response(status=status.HTTP_400_BAD_REQUEST)
+
+def index(request):
+    return render(request, 'index.html')
+
+def index_divida(request):
+    return render(request, 'divida/index_divida.html')
