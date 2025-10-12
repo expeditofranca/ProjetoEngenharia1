@@ -13,10 +13,11 @@ class Endereco(models.Model):
         return f'{self.logradouro}, {self.numero}, {self.cidade}'
     
 class Cliente(models.Model):
-    nome = models.CharField(max_length=255)
-    cpf = models.CharField(max_length=11, unique=True)
-    profissao = models.CharField(max_length=255)
-    renda_familiar = models.FloatField()
+    nome = models.CharField(max_length=255, default='')
+    telefone = models.CharField(max_length=15, default='')
+    cpf = models.CharField(max_length=11, unique=True, primary_key=True, default='')
+    profissao = models.CharField(max_length=255, default='')
+    renda_familiar = models.FloatField(max_length=10, default=0)
     status = models.BooleanField(default=True)
 
     endereco = models.OneToOneField(Endereco,on_delete=models.CASCADE)
@@ -35,7 +36,7 @@ class Divida(models.Model):
     num_notafiscal = models.CharField(max_length=50, default='')
 
     def __str__(self):
-        return f'Dívida {self.id} - Cliente: {self.cliente.name} - Valor: {self.valor}'
+        return f'Dívida {self.cod_divida} - Cliente: {self.cliente.name} - Valor: {self.valor}'
     
 class Pagamento(models.Model):
     cod_pagamento = models.AutoField(primary_key=True)
