@@ -71,5 +71,13 @@ def divida_manager(request):
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
+        
+    elif request.method == 'DELETE':
+        try:
+            divida_to_delete = Divida.objects.get(pk=request.data.get('cod_divida'))
+            divida_to_delete.delete()
+            return Response(status=status.HTTP_202_ACCEPTED)
+        except Divida.DoesNotExist:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
 
     return Response(status=status.HTTP_400_BAD_REQUEST)
