@@ -3,13 +3,22 @@
 <html lang="pt-br">
 <head>
   <meta charset="utf-8">
-  <title>Cadastrar Dívida</title>
+  <title>
+    {% if divida %}Editar Dívida{% else %}Cadastrar Dívida{% endif %}
+  </title>
   <link rel="stylesheet" href="{% static 'css/divida/cadastrar_divida.css' %}">
 </head>
 <body>
   <div class="container">
-    <h1>Cadastrar Dívida</h1>
-    <form method="post" action="{% url 'adicionar_divida' %}">
+    <h1>
+      {% if divida %}
+        Editar Dívida
+      {% else %}
+        Cadastrar Dívida
+      {% endif %}
+    </h1>
+
+    <form method="post" action="">
       {% csrf_token %}
       {{ form.as_p }}
       <button type="submit">Salvar</button>
