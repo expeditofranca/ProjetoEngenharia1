@@ -1,0 +1,23 @@
+{% load static %}
+<!doctype html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8">
+  <title>Cadastrar Dívida</title>
+  <link rel="stylesheet" href="{% static 'css/divida/cadastrar_divida.css' %}">
+</head>
+<body>
+  <div class="container">
+    <h1>Cadastrar Dívida</h1>
+    <form method="post" action="{% url 'divida_manager' %}">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit">Salvar</button>
+    </form>
+
+    {% if mensagem %}
+      <p style="color:green; margin-top:15px;">{{ mensagem }}</p>
+    {% endif %}
+  </div>
+</body>
+</html>
