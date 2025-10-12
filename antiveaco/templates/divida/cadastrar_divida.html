@@ -1,23 +1,40 @@
 {% load static %}
-<!doctype html>
+<!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <meta charset="utf-8">
-  <title>Cadastrar Dívida</title>
-  <link rel="stylesheet" href="{% static 'css/divida/cadastrar_divida.css' %}">
+    <meta charset="UTF-8">
+    <title>{% if form.instance.pk %}Editar Dívida{% else %}Cadastrar Dívida{% endif %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body>
-  <div class="container">
-    <h1>Cadastrar Dívida</h1>
-    <form method="post" action="{% url 'divida_manager' %}">
-      {% csrf_token %}
-      {{ form.as_p }}
-      <button type="submit">Salvar</button>
-    </form>
+<body class="bg-light">
 
-    {% if mensagem %}
-      <p style="color:green; margin-top:15px;">{{ mensagem }}</p>
-    {% endif %}
-  </div>
+    <div class="container mt-5">
+        <div class="card shadow-sm">
+            <div class="card-header">
+                <h3 class="mb-0">{% if form.instance.pk %}Editar Dívida{% else %}Cadastrar Nova Dívida{% endif %}</h3>
+            </div>
+            <div class="card-body">
+                <form method="post" action="">
+                    {% csrf_token %}
+                    
+                    {% for field in form %}
+                        <div class="mb-3">
+                            <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+                            {{ field }}
+                            {% for error in field.errors %}
+                                <div class="alert alert-danger p-2 mt-1">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+                    {% endfor %}
+    
+                    <hr>
+                    <button type="submit" class="btn btn-success">Salvar</button>
+                    <a href="{% url 'get_dividas' %}" class="btn btn-secondary">Cancelar</a>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

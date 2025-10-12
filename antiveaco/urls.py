@@ -8,4 +8,5 @@ urlpatterns = [
     path('data/', views.divida_manager, name='divida_manager'),
     path('dividas/cadastrar/', views.divida_manager, name='divida_manager'),
     path('dividas/pesquisar/', views.get_dividas, name='get_dividas'),
+    path('dividas/adicionar/', views.divida_manager, name='adicionar_divida'),
 ]
