@@ -7,4 +7,5 @@ urlpatterns = [
     path('dividas/<int:cod_divida>/', views.get_divida_by_id, name='get_divida_by_id'),
     path('data/', views.divida_manager, name='divida_manager'),
     path('dividas/cadastrar/', views.divida_manager, name='divida_manager'),
+    path('dividas/pesquisar/', views.get_dividas, name='get_dividas'),
 ]

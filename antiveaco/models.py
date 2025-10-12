@@ -36,7 +36,7 @@ class Divida(models.Model):
     num_notafiscal = models.CharField(max_length=50, default='')
 
     def __str__(self):
-        return f'Dívida {self.cod_divida} - Cliente: {self.cliente.name} - Valor: {self.valor}'
+        return f'Dívida {self.cod_divida} - Cliente: {self.cliente.nome} - Valor: {self.valor}'
     
 class Pagamento(models.Model):
     cod_pagamento = models.AutoField(primary_key=True)
