@@ -54,3 +54,10 @@ body {
     color: #888;
     padding: 20px;
   }
+  .success {
+    color: #065f46;
+    background: #e6ffed;
+    padding: 10px;
+    border-radius: 6px;
+    margin-top: 15px;
+  }
