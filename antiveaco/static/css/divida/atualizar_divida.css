@@ -5,7 +5,7 @@ body {
     padding: 40px;
   }
   .container {
-    max-width: 900px;
+    max-width: 850px;
     margin: 0 auto;
     background: #fff;
     padding: 24px;
@@ -31,32 +31,21 @@ body {
     cursor: pointer;
   }
   button:hover { background: #0955c1; }
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 30px;
-    font-size: 14px;
-  }
-  th, td {
-    border: 1px solid #ddd;
-    padding: 10px;
-    text-align: left;
-  }
-  th {
-    background: #0b6efd;
-    color: white;
-  }
-  tr:nth-child(even) {
-    background: #f9f9f9;
-  }
-  .no-results {
-    text-align: center;
-    color: #888;
-    padding: 20px;
+  .muted {
+    color: #777;
+    font-size: 13px;
+    margin-bottom: 16px;
   }
   .success {
     color: #065f46;
     background: #e6ffed;
+    padding: 10px;
+    border-radius: 6px;
+    margin-top: 15px;
+  }
+  .error {
+    color: #7f1d1d;
+    background: #ffe6e6;
     padding: 10px;
     border-radius: 6px;
     margin-top: 15px;

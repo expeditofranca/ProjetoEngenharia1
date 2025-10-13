@@ -1,0 +1,46 @@
+{% load static %}
+<!doctype html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8">
+  <title>Atualizar Dívida</title>
+  <link rel="stylesheet" href="{% static 'css/divida/atualizar_divida.css' %}">
+</head>
+<body>
+  <div class="container">
+    <h1>Atualizar Dívida</h1>
+    {% if divida %}
+      <hr style="margin: 25px 0;">
+      <form method="post" action="{% url 'atualizar_divida' divida.cod_divida %}">
+        {% csrf_token %}
+        <label for="cpf_funcionario">CPF do Funcionário</label>
+        <input type="text" id="cpf_funcionario" name="cpf_funcionario" value="{{ divida.cpf_funcionario }}" maxlength="11">
+
+        <label for="cliente">Cliente (CPF)</label>
+        <input type="text" id="cliente" name="cliente" value="{{ divida.cliente.cpf }}" readonly>
+
+        <label for="valor">Valor (R$)</label>
+        <input type="number" id="valor" name="valor" step="0.01" min="0" value="{{ divida.valor }}">
+
+        <label for="num_notafiscal">Número da Nota Fiscal</label>
+        <input type="text" id="num_notafiscal" name="num_notafiscal" value="{{ divida.num_notafiscal }}">
+
+        <label for="status">Status</label>
+        <select id="status" name="status">
+          <option value="Pendente" {% if divida.status == "Pendente" %}selected{% endif %}>Pendente</option>
+          <option value="Pago" {% if divida.status == "Pago" %}selected{% endif %}>Pago</option>
+          <option value="Parcial" {% if divida.status == "Parcial" %}selected{% endif %}>Parcial</option>
+          <option value="Cancelado" {% if divida.status == "Cancelado" %}selected{% endif %}>Cancelado</option>
+        </select>
+
+        <button type="submit">Salvar Alterações</button>
+      </form>
+    {% endif%}
+    {% if mensagem %}
+      <p class="success">{{ mensagem }}</p>
+    {% elif erro %}
+      <p class="error">{{ erro }}</p>
+    {% endif %}
+  </div>
+</body>
+</html>
