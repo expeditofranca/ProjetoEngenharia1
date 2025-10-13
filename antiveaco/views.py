@@ -47,11 +47,15 @@ def get_divida_by_id(request, cod_divida):
 
 @api_view(['GET', 'POST'])
 def divida_manager(request, cod_divida=None):
-    divida = None
+    divida = get_object_or_404(Divida, pk=cod_divida)
     template = 'divida/cadastrar_divida.html'
 
+    if 'excluir' in request.POST and divida:
+        divida.delete()
+        messages.success(request, 'Dívida excluída com sucesso!')
+        return redirect('pesquisar_divida')
+
     if cod_divida:
-        divida = get_object_or_404(Divida, pk=cod_divida)
         template = 'divida/atualizar_divida.html'
         
     if request.method == 'POST':
@@ -65,6 +69,7 @@ def divida_manager(request, cod_divida=None):
             if divida:
                 messages.success(request, 'Dívida atualizada com sucesso!')
                 return redirect('pesquisar_divida')
+
             else:
                 return render(request, template, {
                     'form': DividaForm(),
