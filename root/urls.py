@@ -21,5 +21,5 @@ from antiveaco.views import index  # importa a view do index
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('antiveaco.urls'), name='antiveaco_urls'),
-    path('', index, name='index'),
+    path('', index, name='index'),   # rota para a página inicial
 ]

@@ -1,5 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.http import JsonResponse, HttpResponse
+from django.contrib import messages
 
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -44,46 +45,48 @@ def get_divida_by_id(request, cod_divida):
         return Response(serializer.data)
     return Response(status=status.HTTP_400_BAD_REQUEST)
 
-@api_view(['GET', 'POST', 'PUT', 'DELETE'])
-def divida_manager(request):
-    if request.method == 'GET':
-        return render(request, 'divida/cadastrar_divida.html', {
-            'form': DividaForm()
-        })
-    
-    elif request.method == 'POST':
-        form = DividaForm(request.POST)
+@api_view(['GET', 'POST'])
+def divida_manager(request, cod_divida=None):
+    divida = None
+    template = 'divida/cadastrar_divida.html'
+
+    if cod_divida:
+        divida = get_object_or_404(Divida, pk=cod_divida)
+        template = 'divida/atualizar_divida.html'
+        
+    if request.method == 'POST':
+        form = DividaForm(request.POST, instance=divida)
         if form.is_valid():
             form.save()
-            return render(request, 'divida/cadastrar_divida.html', {
-                'form': DividaForm(),
-                'mensagem': 'Dívida cadastrada com sucesso!'
+            mensagem = (
+                'Dívida atualizada com sucesso!'
+                if divida else 'Dívida cadastrada com sucesso!'
+            )
+            if divida:
+                messages.success(request, 'Dívida atualizada com sucesso!')
+                return redirect('pesquisar_divida')
+            else:
+                return render(request, template, {
+                    'form': DividaForm(),
+                    'mensagem': mensagem
+                })
+        else:
+            return render(request, template, {
+                'form': form,
+                'erro': 'Erro ao salvar os dados.',
+                'divida': divida
             })
+    else:
+        if divida:
+            template = 'divida/atualizar_divida.html'
+    
+    form = DividaForm(instance=divida)
+    return render(request, template, {
+        'form': form,
+        'divida': divida
+    })
 
-    elif request.method == 'PUT':
-        cod_divida = request.data.get('cod_divida')
-
-        try:
-            update_divida_data = Divida.objects.get(pk=cod_divida)
-        except Divida.DoesNotExist:
-            return Response(status=status.HTTP_404_NOT_FOUND)
-        
-        serializer = DividaSerializer(update_divida_data, data=request.data)
-
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
-        
-    elif request.method == 'DELETE':
-        try:
-            divida_to_delete = Divida.objects.get(pk=request.data.get('cod_divida'))
-            divida_to_delete.delete()
-            return Response(status=status.HTTP_202_ACCEPTED)
-        except Divida.DoesNotExist:
-            return Response(status=status.HTTP_400_BAD_REQUEST)
-
-    return Response(status=status.HTTP_400_BAD_REQUEST)
-
+# Funções que apenas exibem páginas, sem lógica de CRUD
 def index(request):
     return render(request, 'index.html')
 

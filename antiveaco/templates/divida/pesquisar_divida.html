@@ -9,7 +9,7 @@
 <body>
   <div class="container">
     <h1>Pesquisar Dívidas</h1>
-    <form method="get" action="{% url 'get_dividas' %}">
+    <form method="get" action="{% url 'pesquisar_divida' %}">
       {% csrf_token %}
       <label for="cpf_cliente">CPF do Cliente</label>
       <input type="text" id="cpf_cliente" name="cpf_cliente" value="{{ request.GET.cpf_cliente }}" placeholder="Ex: 12345678901">
@@ -36,6 +36,11 @@
 
       <button type="submit">Pesquisar</button>
     </form>
+    {% if messages %}
+      {% for msg in messages %}
+        <div class="success">{{ msg }}</div>
+      {% endfor %}
+    {% endif %}
 
     {% if dividas %}
       <table>
@@ -58,6 +63,7 @@
               <td>{{ d.valor }}</td>
               <td>{{ d.status }}</td>
               <td>{{ d.data_divida|date:"d/m/Y" }}</td>
+              <td><a href="{% url 'atualizar_divida' d.cod_divida %}" class="btn">Editar</a></td>
             </tr>
           {% endfor %}
         </tbody>
