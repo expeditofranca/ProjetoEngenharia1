@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'css/index.css' %}">
+
+<div class="container">
+    <h1>Caderneta de Dívidas</h1>
+    <p>Escolha a ação desejada:</p>
+
+    <div class="button-group">
+
+        <!-- Botão para Dívidas -->
+        <a href="{% url 'index_divida' %}" class="btn btn-primary">Gerenciar Dívidas</a>
+
+        <!-- (Em andamento) -->
+        <a href="#" class="btn btn-cliente">Gerenciar Clientes</a>
+    </div>
+</div>
+{% endblock content %}
