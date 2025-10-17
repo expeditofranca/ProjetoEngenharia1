@@ -90,3 +90,10 @@ def divida_manager(request, cod_divida=None):
         'form': form,
         'divida': divida
     })
+
+# Funções que apenas exibem páginas, sem lógica de CRUD
+def index(request):
+    return render(request, 'index.html')
+
+def index_divida(request):
+    return render(request, 'divida/index_divida.html')
