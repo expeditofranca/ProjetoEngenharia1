@@ -9,6 +9,9 @@ from rest_framework import status
 from .models import Cliente, Divida, Pagamento
 from .serializers import ClienteSerializer, DividaSerializer
 
+from .forms import PagamentoForm
+from .models import Pagamento
+
 from .forms import DividaForm
 
 import json
@@ -97,3 +100,36 @@ def index(request):
 
 def index_divida(request):
     return render(request, 'divida/index_divida.html')
+
+
+def index_pagamento(request):
+    """Renderiza o menu de opções para pagamentos."""
+    return render(request, 'pagamento/index_pagamento.html')
+
+def registrar_pagamento(request):
+    """Controla o formulário de registro de um novo pagamento."""
+    if request.method == 'POST':
+        form = PagamentoForm(request.POST)
+        if form.is_valid():
+            pagamento = form.save(commit=False)
+            divida = pagamento.divida
+            divida.valor -= pagamento.valor_pago
+            if divida.valor <= 0:
+                divida.valor = 0
+                divida.status = 'Pago'
+            
+            divida.save()
+            pagamento.cliente = divida.cliente
+            pagamento.save()
+            
+            messages.success(request, f'Pagamento de R$ {pagamento.valor_pago} registrado com sucesso!')
+            return redirect('lista_pagamentos')
+    else:
+        form = PagamentoForm()
+    
+    return render(request, 'pagamento/registrar_pagamento.html', {'form': form})
+
+def lista_pagamentos(request):
+    """Exibe um relatório com todos os pagamentos registrados."""
+    pagamentos = Pagamento.objects.all().order_by('-data_pagamento')
+    return render(request, 'pagamento/lista_pagamentos.html', {'pagamentos': pagamentos})
