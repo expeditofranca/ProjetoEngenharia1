@@ -3,7 +3,6 @@ from django.urls import path, include
 from . import views
 
 urlpatterns = [
-    # path('dividas/', views.get_dividas, name='get_all_dividas'),
     path('dividas/gerenciar/', views.index_divida, name='index_divida'),
     path('dividas/cadastrar/', views.divida_manager, name='cadastrar_divida'),
     path('dividas/pesquisar/', views.get_dividas, name='pesquisar_divida'),
