@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Caderneta de Dívidas{% endblock %}</title>
+    {% load static %}
+</head>
+
+    <header style="text-align:center; padding:20px; background:#0b6efd; color:white;">
+        <h2>Caderneta de Dívidas</h2>
+    </header>
+
+    <main>
+        {% block content %}{% endblock content %}
+    </main>
+
+    <!-- Rodapé -->
+    <footer style="text-align:center; padding:15px; color:#555; margin-top:40px;">
+        &copy; 2025 - Sistema de Caderneta
+    </footer>
+</body>
+</html>
