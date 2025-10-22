@@ -16,8 +16,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from antiveaco.views import index  # importa a view do index
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('antiveaco.urls'), name='antiveaco_urls'),
+    path('', index, name='index'),   # rota para a página inicial
 ]

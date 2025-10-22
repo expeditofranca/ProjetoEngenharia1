@@ -101,3 +101,9 @@ def cadastrar_cliente(request):
         'endereco_form': endereco_form,
     }
     return render(request, 'cliente/cadastrar_cliente.html', contexto)
+# Funções que apenas exibem páginas, sem lógica de CRUD
+def index(request):
+    return render(request, 'index.html')
+
+def index_divida(request):
+    return render(request, 'divida/index_divida.html')
