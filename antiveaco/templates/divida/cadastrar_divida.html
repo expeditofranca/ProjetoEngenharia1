@@ -9,7 +9,7 @@
 <body>
   <div class="container">
     <h1>Cadastrar Dívida</h1>
-    <form method="post" action="{% url 'divida_manager' %}">
+    <form method="post" action="{% url 'cadastrar_divida' %}">
       {% csrf_token %}
       {{ form.as_p }}
       <button type="submit">Salvar</button>
