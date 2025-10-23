@@ -1,5 +1,4 @@
 from django.shortcuts import get_object_or_404, redirect, render
-from django.http import JsonResponse, HttpResponse
 from django.contrib import messages
 
 from django.db import transaction
@@ -16,11 +15,11 @@ from .serializers import ClienteSerializer, DividaSerializer
 from .forms import PagamentoForm
 from .models import Pagamento
 
+from .models import Cliente, Divida, Pagamento
 from .forms import DividaForm
 
 import json
 
-@api_view(['GET'])
 def get_dividas(request):
     dividas = Divida.objects.all()
 
@@ -40,48 +39,28 @@ def get_dividas(request):
 
     return render(request, 'divida/pesquisar_divida.html', {'dividas': dividas})
 
-@api_view(['GET'])
-def get_divida_by_id(request, cod_divida):
-    try:
-        divida = Divida.objects.get(pk=cod_divida)
-    except Divida.DoesNotExist:
-        return Response(status=status.HTTP_404_NOT_FOUND)
-
-    if request.method == 'GET':
-        serializer = DividaSerializer(divida)
-        return Response(serializer.data)
-    return Response(status=status.HTTP_400_BAD_REQUEST)
-
-@api_view(['GET', 'POST'])
 def divida_manager(request, cod_divida=None):
-    divida = get_object_or_404(Divida, pk=cod_divida)
+    divida = None
     template = 'divida/cadastrar_divida.html'
 
-    if 'excluir' in request.POST and divida:
-        divida.delete()
-        messages.success(request, 'Dívida excluída com sucesso!')
-        return redirect('pesquisar_divida')
-
     if cod_divida:
+        divida = get_object_or_404(Divida, pk=cod_divida)
+        if 'excluir' in request.POST and divida:
+            divida.delete()
+            messages.success(request, 'Dívida excluída com sucesso!')
+            return redirect('pesquisar_divida')
         template = 'divida/atualizar_divida.html'
         
     if request.method == 'POST':
         form = DividaForm(request.POST, instance=divida)
         if form.is_valid():
             form.save()
-            mensagem = (
-                'Dívida atualizada com sucesso!'
-                if divida else 'Dívida cadastrada com sucesso!'
-            )
             if divida:
                 messages.success(request, 'Dívida atualizada com sucesso!')
                 return redirect('pesquisar_divida')
-
             else:
-                return render(request, template, {
-                    'form': DividaForm(),
-                    'mensagem': mensagem
-                })
+                messages.success(request, 'Dívida cadastrada com sucesso!')
+                return redirect('pesquisar_divida')
         else:
             return render(request, template, {
                 'form': form,
