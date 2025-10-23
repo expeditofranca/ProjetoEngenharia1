@@ -9,7 +9,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 
-from .models import Cliente, Divida, Pagamento
+from .models import Cliente, Divida, Pagamento, Endereco
 from .serializers import ClienteSerializer, DividaSerializer
 
 from .forms import PagamentoForm
@@ -17,6 +17,8 @@ from .models import Pagamento
 
 from .models import Cliente, Divida, Pagamento
 from .forms import DividaForm
+from .forms import ClienteForm
+from .forms import EnderecoForm
 
 import json
 
@@ -77,6 +79,14 @@ def divida_manager(request, cod_divida=None):
         'divida': divida
     })
 
+def cadastrar_cliente(request):
+    cliente_form = ClienteForm()
+    endereco_form = EnderecoForm()
+    contexto = {
+        'cliente_form': cliente_form,
+        'endereco_form': endereco_form,
+    }
+    return render(request, 'cliente/cadastrar_cliente.html', contexto)
 # Funções que apenas exibem páginas, sem lógica de CRUD
 def index(request):
     return render(request, 'index.html')
