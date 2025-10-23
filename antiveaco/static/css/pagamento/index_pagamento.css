@@ -32,11 +32,13 @@ p {
     align-items: center;
 }
 
-.btn {
-    display: inline-block;
-    width: 80%;
+.button-group .btn {
+    display: block;
+    width: 100%;
+    max-width: 300px;
     padding: 12px 0;
     font-size: 16px;
+    text-align: center;
     text-decoration: none;
     color: white;
     border: none;
@@ -50,5 +52,6 @@ p {
 }
 
 .btn-primary { background-color: #0b6efd; }
-.btn-success { background-color: #198754; }
-.btn-tertiary { background-color: #6c757d; }
+.btn-success { background-color: #28a745; }
+.btn-warning { background-color: #ffc107; color: black; }
+.btn-danger { background-color: #dc3545; }
