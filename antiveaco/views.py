@@ -297,3 +297,7 @@ def excluir_cliente(request, cpf_cliente):
             messages.error(request, f"Erro ao excluir cliente: {e}")
     
     return redirect('pesquisar_cliente')
+
+def index_cliente(request):
+    """Renderiza o menu de opções para Clientes."""
+    return render(request, 'cliente/index_cliente.html')
