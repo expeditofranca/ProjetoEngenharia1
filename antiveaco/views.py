@@ -197,3 +197,10 @@ def pesquisar_cliente(request):
         'clientes': clientes
     }
     return render(request, 'cliente/pesquisar_cliente.html', contexto)
+def editar_cliente(request, id_cliente):
+
+    return redirect('pesquisar_cliente')
+
+def excluir_cliente(request, id_cliente):
+
+    return redirect('pesquisar_cliente')
