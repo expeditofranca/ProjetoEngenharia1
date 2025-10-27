@@ -1,0 +1,56 @@
+{% load static %}
+<!doctype html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8">
+  <title>Pesquisar Clientes</title>
+  <link rel="stylesheet" href="{% static 'css/cliente/pesquisar_cliente.css' %}">
+</head>
+<body>
+  <div class="container">
+    <h1>Pesquisar Clientes</h1>
+    
+    <form method="get" action="{% url 'pesquisar_cliente' %}">
+      <label for="nome_cliente">Nome do Cliente</label>
+      <input type="text" id="nome_cliente" name="nome_cliente" value="{{ request.GET.nome_cliente }}" placeholder="Digite o nome...">
+
+      <label for="cpf_cliente">CPF do Cliente</label>
+      <input type="text" id="cpf_cliente" name="cpf_cliente" value="{{ request.GET.cpf_cliente }}" placeholder="Ex: 12345678901">
+
+      <button type="submit">Pesquisar</button>
+    </form>
+
+    {% if clientes %}
+      <table>
+        <thead>
+          <tr>
+            <th>Nome</th>
+            <th>CPF</th>
+            <th>Profissão</th>
+            <th>Status</th>
+            <th>Endereço</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for c in clientes %}
+            <tr>
+              <td>{{ c.nome }}</td>
+              <td>{{ c.cpf }}</td>
+              <td>{{ c.profissao }}</td>
+              <td>{{ c.status_cliente|yesno:"Ativo,Inativo" }}</td>
+              <td>{{ c.endereco }}</td> <td>
+                 <button disabled>Editar</button>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% elif clientes is None %}
+       <p class="no-results">Digite um nome ou CPF para iniciar a pesquisa.</p>
+    {% else %}
+      <p class="no-results">Nenhum cliente encontrado com os filtros informados.</p>
+    {% endif %}
+  </div>
+</body>
+</html>

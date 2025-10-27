@@ -11,6 +11,7 @@ from rest_framework import status
 
 from .models import Cliente, Divida, Pagamento, Endereco
 from .serializers import ClienteSerializer, DividaSerializer
+from django.db.models import Q
 
 from .forms import PagamentoForm
 from .models import Pagamento
@@ -180,3 +181,19 @@ def lista_pagamentos(request):
     """Exibe um relatório com todos os pagamentos registrados."""
     pagamentos = Pagamento.objects.all().order_by('-data_pagamento')
     return render(request, 'pagamento/lista_pagamentos.html', {'pagamentos': pagamentos})
+
+def pesquisar_cliente(request):
+    clientes = None
+    query_nome = request.GET.get('nome_cliente')
+    query_cpf = request.GET.get('cpf_cliente')
+    if query_nome or query_cpf:
+        queries = Q() 
+        if query_nome:
+            queries &= Q(nome__icontains=query_nome) 
+        if query_cpf:
+            queries &= Q(cpf__icontains=query_cpf)
+        clientes = Cliente.objects.filter(queries)
+    contexto = {
+        'clientes': clientes
+    }
+    return render(request, 'cliente/pesquisar_cliente.html', contexto)
