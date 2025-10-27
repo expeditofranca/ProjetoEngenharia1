@@ -62,3 +62,37 @@ body {
     border-radius: 6px;
     margin-top: 15px;
   }
+  .acoes-cell {
+  text-align: center;
+  white-space: nowrap; /* Impede que os botões quebrem linha */
+}
+
+/* Estilo base para os botões */
+.btn-acao {
+  display: inline-block;
+  padding: 8px 12px;
+  border-radius: 5px;
+  text-decoration: none;
+  color: white;
+  font-weight: 600;
+  font-size: 13px;
+  border: none;
+  cursor: pointer;
+  margin: 2px;
+}
+
+/* Botão de Editar (Azul) */
+.btn-editar {
+  background-color: #007bff; /* Azul */
+}
+.btn-editar:hover {
+  background-color: #0056b3;
+}
+
+/* Botão de Excluir (Vermelho) */
+.btn-excluir {
+  background-color: #dc3545; /* Vermelho */
+}
+.btn-excluir:hover {
+  background-color: #c82333;
+}
