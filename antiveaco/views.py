@@ -11,7 +11,6 @@ from rest_framework import status
 
 from .models import Cliente, Divida, Pagamento, Endereco
 from .serializers import ClienteSerializer, DividaSerializer
-from django.db.models import Q
 
 from .forms import PagamentoForm
 from .models import Pagamento
@@ -80,62 +79,14 @@ def divida_manager(request, cod_divida=None):
         'divida': divida
     })
 
-# Em antiveaco/views.py
-
 def cadastrar_cliente(request):
-    if request.method == 'POST':
-        # Se for um POST, preenchemos os forms com os dados enviados
-        cliente_form = ClienteForm(request.POST)
-        endereco_form = EnderecoForm(request.POST)
-
-        # Verificamos se AMBOS os formulários são válidos
-        if cliente_form.is_valid() and endereco_form.is_valid():
-            try:
-                # transaction.atomic garante que ou tudo salva, ou nada salva
-                with transaction.atomic():
-                    # 1. Salva o endereço primeiro para obter um objeto
-                    endereco_obj = endereco_form.save()
-                    
-                    # 2. Prepara o cliente, mas não salva no banco ainda (commit=False)
-                    cliente_obj = cliente_form.save(commit=False)
-                    
-                    # 3. Associa o endereço salvo ao cliente
-                    cliente_obj.endereco = endereco_obj
-                    
-                    # 4. Agora sim, salva o cliente no banco
-                    cliente_obj.save()
-
-                messages.success(request, 'Cliente cadastrado com sucesso!')
-                # Redireciona para a página de pesquisa (para o usuário ver o resultado)
-                return redirect('pesquisar_cliente')
-            
-            except Exception as e:
-                # Se algo der errado (ex: erro no banco), avisa o usuário
-                messages.error(request, f'Erro ao salvar: {e}')
-        
-        else:
-            # Se um dos forms for inválido, os erros serão exibidos
-            messages.error(request, 'Por favor, corrija os erros no formulário.')
-            # Monta o contexto com os formulários preenchidos e com os erros
-            contexto = {
-                'cliente_form': cliente_form,
-                'endereco_form': endereco_form,
-            }
-            # Re-renderiza a página para mostrar os erros
-            return render(request, 'cliente/cadastrar_cliente.html', contexto)
-
-    else:
-        # Se for um GET (primeira vez carregando a página), cria forms vazios
-        cliente_form = ClienteForm()
-        endereco_form = EnderecoForm()
-
-    # Contexto padrão para o GET
+    cliente_form = ClienteForm()
+    endereco_form = EnderecoForm()
     contexto = {
         'cliente_form': cliente_form,
         'endereco_form': endereco_form,
     }
     return render(request, 'cliente/cadastrar_cliente.html', contexto)
-
 # Funções que apenas exibem páginas, sem lógica de CRUD
 def index(request):
     return render(request, 'index.html')
@@ -229,71 +180,3 @@ def lista_pagamentos(request):
     """Exibe um relatório com todos os pagamentos registrados."""
     pagamentos = Pagamento.objects.all().order_by('-data_pagamento')
     return render(request, 'pagamento/lista_pagamentos.html', {'pagamentos': pagamentos})
-
-def pesquisar_cliente(request):
-    clientes = None
-    query_nome = request.GET.get('nome_cliente')
-    query_cpf = request.GET.get('cpf_cliente')
-    if query_nome or query_cpf:
-        queries = Q() 
-        if query_nome:
-            queries &= Q(nome__icontains=query_nome) 
-        if query_cpf:
-            queries &= Q(cpf__icontains=query_cpf)
-        clientes = Cliente.objects.filter(queries)
-    contexto = {
-        'clientes': clientes
-    }
-    return render(request, 'cliente/pesquisar_cliente.html', contexto)
-
-
-def editar_cliente(request, cpf_cliente):
-    # 1. Busca o cliente pelo CPF e o seu endereço associado
-    cliente = get_object_or_404(Cliente, cpf=cpf_cliente)
-    endereco = cliente.endereco
-
-    # 2. Se for um POST (clicou em "Salvar Alterações")
-    if request.method == 'POST':
-        # Carrega os formulários com os dados enviados (request.POST) 
-        # e também com as instâncias (para saber QUE registro atualizar)
-        cliente_form = ClienteForm(request.POST, instance=cliente)
-        endereco_form = EnderecoForm(request.POST, instance=endereco)
-
-        if cliente_form.is_valid() and endereco_form.is_valid():
-            try:
-                # Salva os dois formulários dentro de uma transação
-                with transaction.atomic():
-                    endereco_form.save()
-                    cliente_form.save() # O cliente já está ligado ao endereço
-
-                messages.success(request, 'Cliente atualizado com sucesso!')
-                return redirect('pesquisar_cliente')
-            except Exception as e:
-                messages.error(request, f'Erro ao salvar: {e}')
-        else:
-            messages.error(request, 'Por favor, corrija os erros no formulário.')
-
-    # 3. Se for um GET (carregando a página pela primeira vez)
-    else:
-        # Cria os formulários preenchidos com os dados do banco
-        cliente_form = ClienteForm(instance=cliente)
-        endereco_form = EnderecoForm(instance=endereco)
-    contexto = {
-        'cliente_form': cliente_form,
-        'endereco_form': endereco_form,
-        'cliente_nome': cliente.nome # Para o título da página
-    }
-    return render(request, 'cliente/editar_cliente.html', contexto)
-
-
-def excluir_cliente(request, cpf_cliente):
-    cliente = get_object_or_404(Cliente, cpf=cpf_cliente)
-    if request.method == 'POST':
-        try:
-            nome_cliente = cliente.nome
-            cliente.delete()
-            messages.success(request, f"Cliente '{nome_cliente}' foi excluído com sucesso.")
-        except Exception as e:
-            messages.error(request, f"Erro ao excluir cliente: {e}")
-    
-    return redirect('pesquisar_cliente')
