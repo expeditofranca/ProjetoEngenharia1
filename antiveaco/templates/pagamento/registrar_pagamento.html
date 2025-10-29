@@ -1,6 +1,10 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block content %}
+
+<link rel="stylesheet" href="{% static 'css/pagamento/registrar_pagamento.css' %}">
+
 <div class="container mt-4">
     <div class="card shadow-sm mb-4">
         <div class="card-header">
@@ -17,22 +21,20 @@
     </div>
 
     {% if cliente %}
-        {% if dividas_do_cliente %}
-            <div class="card shadow-sm mb-4">
-                <div class="card-header bg-success text-white">
-                    <h3>Quitar Todas as Dívidas</h3>
-                </div>
-                <div class="card-body text-center">
-                    <p class="fs-5">O valor total das dívidas pendentes de <strong>{{ cliente.nome }}</strong> é:</p>
-                    <h2 class="display-4">R$ {{ soma_total|floatformat:2 }}</h2>
-                    <form method="post" action="" class="mt-3">
-                        {% csrf_token %}
-                        <input type="hidden" name="cpf_cliente" value="{{ cliente.cpf }}">
-                        <button type="submit" name="pagar_tudo" class="btn btn-success btn-lg">Pagar Todas as Dívidas Agora</button>
-                    </form>
-                </div>
+        <div class="card shadow-sm mb-4">
+            <div class="card-header bg-success text-white">
+                <h3>Quitar Todas as Dívidas</h3>
             </div>
-        {% endif %}
+            <div class="card-body text-center">
+                <p class="fs-5">O valor total das dívidas pendentes de <strong>{{ cliente.nome }}</strong> é:</p>
+                <h2 class="display-4">R$ {{ soma_total|floatformat:2 }}</h2>
+                <form method="post" action="" class="mt-3">
+                    {% csrf_token %}
+                    <input type="hidden" name="cpf_cliente" value="{{ cliente.cpf }}">
+                    <button type="submit" name="pagar_tudo" class="btn btn-success btn-lg">Pagar Todas as Dívidas Agora</button>
+                </form>
+            </div>
+        </div>
 
         <div class="card shadow-sm">
             <div class="card-header">
@@ -50,7 +52,7 @@
                             <label for="{{ form.valor_pago.id_for_label }}" class="form-label">Valor a Pagar (R$)</label>
                             {{ form.valor_pago }}
                         </div>
-                        <button type="submit" class="btn btn-primary">Abater Valor</ce:para>
+                        <button type="submit" class="btn btn-primary">Abater Valor</button>
                     </form>
                 {% else %}
                     <div class="alert alert-info">Este cliente não possui dívidas pendentes.</div>
