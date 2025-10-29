@@ -1,0 +1,35 @@
+{% load static %}
+<!doctype html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8">
+  <title>Editar Cliente</title>
+    <link rel="stylesheet" href="{% static 'css/cliente/editar_cliente.css' %}">
+</head>
+<body>
+  <div class="container">
+    <h1>Editando Cliente: {{ cliente_nome }}</h1>
+    
+        {% if messages %}
+      <ul class="messages">
+        {% for message in messages %}
+          <li class="{{ message.tags }}">{{ message }}</li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+    
+        <form method="post">
+      {% csrf_token %}
+      
+      <h2>Dados Pessoais</h2>
+      {{ cliente_form.as_p }}
+      
+      <h2>Endereço</h2>
+      {{ endereco_form.as_p }}
+
+      <button type="submit" class="btn-salvar">Salvar Alterações</button>
+      <a href="{% url 'pesquisar_cliente' %}" class="btn-cancelar">Cancelar</a>
+    </form>
+  </div>
+</body>
+</html>

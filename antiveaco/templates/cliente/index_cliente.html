@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/cliente/index_cliente.css' %}">
+
+<div class="container">
+    <h1>Painel de Controle de Clientes</h1>
+    <p>Escolha a ação desejada:</p>
+
+    <div class="button-group">
+        <div class="btn-wrapper">
+            <a href="{% url 'cadastrar_cliente' %}" class="btn btn-success">Cadastrar Novo Cliente</a>
+        </div>
+        <div class="btn-wrapper">
+            <a href="{% url 'pesquisar_cliente' %}" class="btn btn-primary">Pesquisar / Gerenciar Clientes</a>
+        </div>
+        
+                <div class="btn-wrapper">
+            <a href="#" class="btn btn-secondary">Gerar Relatório de Clientes</a>
+        </div>
+    </div>
+</div>
+{% endblock content %}

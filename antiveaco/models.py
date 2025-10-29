@@ -18,7 +18,7 @@ class Cliente(models.Model):
     cpf = models.CharField(max_length=11, unique=True, primary_key=True, default='')
     profissao = models.CharField(max_length=255, default='')
     renda_familiar = models.FloatField(max_length=10, default=0)
-    status = models.BooleanField(default=True)
+    status_cliente = models.BooleanField(default=True)
 
     endereco = models.OneToOneField(Endereco,on_delete=models.CASCADE)
 
