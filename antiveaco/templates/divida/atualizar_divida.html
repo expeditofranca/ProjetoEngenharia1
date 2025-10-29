@@ -8,7 +8,13 @@
 </head>
 <body>
   <div class="container">
+    
+    <form action="{% url 'index_divida' %}" method="get" style="margin-bottom: 20px;">
+        <button type="submit" class="btn-submit">Voltar</button>
+    </form>
+
     <h1>Atualizar Dívida</h1>
+
     {% if divida %}
       <hr style="margin: 25px 0;">
       <form method="post" action="{% url 'atualizar_divida' divida.cod_divida %}">

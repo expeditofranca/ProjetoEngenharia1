@@ -8,7 +8,13 @@
 </head>
 <body>
   <div class="container">
+    
+    <form action="{% url 'index_divida' %}" method="get" style="margin-bottom: 20px;">
+        <button type="submit" class="btn-submit">Voltar</button>
+    </form>
+
     <h1>Pesquisar Dívidas</h1>
+
     <form method="get" action="{% url 'pesquisar_divida' %}">
       {% csrf_token %}
       <label for="cpf_cliente">CPF do Cliente</label>
@@ -63,7 +69,12 @@
               <td>{{ d.valor }}</td>
               <td>{{ d.status }}</td>
               <td>{{ d.data_divida|date:"d/m/Y" }}</td>
-              <td><button><a href="{% url 'atualizar_divida' d.cod_divida %}" class="btn">Editar</a></button></td>
+              <td>
+                <form action="{% url 'atualizar_divida' d.cod_divida %}" method="get">
+                  <button type="submit">Editar</button>
+                </form>
+              </td>
+
               <td><form method="post" action="{% url 'excluir_divida' d.cod_divida %}">
                 {% csrf_token %}
                 <button type="submit" name="excluir">Excluir</button>
