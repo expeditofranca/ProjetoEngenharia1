@@ -1,0 +1,72 @@
+/*
+ * CSS para a página: antiveaco/static/css/cliente/index_cliente.css
+ */
+
+.container {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 30px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+  text-align: center;
+}
+
+h1 {
+  color: #2c3e50;
+  margin-bottom: 15px;
+}
+
+p {
+  font-size: 1.1em;
+  color: #555;
+  margin-bottom: 30px;
+}
+
+.button-group {
+  display: flex;
+  flex-direction: column; /* Botões um abaixo do outro */
+  gap: 15px; /* Espaço entre os botões */
+}
+
+/* Base button style */
+.btn {
+  display: block; /* Faz o link ocupar todo o espaço */
+  padding: 18px 30px;
+  border-radius: 8px;
+  text-decoration: none;
+  color: white;
+  font-weight: 600;
+  font-size: 1.2em;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Botão de Cadastrar (Verde) */
+.btn-success {
+  background-color: #28a745; 
+}
+.btn-success:hover {
+  background-color: #218838;
+}
+
+/* Botão de Pesquisar (Azul) */
+.btn-primary {
+  background-color: #007bff;
+}
+.btn-primary:hover {
+  background-color: #0056b3;
+}
+
+/* Botão de Relatório (Cinza) */
+.btn-secondary {
+  background-color: #6c757d;
+  cursor: not-allowed; /* Indica que ainda não funciona */
+}
+.btn-secondary:hover {
+  background-color: #5a6268;
+}
