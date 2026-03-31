@@ -69,3 +69,37 @@
 | TA02.08    | O usuário informa, na tela Pesquisar Dívida, os dados para identificar a dívida, a dívida não existe. O usuário é notificado com uma mensagem de erro. Mensagem: Dívida não encontrada.|
 | TA02.09    | O usuário informa, na tela Excluir Dívida, os dados para identificar a dívida, a dívida existe. O usuário é notificado com uma mensagem de aviso. Mensagem: Deseja prosseguir com a ação?. Ao confirmar, a dívida é removida com sucesso.|
 | TA02.10    | O usuário informa, na tela Excluir Dívida, uma dívida inexistente. O usuário é notificado com uma mensagem de erro. Mensagem: Dívida não encontrada.|
+
+---
+
+## 📦 User Story US03 - Controlar Pagamento
+
+|               |                                                                |
+| ------------- | :------------------------------------------------------------- |
+| **Descrição** |  Deve ser possível registrar pagamentos totais ou parciais de uma dívida, atualizando automaticamente o saldo restante e o status da dívida. |
+
+| **Requisitos envolvidos** |                                                    |
+| ------------- | :------------------------------------------------------------- |
+| RF03          | Controlar Pagamento |
+
+|                           |                                     |
+| ------------------------- | ----------------------------------- | 
+| **Prioridade**            | Essencial                           | 
+| **Estimativa**            | 4 h                                 | 
+| **Tempo Gasto (real):**   |                                     | 
+| **Tamanho Funcional**     |                                     | 
+| **Analista**              | Gean                                | 
+| **Desenvolvedor**         | Ivyson                              | 
+| **Revisor**               | Arthur                              | 
+| **Testador**              | Expedito                            | 
+
+
+| Teste de Aceitação (TA) |  |
+| ----------- | --------- |
+| Código | Descrição |
+| TA03.01 | O usuário informa, na tela de pagamento, o valor a ser pago (total ou parcial). Ao confirmar a operação, o sistema deve exibir uma mensagem de sucesso e mostrar o valor da dívida antes e após o pagamento. |
+| TA03.02 | O sistema deve atualizar automaticamente o valor restante da dívida após o registro de um pagamento parcial. |
+| TA03.03 | O sistema deve exibir uma mensagem de erro ao tentar registrar um pagamento com valor inválido (zero ou negativo). |
+| TA03.04 | O sistema deve impedir o registro de pagamento com valor superior ao saldo da dívida. |
+| TA03.05 | O sistema deve permitir registrar múltiplos pagamentos parciais para a mesma dívida, atualizando corretamente o saldo a cada pagamento. |
+| TA03.06 | O sistema deve atualizar o status da dívida para “quitada” quando o valor do pagamento for igual ao saldo restante. |
