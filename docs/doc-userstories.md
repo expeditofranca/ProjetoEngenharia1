@@ -5,6 +5,7 @@
 | ID | Título do User Story | Requisitos Funcionais Relacionados | Responsável pelo Detalhamento |
 |:---|:---|:---|:---|
 | US01 | Manter Cliente | RF01.01, RF01.02, RF01.03, RF01.04 | Expedito |
+| US02 | Manter Dívida | RF02.01, RF02.02, RF02.03, RF02.04 | Arthur |
 
 ## 📦 RF01 - Manter Cliente
 |||
@@ -38,3 +39,32 @@
 
 ---
 
+## 📦 RF02 - Manter Dívida
+|||
+|-|-|
+|**Descrição:**| O sistema deve permitir cadastrar, editar, visualizar e excluir dívidas associadas a um cliente. Será possível registrar uma dívida informando o cliente, valor, data e descrição (ou cupom fiscal). Esse módulo é essencial para controlar os valores que os clientes devem ao comerciante.|
+
+| Campo               | Informação         |
+|---------------------|--------------------|
+| Prioridade          | Essencial          |
+| Estimativa          | 6h                 |
+| Tempo Gasto (real)  |                    |
+| Tamanho Funcional   |                    |
+| Analista            | Arthur             |
+| Desenvolvedor       | Arthur             |
+| Revisor             | Júlia              |
+| Testador            | Gean               |
+
+|**Teste de Aceitação (TA)**||
+|------------|-----------|
+| Código     | Descrição |
+| TA02.01    | O usuário informa, na tela Cadastrar Dívida, todos os dados corretamente (cliente válido, valor positivo, data). Ao clicar em salvar ele é notificado com uma mensagem de sucesso. Mensagem: Dívida cadastrada com sucesso.|
+| TA02.02    | O usuário informa, na tela Cadastrar Dívida, um cliente inexistente. Ao clicar em salvar ele é notificado com uma mensagem de erro. Mensagem: Cliente não encontrado.|
+| TA02.03    | O usuário informa, na tela Cadastrar Dívida, um valor inválido (zero ou negativo). Ao clicar em salvar ele é notificado com uma mensagem de erro. Mensagem: Valor inválido.|
+| TA02.04    | O usuário informa, na tela Editar Dívida, os dados para identificar a dívida, a dívida existe, o usuário seleciona a dívida, em seguida são mostrados os campos para edição.|
+| TA02.05    | O usuário informa, na tela Editar Dívida corretamente os dados para edição. Ao clicar em salvar ele é notificado com uma mensagem de sucesso. Mensagem: Edição realizada com sucesso.|
+| TA02.06    | O usuário informa, na tela Editar Dívida, uma dívida inexistente. O usuário é notificado com uma mensagem de erro. Mensagem: Dívida não encontrada.|
+| TA02.07    | O usuário informa, na tela Pesquisar Dívida, os dados para identificar a dívida, a dívida existe, o usuário seleciona a dívida e são exibidas suas informações.|
+| TA02.08    | O usuário informa, na tela Pesquisar Dívida, os dados para identificar a dívida, a dívida não existe. O usuário é notificado com uma mensagem de erro. Mensagem: Dívida não encontrada.|
+| TA02.09    | O usuário informa, na tela Excluir Dívida, os dados para identificar a dívida, a dívida existe. O usuário é notificado com uma mensagem de aviso. Mensagem: Deseja prosseguir com a ação?. Ao confirmar, a dívida é removida com sucesso.|
+| TA02.10    | O usuário informa, na tela Excluir Dívida, uma dívida inexistente. O usuário é notificado com uma mensagem de erro. Mensagem: Dívida não encontrada.|
