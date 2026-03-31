@@ -6,6 +6,7 @@
 |:---|:---|:---|:---|
 | US01 | Manter Cliente | RF01.01, RF01.02, RF01.03, RF01.04 | Expedito |
 | US02 | Manter Dívida | RF02.01, RF02.02, RF02.03, RF02.04 | Arthur |
+| US03 | Controlar Pagamento | RF03 | Ivyson 
 
 ## 📦 RF01 - Manter Cliente
 |||
