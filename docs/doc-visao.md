@@ -43,3 +43,15 @@ Administrador | Pode gerenciar todo o sistema (mesmas permissões do comerciante
 
 ---
 
+## Requisitos Funcionais
+
+### RF01 - Manter Cliente
+(adicionar ainda)
+
+### RF02 - Manter Dívida
+O sistema deve permitir ao comerciante gerenciar as dívidas dos clientes, possibilitando o cadastro, visualização, atualização e exclusão de dívidas. Cada dívida deve estar associada a um cliente previamente cadastrado e conter informações como valor, data e descrição.
+
+- RF02.01 - Inserir Dívida  
+- RF02.02 - Listar Dívidas  
+- RF02.03 - Atualizar Dívida  
+- RF02.04 - Deletar Dívida  
