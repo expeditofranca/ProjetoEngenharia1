@@ -42,7 +42,7 @@ classDiagram
     Cliente "1" -- "0..*" Compra : realiza
     Compra "0..*" -- "1" Divida : gera
     Pagamento "0..*" -- "1" Divida : liquida
-
+```
 
 # Modelo de Dados (Entidade-Relacionamento)
 
@@ -88,3 +88,4 @@ erDiagram
         date data
         string status
     }
+```
