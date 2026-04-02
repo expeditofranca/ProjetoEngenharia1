@@ -55,3 +55,10 @@ O sistema deve permitir ao comerciante gerenciar as dívidas dos clientes, possi
 - RF02.02 - Listar Dívidas  
 - RF02.03 - Atualizar Dívida  
 - RF02.04 - Deletar Dívida  
+
+### RF08 - Emitir Alerta de Inadimplência
+O sistema deve permitir identificar clientes inadimplentes com base em dívidas em atraso e emitir alertas para auxiliar o comerciante no acompanhamento desses casos. Os alertas devem considerar critérios como data de vencimento e ausência de pagamento.
+
+- RF08.01 - Identificar Dívidas em Atraso  
+- RF08.02 - Gerar Alerta de Inadimplência  
+- RF08.03 - Listar Clientes Inadimplentes  
