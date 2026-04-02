@@ -7,6 +7,7 @@
 | US01 | Manter Cliente | RF01.01, RF01.02, RF01.03, RF01.04 | Expedito |
 | US02 | Manter Dívida | RF02.01, RF02.02, RF02.03, RF02.04 | Arthur |
 | US03 | Controlar Pagamento | RF03 | Ivyson 
+| US08 | Emitir Alerta de Inadimplência | RF08.01, RF08.02, RF08.03 | Arthur |
 
 ## 📦 RF01 - Manter Cliente
 |||
@@ -51,7 +52,7 @@
 | Estimativa          | 6h                 |
 | Tempo Gasto (real)  |                    |
 | Tamanho Funcional   |                    |
-| Analista            | Arthur             |
+| Analista            | Ivyson             |
 | Desenvolvedor       | Arthur             |
 | Revisor             | Júlia              |
 | Testador            | Gean               |
@@ -103,3 +104,31 @@
 | TA03.04 | O sistema deve impedir o registro de pagamento com valor superior ao saldo da dívida. |
 | TA03.05 | O sistema deve permitir registrar múltiplos pagamentos parciais para a mesma dívida, atualizando corretamente o saldo a cada pagamento. |
 | TA03.06 | O sistema deve atualizar o status da dívida para “quitada” quando o valor do pagamento for igual ao saldo restante. |
+
+
+## 📦 RF08 - Emitir Alerta de Inadimplência
+|||
+|-|-|
+|**Descrição:**| O sistema deve permitir identificar clientes inadimplentes com base em dívidas em atraso e emitir alertas para auxiliar o comerciante no acompanhamento desses casos. Os alertas devem considerar a data de vencimento das dívidas e a ausência de pagamento, permitindo visualizar facilmente os clientes com pendências financeiras.|
+
+| Campo               | Informação         |
+|---------------------|--------------------|
+| Prioridade          | Importante         |
+| Estimativa          | 5h                 |
+| Tempo Gasto (real)  |                    |
+| Tamanho Funcional   |                    |
+| Analista            | Ivison             |
+| Desenvolvedor       | Arthur             |
+| Revisor             | Júlia              |
+| Testador            | Gean               |
+
+|**Teste de Aceitação (TA)**||
+|------------|-----------|
+| Código     | Descrição |
+| TA08.01    | O sistema identifica automaticamente dívidas com data de vencimento inferior à data atual e sem pagamento registrado.|
+| TA08.02    | O usuário acessa a tela de alertas e visualiza a lista de clientes inadimplentes.|
+| TA08.03    | O sistema exibe corretamente os dados do cliente e da dívida em atraso.|
+| TA08.04    | O sistema não exibe clientes que não possuem dívidas em atraso.|
+| TA08.05    | O sistema atualiza automaticamente a lista quando uma dívida é quitada.|
+| TA08.06    | O sistema exibe mensagem informando que não há inadimplentes quando não houver registros. Mensagem: Nenhum cliente inadimplente encontrado.|
+| TA08.07    | O usuário tenta acessar a tela de alertas e o sistema carrega corretamente sem erros.|
