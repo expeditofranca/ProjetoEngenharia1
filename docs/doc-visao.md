@@ -45,8 +45,17 @@ Administrador | Pode gerenciar todo o sistema (mesmas permissões do comerciante
 
 ## Requisitos Funcionais
 
-### RF01 - Manter Cliente
-(adicionar ainda)
+### US01 - Manter Cliente
+Um cliente possui nome, CPF, telefone, endereço, profissão e renda familiar.
+
+Requisito | Descrição | Ator |
+----------|----------|------|
+RF01.01 - Inserir Cliente | Cadastrar cliente informando nome, CPF, telefone, endereço, profissão e renda familiar. | Comerciante |
+RF01.02 - Listar Clientes | Listar clientes cadastrados com filtros. | Comerciante |
+RF01.03 - Atualizar Cliente | Editar dados de um cliente informando nome, telefone, endereço, profissão e renda familiar. | Comerciante |
+RF01.04 - Deletar Cliente | Excluir cliente do sistema informando CPF. | Comerciante |
+
+---
 
 ### RF02 - Manter Dívida
 O sistema deve permitir ao comerciante gerenciar as dívidas dos clientes, possibilitando o cadastro, visualização, atualização e exclusão de dívidas. Cada dívida deve estar associada a um cliente previamente cadastrado e conter informações como valor, data e descrição.
