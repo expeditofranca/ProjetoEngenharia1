@@ -105,6 +105,30 @@
 | TA03.05 | O sistema deve permitir registrar múltiplos pagamentos parciais para a mesma dívida, atualizando corretamente o saldo a cada pagamento. |
 | TA03.06 | O sistema deve atualizar o status da dívida para “quitada” quando o valor do pagamento for igual ao saldo restante. |
 
+---
+
+## 📦 RF07 - Emitir Alerta por Limite de Dívida
+|||
+|-|-|
+|**Descrição:**| Caso o valor total do fiado de um cliente ultrapasse o valor de um salário mínimo, o sistema deve emitir um alerta para o comerciante.|
+
+| Campo               | Informação         |
+|---------------------|--------------------|
+| Prioridade          | Importante         |
+| Estimativa          | 2h                 |
+| Tempo Gasto (real)  |                    |
+| Tamanho Funcional   |                    |
+| Analista            | Arthur             |
+| Desenvolvedor       | Expedito           |
+| Revisor             | Júlia              |
+| Testador            | Gean               |
+
+|**Teste de Aceitação (TA)**||
+|------------|-----------|
+| Código     | Descrição |
+| TA07.01    | O usuário, ao cadastrar uma dívida para um cliente, caso este ultrapasse o limite de dívidas, recebe uma mensagem de aviso. Mensagem: Cliente 'xxxxx" ultrapassou o limite de dívidas. Em seguida recebe outra mensagem de aviso. Mensagem: Deseja prosseguir com a ação?. Ao clicar em 'sim', o usuário cadastra a dívida com sucesso. Ao clicar em 'não' o usuário retorna a tela Cadastrar Dívida.|
+
+---
 
 ## 📦 RF08 - Emitir Alerta de Inadimplência
 |||
