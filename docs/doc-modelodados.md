@@ -55,8 +55,8 @@ erDiagram
     COMPRA }o--|| DIVIDA : "gera"
 
     CLIENTE {
-        string nome PK
-        string cpf
+        string cpf PK
+        string nome
         string telefone
         string endereco_rua
         string endereco_numero
@@ -81,11 +81,28 @@ erDiagram
     }
 
     DIVIDA {
-        string cpf_f PK
-        int cod_divida
+        int cod_divida PK
+        string cpf_f
         int num_nota
         float valor
         date data
         string status
     }
 ```
+
+### Dicionário de Dados
+
+|   Tabela   |   Cliente   |
+| ---------- | ----------- |
+| Descrição  | Armazena as informações de um cliente. |
+
+|  Nome         | Descrição                        | Tipo de Dado | Tamanho | Restrições de Domínio |
+| ------------- | -------------------------------- | ------------ | ------- | --------------------- |
+| CPF           | Número do CPF do cliente         | VARCHAR      | 15      | PK / Identity         |
+| Nome          | Nome cliente                     | VARCHAR      | 100     | Not Null              |
+| Telefone      | Telefone do cliente              | VARCHAR      | 16      | Not Null              |
+| Rua           | Nome da rua                      | VARCHAR      | 100     | Not Null              |
+| Número        | Número da residência             | VARCHAR      | 6       |          ---          |
+| Bairro        | Bairro onde o cliente reside     | VARCHAR      | 50      | Not Null              |
+| Profissão     | Profissão do cliente             | VARCHAR      | 100     | Not Null              |
+| Renda         | Renda bruta do cliente           | Float        |   ---   | Not Null              |
