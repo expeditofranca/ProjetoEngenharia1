@@ -82,3 +82,17 @@ O sistema deve permitir identificar clientes inadimplentes com base em dívidas 
 - RF08.01 - Identificar Dívidas em Atraso  
 - RF08.02 - Gerar Alerta de Inadimplência  
 - RF08.03 - Listar Clientes Inadimplentes  
+
+---
+
+## Lista de Requisitos Não-Funcionais
+
+Requisito | Descrição |
+-----------|----------|
+RNF001 - Acesso Web | O sistema deve ser acessível via navegador (Chrome, Firefox, Edge). |
+RNF002 - Performance | As consultas devem ser rápidas e eficientes. |
+RNF003 - Segurança | Os dados dos clientes devem ser protegidos. |
+RNF004 - Usabilidade | Interface simples e intuitiva para o comerciante. |
+RNF005 - Disponibilidade | O sistema deve estar disponível sempre que necessário. |
+
+---
