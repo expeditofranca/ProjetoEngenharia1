@@ -65,6 +65,17 @@ O sistema deve permitir ao comerciante gerenciar as dívidas dos clientes, possi
 - RF02.03 - Atualizar Dívida  
 - RF02.04 - Deletar Dívida  
 
+---
+
+### US07 - Alerta de Limite de Dívida
+Após verificação, o sistema deve emitir um alerta ao comerciante informando o cliente devedor.
+
+Requisito | Descrição | Ator |
+----------|----------|------|
+RF07.01 - Verificar Limite | Emitir alerta quando cliente ultrapassar limite de dívidas. | Administrador |
+
+---
+
 ### RF08 - Emitir Alerta de Inadimplência
 O sistema deve permitir identificar clientes inadimplentes com base em dívidas em atraso e emitir alertas para auxiliar o comerciante no acompanhamento desses casos. Os alertas devem considerar critérios como data de vencimento e ausência de pagamento.
 
