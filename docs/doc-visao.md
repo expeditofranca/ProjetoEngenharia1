@@ -96,3 +96,13 @@ RNF004 - Usabilidade | Interface simples e intuitiva para o comerciante. |
 RNF005 - Disponibilidade | O sistema deve estar disponível sempre que necessário. |
 
 ---
+
+## Riscos
+
+Data | Risco | Prioridade | Responsável | Status | Solução |
+------|------|-----------|-------------|--------|--------|
+25/03/2026 | Falta de experiência da equipe | Alta | Equipe | Em andamento | Estudo contínuo e prática |
+25/03/2026 | Atrasos no desenvolvimento | Média | Gerente | Em andamento | Planejamento e divisão de tarefas |
+25/03/2026 | Problemas técnicos com tecnologias | Média | Equipe | Em andamento | Pesquisa e suporte técnico |
+
+---
