@@ -110,7 +110,27 @@
 ---
 
 ## 📦 RF04 - Gerar Relatório de Pagamento
+|||
+|-|-|
+|**Descrição:**| O sistema deve permitir que o comerciante gere relatórios contendo exclusivamente os registros de pagamentos realizados pelos clientes. |
 
+
+| Campo               | Informação         |
+|---------------------|--------------------|
+| Prioridade          | Essencial          |
+| Estimativa          | 3h                 |
+| Tempo Gasto (real)  |                    |
+| Tamanho Funcional   |                    |
+| Analista            | Ivyson             |
+| Desenvolvedor       | Arthur             |
+| Revisor             | Júlia              |
+| Testador            | Gean               |
+
+#### Teste de Aceitação (TA)
+| Código | Descrição |
+|--------|-----------|
+| TA04.01 | O usuário acessa a tela de Relatórios, seleciona o filtro de "Pagamentos" e clica em gerar. O sistema exibe a lista com sucesso. |
+| TA04.02 | O usuário tenta gerar relatório para um período sem entradas. O sistema exibe: "Nenhum pagamento registrado." |
 
 ---
 
