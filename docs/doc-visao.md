@@ -67,6 +67,15 @@ O sistema deve permitir ao comerciante gerenciar as dívidas dos clientes, possi
 
 ---
 
+### RF04 - Gerar Relatório de Pagamento
+O sistema deve permitir a geração de relatórios contendo os registros de pagamentos realizados pelos clientes, facilitando o controle financeiro da mercearia.
+
+Requisito | Descrição | Ator |
+----------|----------|------|
+RF04.01 - Gerar Relatório | Gerar relatórios de pagamentos incluindo nome do cliente, valor pago e data do pagamento. | Comerciante |
+
+---
+
 ### US07 - Alerta de Limite de Dívida
 Após verificação, o sistema deve emitir um alerta ao comerciante informando o cliente devedor.
 
