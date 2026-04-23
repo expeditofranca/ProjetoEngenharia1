@@ -135,20 +135,25 @@
 ---
 
 ## 📦 US05 - Gerar Relatório de Histórico de Cliente 
-|||
-|-|-|
-|**Descrição:**| O sistema deve possibilitar a geração de um relatório detalhado do histórico de compras fiadas e pagamentos de um cliente específico. O relatório deve incluir todas as dívidas, datas, valores, produtos comprados, pagamentos efetuados e situação atual do cliente (adimplente/inadimplente). |
 
-| Campo               | Informação         |
-|---------------------|--------------------|
-| Prioridade          |                    |
-| Estimativa          | 3h                 |
-| Tempo Gasto (real)  |
-| Tamanho Funcional   |
-| Analista            |
-| Desenvolvedor       | Júlia              |
-| Revisor             |
-| Testador            | 
+|               |                                                                |
+| ------------- | :------------------------------------------------------------- |
+| **Descrição** |  O sistema deve possibilitar a geração de um relatório detalhado do histórico de compras fiadas e pagamentos de um cliente específico. O relatório deve incluir todas as dívidas, datas, valores, produtos comprados, pagamentos efetuados e situação atual do cliente (adimplente/inadimplente).|
+
+| **Requisitos envolvidos** |                                                    |
+| ------------- | :------------------------------------------------------------- |
+| RF05          | Gerar Relatório de Histórico de Cliente |
+
+|                           |                                     |
+| ------------------------- | ----------------------------------- | 
+| **Prioridade**            | Importante                          | 
+| **Estimativa**            | 4h                                  | 
+| **Tempo Gasto (real):**   |                                     | 
+| **Tamanho Funcional**     |                                     | 
+| **Analista**              | Arthur                              | 
+| **Desenvolvedor**         | Júlia                               | 
+| **Revisor**               | Gean                                | 
+| **Testador**              | Expedito                            |
 
 ## 📦 RF07 - Emitir Alerta por Limite de Dívida
 |||
@@ -184,7 +189,7 @@
 | Estimativa          | 5h                 |
 | Tempo Gasto (real)  |                    |
 | Tamanho Funcional   |                    |
-| Analista            | Ivison             |
+| Analista            | Ivyson             |
 | Desenvolvedor       | Arthur             |
 | Revisor             | Júlia              |
 | Testador            | Gean               |
