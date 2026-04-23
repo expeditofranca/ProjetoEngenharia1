@@ -134,6 +134,22 @@
 
 ---
 
+## 📦 US05 - Gerar Relatório de Histórico de Cliente 
+|||
+|-|-|
+|**Descrição:**| O sistema deve possibilitar a geração de um relatório detalhado do histórico de compras fiadas e pagamentos de um cliente específico. O relatório deve incluir todas as dívidas, datas, valores, produtos comprados, pagamentos efetuados e situação atual do cliente (adimplente/inadimplente). |
+
+| Campo               | Informação         |
+|---------------------|--------------------|
+| Prioridade          |                    |
+| Estimativa          | 3h                 |
+| Tempo Gasto (real)  |
+| Tamanho Funcional   |
+| Analista            |
+| Desenvolvedor       | Júlia              |
+| Revisor             |
+| Testador            | 
+
 ## 📦 RF07 - Emitir Alerta por Limite de Dívida
 |||
 |-|-|
