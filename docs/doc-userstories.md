@@ -6,15 +6,29 @@
 |:---|:---|:---|:---|
 | US01 | Manter Cliente | RF01.01, RF01.02, RF01.03, RF01.04 | Expedito |
 | US02 | Manter Dívida | RF02.01, RF02.02, RF02.03, RF02.04 | Arthur |
-| US03 | Controlar Pagamento | RF03 | Ivyson 
+| US03 | Controlar Pagamento | RF03 | Ivyson |
 | US04 | Gerar Relatório de Pagamento | RF04 | Gean |
+| US05 | Gerar Relatório de Histórico de Dívidas | RF05 | Júlia |
+| US07 | Emitir Alerta de Limite de Dívida | RF07.01, RF07.02, RF07.03 | Expedito |
 | US08 | Emitir Alerta de Inadimplência | RF08.01, RF08.02, RF08.03 | Arthur |
 
+<!-- 1- Esses US não deveriam seguir uma ordem? Do US05 já pula pro US08... é assim mesmo? 
+2- Em cada US abaixo, era pra colocar os requisitos também? Alguns tem, outros não...
+3- Como saber quem vai ter qual papel em cada User Story? 
+-->
 
-## 📦 RF01 - Manter Cliente
-|||
-|-|-|
+## 📦 US01 - Manter Cliente
+
+|               |                                                                |
+| ------------- | :------------------------------------------------------------- |
 |**Descrição:**|  O sistema deve permitir cadastrar, editar, visualizar e excluir clientes. Será possível cadastrar clientes informando os seguintes dados: nome, CPF, telefone, endereço, profissão e renda familiar. Esse módulo é essencial para o controle de quem pode comprar fiado.|
+
+| **Requisitos envolvidos** |                                                    |
+| ------------- | :------------------------------------------------------------- |
+| RF01.01       | Inserir Cliente     |
+| RF01.02       | Listar Clientes     |
+| RF01.03       | Atualizar Cliente   |
+| RF01.04       | Deletar Cliente     |
 
 | Campo               | Informação         |
 |---------------------|--------------------|
@@ -43,10 +57,18 @@
 
 ---
 
-## 📦 RF02 - Manter Dívida
-|||
-|-|-|
+## 📦 US02 - Manter Dívida
+
+|               |                                                                |
+| ------------- | :------------------------------------------------------------- |
 |**Descrição:**| O sistema deve permitir cadastrar, editar, visualizar e excluir dívidas associadas a um cliente. Será possível registrar uma dívida informando o cliente, valor, data e descrição (ou cupom fiscal). Esse módulo é essencial para controlar os valores que os clientes devem ao comerciante.|
+
+| **Requisitos envolvidos** |                                                    |
+| ------------- | :------------------------------------------------------------- |
+| RF02.01       | Inserir Dívida   |
+| RF02.02       | Listar Dívidas   |
+| RF02.03       | Atualizar Dívida |
+| RF02.04       | Deletar Dívida   |
 
 | Campo               | Informação         |
 |---------------------|--------------------|
@@ -75,7 +97,7 @@
 
 ---
 
-## 📦 User Story US03 - Controlar Pagamento
+## 📦 US03 - Controlar Pagamento
 
 |               |                                                                |
 | ------------- | :------------------------------------------------------------- |
@@ -85,10 +107,10 @@
 | ------------- | :------------------------------------------------------------- |
 | RF03          | Controlar Pagamento |
 
-|                           |                                     |
+| Campo                     | Informação                          |
 | ------------------------- | ----------------------------------- | 
 | **Prioridade**            | Essencial                           | 
-| **Estimativa**            | 4 h                                 | 
+| **Estimativa**            | 4h                              m   | 
 | **Tempo Gasto (real):**   |                                     | 
 | **Tamanho Funcional**     |                                     | 
 | **Analista**              | Gean                                | 
@@ -97,7 +119,7 @@
 | **Testador**              | Expedito                            | 
 
 
-| Teste de Aceitação (TA) |  |
+|**Teste de Aceitação (TA)** |  |
 | ----------- | --------- |
 | Código | Descrição |
 | TA03.01 | O usuário informa, na tela de pagamento, o valor a ser pago (total ou parcial). Ao confirmar a operação, o sistema deve exibir uma mensagem de sucesso e mostrar o valor da dívida antes e após o pagamento. |
@@ -109,11 +131,15 @@
 
 ---
 
-## 📦 RF04 - Gerar Relatório de Pagamento
-|||
-|-|-|
+## 📦 US04 - Gerar Relatório de Pagamento
+
+|               |                                                                |
+| ------------- | :------------------------------------------------------------- |
 |**Descrição:**| O sistema deve permitir que o comerciante gere relatórios contendo exclusivamente os registros de pagamentos realizados pelos clientes. |
 
+| **Requisitos envolvidos** |                                                    |
+| ------------- | :------------------------------------------------------------- |
+| RF04          | Gerar Relatório de Pagamento |
 
 | Campo               | Informação         |
 |---------------------|--------------------|
@@ -126,7 +152,8 @@
 | Revisor             | Júlia              |
 | Testador            | Gean               |
 
-#### Teste de Aceitação (TA)
+|**Teste de Aceitação (TA)** |  |
+| ----------- | --------- |
 | Código | Descrição |
 |--------|-----------|
 | TA04.01 | O usuário acessa a tela de Relatórios, seleciona o filtro de "Pagamentos" e clica em gerar. O sistema exibe a lista com sucesso. |
@@ -134,10 +161,49 @@
 
 ---
 
-## 📦 RF07 - Emitir Alerta por Limite de Dívida
-|||
-|-|-|
+## 📦 US05 - Gerar Relatório de Histórico de Dívidas 
+
+|               |                                                                |
+| ------------- | :------------------------------------------------------------- |
+| **Descrição** |  O sistema deve possibilitar a geração de um relatório detalhado do histórico de compras fiadas (dívidas) de um cliente específico. O relatório deve incluir todas as dívidas, datas, produtos comprados, valores totais, pagamentos efetuados e situação atual da dívida do cliente (adimplente/inadimplente).|
+
+| **Requisitos envolvidos** |                                                    |
+| ------------- | :------------------------------------------------------------- |
+| RF05          | Gerar Relatório de Histórico de Dívidas |
+
+| Campo                     | Informação                          |
+| ------------------------- | ----------------------------------- | 
+| **Prioridade**            | Importante                          | 
+| **Estimativa**            | 4h                                  | 
+| **Tempo Gasto (real):**   |                                     | 
+| **Tamanho Funcional**     |                                     | 
+| **Analista**              | Arthur                              | 
+| **Desenvolvedor**         | Júlia                               | 
+| **Revisor**               | Gean                                | 
+| **Testador**              | Expedito                            |
+
+|**Teste de Aceitação (TA)** |  |
+| ----------- | --------- |
+| Código | Descrição |
+| TA05.01 | O usuário acessa a tela de Relatórios, seleciona o filtro de "Histórico de Dívidas" e informa o número de CPF do cliente para o qual deseja gerar relatório. O sistema deve gerar e exibir com sucesso um relatório contendo todas as dívidas do cliente, com suas respectivas datas, produtos comprados, valores totais, pagamentos efetuados e situação atual da dívida do cliente (adimplente/inadimplente). |
+| TA05.02 | Ao exibir o relatório de histórico de dívidas de um cliente, o sistema deve permitir ao cliente escolher voltar para a tela de Relatórios, através de um botão, caso deseje gerar um novo relatório. |
+| TA05.03 | Ao exibir o relatório de histórico de dívidas de um cliente, o sistema deve permitir ao usuário escolher voltar para a tela principal através de um botão, caso deseje retornar ao menu principal. |
+| TA05.04 | Ao informar o número de CPF de um cliente que ainda não tenha dívidas cadastradas, o sistema deve exibir uma mensagem de aviso indicando que não será possível gerar relatório de histórico de dívidas daquele cliente por não ter nenhuma dívida cadastrada. |
+| TA05.05 | Ao informar o número de CPF de um cliente não cadastrado, o sistema deve exibir mensagem de erro indicando que o CPF não corresponde a nenhum cliente cadastrado no sistema. |
+
+---
+
+## 📦 US07 - Emitir Alerta de Limite de Dívida
+
+|               |                                                                |
+| ------------- | :------------------------------------------------------------- |
 |**Descrição:**| Caso o valor total do fiado de um cliente ultrapasse o valor de um salário mínimo, o sistema deve emitir um alerta para o comerciante.|
+
+| **Requisitos envolvidos** |                                                    |
+| ------------- | :------------------------------------------------------------- |
+| RF07.01       | Calcular Total de Dívidas |
+| RF07.02       | Verificar Limite          |
+| RF07.03       | Emitir Alerta de Limite   |
 
 | Campo               | Informação         |
 |---------------------|--------------------|
@@ -157,10 +223,17 @@
 
 ---
 
-## 📦 RF08 - Emitir Alerta de Inadimplência
-|||
-|-|-|
+## 📦 US08 - Emitir Alerta de Inadimplência
+
+|               |                                                                |
+| ------------- | :------------------------------------------------------------- |
 |**Descrição:**| O sistema deve permitir identificar clientes inadimplentes com base em dívidas em atraso e emitir alertas para auxiliar o comerciante no acompanhamento desses casos. Os alertas devem considerar a data de vencimento das dívidas e a ausência de pagamento, permitindo visualizar facilmente os clientes com pendências financeiras.|
+
+| **Requisitos envolvidos** |                                                    |
+| ------------- | :------------------------------------------------------------- |
+| RF08.01       | Identificar Dívidas Inadimplentes |
+| RF08.02       | Emitir Alerta de Inadimplência    |
+| RF08.03       | Listar Clientes Inadimplentes
 
 | Campo               | Informação         |
 |---------------------|--------------------|
@@ -168,7 +241,7 @@
 | Estimativa          | 5h                 |
 | Tempo Gasto (real)  |                    |
 | Tamanho Funcional   |                    |
-| Analista            | Ivison             |
+| Analista            | Ivyson             |
 | Desenvolvedor       | Arthur             |
 | Revisor             | Júlia              |
 | Testador            | Gean               |
