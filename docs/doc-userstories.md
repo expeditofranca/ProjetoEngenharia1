@@ -6,9 +6,10 @@
 |:---|:---|:---|:---|
 | US01 | Manter Cliente | RF01.01, RF01.02, RF01.03, RF01.04 | Expedito |
 | US02 | Manter Dívida | RF02.01, RF02.02, RF02.03, RF02.04 | Arthur |
-| US03 | Controlar Pagamento | RF03 | Ivyson 
+| US03 | Controlar Pagamento | RF03 | Ivyson |
 | US04 | Gerar Relatório de Pagamento | RF04 | Gean |
 | US05 | Gerar Relatório de Histórico de Dívidas | RF05 | Júlia |
+| US07 | Emitir Alerta de Limite de Dívida | RF07.01, RF07.02, RF07.03 | Expedito |
 | US08 | Emitir Alerta de Inadimplência | RF08.01, RF08.02, RF08.03 | Arthur |
 
 <!-- 1- Esses US não deveriam seguir uma ordem? Do US05 já pula pro US08... é assim mesmo? 
@@ -96,7 +97,7 @@
 
 ---
 
-## 📦 User Story US03 - Controlar Pagamento
+## 📦 US03 - Controlar Pagamento
 
 |               |                                                                |
 | ------------- | :------------------------------------------------------------- |
@@ -192,7 +193,7 @@
 
 ---
 
-## 📦 US07 - Emitir Alerta por Limite de Dívida
+## 📦 US07 - Emitir Alerta de Limite de Dívida
 
 |               |                                                                |
 | ------------- | :------------------------------------------------------------- |
