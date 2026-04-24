@@ -11,10 +11,15 @@
 | US05 | Gerar Relatório de Histórico de Dívidas | RF05 | Júlia |
 | US08 | Emitir Alerta de Inadimplência | RF08.01, RF08.02, RF08.03 | Arthur |
 
+<!-- 1- Esses US não deveriam seguir uma ordem? Do US05 já pula pro US08... é assim mesmo? 
+2- Em cada US abaixo, era pra colocar os requisitos também? Alguns tem, outros não...
+3- Como saber quem vai ter qual papel em cada User Story? 
+-->
 
 ## 📦 US01 - Manter Cliente
-|||
-|-|-|
+
+|               |                                                                |
+| ------------- | :------------------------------------------------------------- |
 |**Descrição:**|  O sistema deve permitir cadastrar, editar, visualizar e excluir clientes. Será possível cadastrar clientes informando os seguintes dados: nome, CPF, telefone, endereço, profissão e renda familiar. Esse módulo é essencial para o controle de quem pode comprar fiado.|
 
 | Campo               | Informação         |
@@ -45,8 +50,9 @@
 ---
 
 ## 📦 US02 - Manter Dívida
-|||
-|-|-|
+
+|               |                                                                |
+| ------------- | :------------------------------------------------------------- |
 |**Descrição:**| O sistema deve permitir cadastrar, editar, visualizar e excluir dívidas associadas a um cliente. Será possível registrar uma dívida informando o cliente, valor, data e descrição (ou cupom fiscal). Esse módulo é essencial para controlar os valores que os clientes devem ao comerciante.|
 
 | Campo               | Informação         |
@@ -89,7 +95,7 @@
 | Campo                     | Informação                          |
 | ------------------------- | ----------------------------------- | 
 | **Prioridade**            | Essencial                           | 
-| **Estimativa**            | 4 h                                 | 
+| **Estimativa**            | 4h                              m   | 
 | **Tempo Gasto (real):**   |                                     | 
 | **Tamanho Funcional**     |                                     | 
 | **Analista**              | Gean                                | 
@@ -164,16 +170,18 @@
 |**Teste de Aceitação (TA)** |  |
 | ----------- | --------- |
 | Código | Descrição |
-| TA05.01 | O usuário acessa a tela de Relatórios, seleciona o filtro de "Histórico" e informa o CPF do cliente para o qual deseja gerar relatório de histórico. O sistema deve gerar e exibir com sucesso um relatório contendo todas as dívidas do cliente, com suas respectivas datas, produtos comprados, valores totais, pagamentos efetuados e situação atual da dívida do cliente (adimplente/inadimplente). |
-| TA05.02 | Ao exibir o relatório de histórico de um cliente, o sistema deve permitir ao cliente escolher voltar para a tela de Relatórios, através de um botão, caso deseje gerar um novo relatório. |
-| TA05.03 | Ao exibir o relatório de histórico de um cliente, o sistema deve permitir ao usuário escolher voltar para a tela principal através de um botão, caso deseje retornar ao menu principal. |
-| TA05.04 | Ao informar o número de CPF de um cliente que não tenha dívidas cadastradas, o sistema deve exibir uma mensagem de aviso indicando que o cliente ainda não possui dívidas cadastradas. |
+| TA05.01 | O usuário acessa a tela de Relatórios, seleciona o filtro de "Histórico de Dívidas" e informa o número de CPF do cliente para o qual deseja gerar relatório. O sistema deve gerar e exibir com sucesso um relatório contendo todas as dívidas do cliente, com suas respectivas datas, produtos comprados, valores totais, pagamentos efetuados e situação atual da dívida do cliente (adimplente/inadimplente). |
+| TA05.02 | Ao exibir o relatório de histórico de dívidas de um cliente, o sistema deve permitir ao cliente escolher voltar para a tela de Relatórios, através de um botão, caso deseje gerar um novo relatório. |
+| TA05.03 | Ao exibir o relatório de histórico de dívidas de um cliente, o sistema deve permitir ao usuário escolher voltar para a tela principal através de um botão, caso deseje retornar ao menu principal. |
+| TA05.04 | Ao informar o número de CPF de um cliente que ainda não tenha dívidas cadastradas, o sistema deve exibir uma mensagem de aviso indicando que não será possível gerar relatório de histórico de dívidas daquele cliente por não ter nenhuma dívida cadastrada. |
+| TA05.05 | Ao informar o número de CPF de um cliente não cadastrado, o sistema deve exibir mensagem de erro indicando que o CPF não corresponde a nenhum cliente cadastrado no sistema. |
 
 ---
 
 ## 📦 US07 - Emitir Alerta por Limite de Dívida
-|||
-|-|-|
+
+|               |                                                                |
+| ------------- | :------------------------------------------------------------- |
 |**Descrição:**| Caso o valor total do fiado de um cliente ultrapasse o valor de um salário mínimo, o sistema deve emitir um alerta para o comerciante.|
 
 | Campo               | Informação         |
@@ -195,8 +203,9 @@
 ---
 
 ## 📦 US08 - Emitir Alerta de Inadimplência
-|||
-|-|-|
+
+|               |                                                                |
+| ------------- | :------------------------------------------------------------- |
 |**Descrição:**| O sistema deve permitir identificar clientes inadimplentes com base em dívidas em atraso e emitir alertas para auxiliar o comerciante no acompanhamento desses casos. Os alertas devem considerar a data de vencimento das dívidas e a ausência de pagamento, permitindo visualizar facilmente os clientes com pendências financeiras.|
 
 | Campo               | Informação         |
