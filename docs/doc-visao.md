@@ -66,6 +66,8 @@ O sistema deve permitir ao comerciante gerenciar as dívidas dos clientes, possi
 - RF02.04 - Deletar Dívida  
 
 ---
+<!-- REQUISITO RF03??? -->
+<!-- Dúvida: Cadê o RF03 aqui??? Por que não tem aqui se tem no Doc DE user stories, no US03?? -->
 
 ### RF04 - Gerar Relatório de Pagamento
 O sistema deve permitir a geração de relatórios contendo os registros de pagamentos realizados pelos clientes, facilitando o controle financeiro da mercearia.

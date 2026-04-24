@@ -22,6 +22,13 @@
 | ------------- | :------------------------------------------------------------- |
 |**Descrição:**|  O sistema deve permitir cadastrar, editar, visualizar e excluir clientes. Será possível cadastrar clientes informando os seguintes dados: nome, CPF, telefone, endereço, profissão e renda familiar. Esse módulo é essencial para o controle de quem pode comprar fiado.|
 
+| **Requisitos envolvidos** |                                                    |
+| ------------- | :------------------------------------------------------------- |
+| RF01.01       | Inserir Cliente     |
+| RF01.02       | Listar Clientes     |
+| RF01.03       | Atualizar Cliente   |
+| RF01.04       | Deletar Cliente     |
+
 | Campo               | Informação         |
 |---------------------|--------------------|
 | Prioridade          | Essencial          |
@@ -54,6 +61,13 @@
 |               |                                                                |
 | ------------- | :------------------------------------------------------------- |
 |**Descrição:**| O sistema deve permitir cadastrar, editar, visualizar e excluir dívidas associadas a um cliente. Será possível registrar uma dívida informando o cliente, valor, data e descrição (ou cupom fiscal). Esse módulo é essencial para controlar os valores que os clientes devem ao comerciante.|
+
+| **Requisitos envolvidos** |                                                    |
+| ------------- | :------------------------------------------------------------- |
+| RF02.01       | Inserir Dívida   |
+| RF02.02       | Listar Dívidas   |
+| RF02.03       | Atualizar Dívida |
+| RF02.04       | Deletar Dívida   |
 
 | Campo               | Informação         |
 |---------------------|--------------------|
@@ -184,6 +198,11 @@
 | ------------- | :------------------------------------------------------------- |
 |**Descrição:**| Caso o valor total do fiado de um cliente ultrapasse o valor de um salário mínimo, o sistema deve emitir um alerta para o comerciante.|
 
+| **Requisitos envolvidos** |                                                    |
+| ------------- | :------------------------------------------------------------- |
+| RF07.01       | Verificar Limite          |
+| RF07.02       | Emitir Alerta de Limite   |
+
 | Campo               | Informação         |
 |---------------------|--------------------|
 | Prioridade          | Importante         |
@@ -207,6 +226,12 @@
 |               |                                                                |
 | ------------- | :------------------------------------------------------------- |
 |**Descrição:**| O sistema deve permitir identificar clientes inadimplentes com base em dívidas em atraso e emitir alertas para auxiliar o comerciante no acompanhamento desses casos. Os alertas devem considerar a data de vencimento das dívidas e a ausência de pagamento, permitindo visualizar facilmente os clientes com pendências financeiras.|
+
+| **Requisitos envolvidos** |                                                    |
+| ------------- | :------------------------------------------------------------- |
+| RF08.01       | Identificar Dívidas Inadimplentes |
+| RF08.02       | Emitir Alerta de Inadimplência    |
+| RF08.03       | Listar Clientes Inadimplentes
 
 | Campo               | Informação         |
 |---------------------|--------------------|
