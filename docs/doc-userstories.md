@@ -8,6 +8,7 @@
 | US02 | Manter Dívida | RF02.01, RF02.02, RF02.03, RF02.04 | Arthur |
 | US03 | Controlar Pagamento | RF03 | Ivyson 
 | US04 | Gerar Relatório de Pagamento | RF04 | Gean |
+| US05 | Gerar Relatório de Histórico de Cliente | RF05 | Júlia
 | US08 | Emitir Alerta de Inadimplência | RF08.01, RF08.02, RF08.03 | Arthur |
 
 
@@ -109,11 +110,15 @@
 
 ---
 
-## 📦 RF04 - Gerar Relatório de Pagamento
-|||
-|-|-|
+## 📦 US04 - Gerar Relatório de Pagamento
+
+|               |                                                                |
+| ------------- | :------------------------------------------------------------- |
 |**Descrição:**| O sistema deve permitir que o comerciante gere relatórios contendo exclusivamente os registros de pagamentos realizados pelos clientes. |
 
+| **Requisitos envolvidos** |                                                    |
+| ------------- | :------------------------------------------------------------- |
+| RF04          | Gerar Relatório de Pagamento |
 
 | Campo               | Informação         |
 |---------------------|--------------------|
@@ -126,7 +131,8 @@
 | Revisor             | Júlia              |
 | Testador            | Gean               |
 
-#### Teste de Aceitação (TA)
+|**Teste de Aceitação (TA)** |  |
+| ----------- | --------- |
 | Código | Descrição |
 |--------|-----------|
 | TA04.01 | O usuário acessa a tela de Relatórios, seleciona o filtro de "Pagamentos" e clica em gerar. O sistema exibe a lista com sucesso. |
@@ -144,7 +150,7 @@
 | ------------- | :------------------------------------------------------------- |
 | RF05          | Gerar Relatório de Histórico de Cliente |
 
-|                           |                                     |
+| Campo                     | Informação                          |
 | ------------------------- | ----------------------------------- | 
 | **Prioridade**            | Importante                          | 
 | **Estimativa**            | 4h                                  | 
@@ -158,9 +164,9 @@
 |**Teste de Aceitação (TA)** |  |
 | ----------- | --------- |
 | Código | Descrição |
-| TA05.01 | O usuário acessa a tela de Relatórios, seleciona o filtro de "Histórico" e informa o CPF do cliente do qual quer gerar relatório de histórico. O sistema deve gerar e exibir com sucesso um relatório contendo todas as dívidas do cliente, com suas respectivas datas, produtos comprados, valores totais, pagamentos efetuados e situação atual da dívida do cliente (adimplente/inadimplente). |
-| TA05.02 | Ao mostrar o relatório de histórico de um cliente, o sistema deve permitir ao cleinte escolher voltar para a tela de Relatórios para gerar um novo relatório através de um botão. |
-| TA05.03 | Ao mostrar o relatório de histórico de um cliente, o sistema deve permitir ao usuário escolher voltar para a tela principal através de um botão. |
+| TA05.01 | O usuário acessa a tela de Relatórios, seleciona o filtro de "Histórico" e informa o CPF do cliente para o qual deseja gerar relatório de histórico. O sistema deve gerar e exibir com sucesso um relatório contendo todas as dívidas do cliente, com suas respectivas datas, produtos comprados, valores totais, pagamentos efetuados e situação atual da dívida do cliente (adimplente/inadimplente). |
+| TA05.02 | Ao exibir o relatório de histórico de um cliente, o sistema deve permitir ao cliente escolher voltar para a tela de Relatórios, através de um botão, caso deseje gerar um novo relatório. |
+| TA05.03 | Ao exibir o relatório de histórico de um cliente, o sistema deve permitir ao usuário escolher voltar para a tela principal através de um botão, caso deseje retornar ao menu principal. |
 | TA05.04 | Ao informar o número de CPF de um cliente que não tenha dívidas cadastradas, o sistema deve exibir uma mensagem de aviso indicando que o cliente ainda não possui dívidas cadastradas. |
 
 ---
