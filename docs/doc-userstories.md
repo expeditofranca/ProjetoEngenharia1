@@ -8,11 +8,11 @@
 | US02 | Manter Dívida | RF02.01, RF02.02, RF02.03, RF02.04 | Arthur |
 | US03 | Controlar Pagamento | RF03 | Ivyson 
 | US04 | Gerar Relatório de Pagamento | RF04 | Gean |
-| US05 | Gerar Relatório de Histórico de Cliente | RF05 | Júlia
+| US05 | Gerar Relatório de Histórico de Dívidas | RF05 | Júlia |
 | US08 | Emitir Alerta de Inadimplência | RF08.01, RF08.02, RF08.03 | Arthur |
 
 
-## 📦 RF01 - Manter Cliente
+## 📦 US01 - Manter Cliente
 |||
 |-|-|
 |**Descrição:**|  O sistema deve permitir cadastrar, editar, visualizar e excluir clientes. Será possível cadastrar clientes informando os seguintes dados: nome, CPF, telefone, endereço, profissão e renda familiar. Esse módulo é essencial para o controle de quem pode comprar fiado.|
@@ -44,7 +44,7 @@
 
 ---
 
-## 📦 RF02 - Manter Dívida
+## 📦 US02 - Manter Dívida
 |||
 |-|-|
 |**Descrição:**| O sistema deve permitir cadastrar, editar, visualizar e excluir dívidas associadas a um cliente. Será possível registrar uma dívida informando o cliente, valor, data e descrição (ou cupom fiscal). Esse módulo é essencial para controlar os valores que os clientes devem ao comerciante.|
@@ -86,7 +86,7 @@
 | ------------- | :------------------------------------------------------------- |
 | RF03          | Controlar Pagamento |
 
-|                           |                                     |
+| Campo                     | Informação                          |
 | ------------------------- | ----------------------------------- | 
 | **Prioridade**            | Essencial                           | 
 | **Estimativa**            | 4 h                                 | 
@@ -140,15 +140,15 @@
 
 ---
 
-## 📦 US05 - Gerar Relatório de Histórico de Cliente 
+## 📦 US05 - Gerar Relatório de Histórico de Dívidas 
 
 |               |                                                                |
 | ------------- | :------------------------------------------------------------- |
-| **Descrição** |  O sistema deve possibilitar a geração de um relatório detalhado do histórico de compras fiadas e pagamentos de um cliente específico. O relatório deve incluir todas as dívidas, datas, produtos comprados, valores totais, pagamentos efetuados e situação atual da dívida do cliente (adimplente/inadimplente).|
+| **Descrição** |  O sistema deve possibilitar a geração de um relatório detalhado do histórico de compras fiadas (dívidas) de um cliente específico. O relatório deve incluir todas as dívidas, datas, produtos comprados, valores totais, pagamentos efetuados e situação atual da dívida do cliente (adimplente/inadimplente).|
 
 | **Requisitos envolvidos** |                                                    |
 | ------------- | :------------------------------------------------------------- |
-| RF05          | Gerar Relatório de Histórico de Cliente |
+| RF05          | Gerar Relatório de Histórico de Dívidas |
 
 | Campo                     | Informação                          |
 | ------------------------- | ----------------------------------- | 
@@ -171,7 +171,7 @@
 
 ---
 
-## 📦 RF07 - Emitir Alerta por Limite de Dívida
+## 📦 US07 - Emitir Alerta por Limite de Dívida
 |||
 |-|-|
 |**Descrição:**| Caso o valor total do fiado de um cliente ultrapasse o valor de um salário mínimo, o sistema deve emitir um alerta para o comerciante.|
@@ -194,7 +194,7 @@
 
 ---
 
-## 📦 RF08 - Emitir Alerta de Inadimplência
+## 📦 US08 - Emitir Alerta de Inadimplência
 |||
 |-|-|
 |**Descrição:**| O sistema deve permitir identificar clientes inadimplentes com base em dívidas em atraso e emitir alertas para auxiliar o comerciante no acompanhamento desses casos. Os alertas devem considerar a data de vencimento das dívidas e a ausência de pagamento, permitindo visualizar facilmente os clientes com pendências financeiras.|

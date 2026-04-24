@@ -18,7 +18,7 @@ Membro     | Papel                  | E-mail |
 -----------|------------------------|--------|
 Arthur     | Analista / Desenvolvedor | arthur.dantas.017@ufrn.edu.br |
 Expedito   | Desenvolvedor          | francaexpedito11@gmail.com |
-Júlia      | Testadora / Revisora   | juliajs.costa@gmail.com |
+Júlia      | Testadora / Revisora   | julia.lilian.706@ufrn.edu.br |
 Gean       | Testador               | jose.gean.706@ufrn.edu.br |
 Ivyson     | Analista / Desenvolvedor | ivysonwanderson@hotmail.com |
 
@@ -26,7 +26,7 @@ Ivyson     | Analista / Desenvolvedor | ivysonwanderson@hotmail.com |
 
 Membro     | Competências |
 -----------|-------------|
-Arthur     | Python, Django, Desenvolvimento Web |
+Arthur     | Desenvolvimento Web, Python, Django |
 Expedito   | Desenvolvimento Backend, Python, Django |
 Júlia      | Testes de Software, Python, Django |
 Gean       | Testes e Validação, Python, Django |
@@ -45,7 +45,7 @@ Administrador | Pode gerenciar todo o sistema (mesmas permissões do comerciante
 
 ## Requisitos Funcionais
 
-### US01 - Manter Cliente
+### RF01 - Manter Cliente
 Um cliente possui nome, CPF, telefone, endereço, profissão e renda familiar.
 
 Requisito | Descrição | Ator |
@@ -76,7 +76,16 @@ RF04.01 - Gerar Relatório | Gerar relatórios de pagamentos incluindo nome do c
 
 ---
 
-### US07 - Alerta de Limite de Dívida
+### RF05 - Gerar Relatório de Histórico de Dívidas de Cliente
+O sistema deve permitir a geração de relatórios das dívidas de um cliente, contendo informações como data, produtos adquiridos, valor total, valores pagos, status (adimplente/inadimplente), por meio de busca do CPF do cliente.
+
+Requisito | Descrição | Ator |
+----------|----------|------|
+RF05.01 - Gerar Relatório de Histórico de Dividas| Gerar relatórios de histórico de dívidas por cliente incluindo data, produtos comprados, valor total, valores pagos e status da dívida (adimplente/inadimplente). | Comerciante |
+
+---
+
+### RF07 - Alerta de Limite de Dívida
 Após verificação, o sistema deve emitir um alerta ao comerciante informando o cliente devedor.
 
 Requisito | Descrição | Ator |
