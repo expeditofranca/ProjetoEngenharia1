@@ -97,7 +97,7 @@
 | **Testador**              | Expedito                            | 
 
 
-| Teste de Aceitação (TA) |  |
+|**Teste de Aceitação (TA)** |  |
 | ----------- | --------- |
 | Código | Descrição |
 | TA03.01 | O usuário informa, na tela de pagamento, o valor a ser pago (total ou parcial). Ao confirmar a operação, o sistema deve exibir uma mensagem de sucesso e mostrar o valor da dívida antes e após o pagamento. |
@@ -138,7 +138,7 @@
 
 |               |                                                                |
 | ------------- | :------------------------------------------------------------- |
-| **Descrição** |  O sistema deve possibilitar a geração de um relatório detalhado do histórico de compras fiadas e pagamentos de um cliente específico. O relatório deve incluir todas as dívidas, datas, valores, produtos comprados, pagamentos efetuados e situação atual do cliente (adimplente/inadimplente).|
+| **Descrição** |  O sistema deve possibilitar a geração de um relatório detalhado do histórico de compras fiadas e pagamentos de um cliente específico. O relatório deve incluir todas as dívidas, datas, produtos comprados, valores totais, pagamentos efetuados e situação atual da dívida do cliente (adimplente/inadimplente).|
 
 | **Requisitos envolvidos** |                                                    |
 | ------------- | :------------------------------------------------------------- |
@@ -154,6 +154,16 @@
 | **Desenvolvedor**         | Júlia                               | 
 | **Revisor**               | Gean                                | 
 | **Testador**              | Expedito                            |
+
+|**Teste de Aceitação (TA)** |  |
+| ----------- | --------- |
+| Código | Descrição |
+| TA05.01 | O usuário acessa a tela de Relatórios, seleciona o filtro de "Histórico" e informa o CPF do cliente do qual quer gerar relatório de histórico. O sistema deve gerar e exibir com sucesso um relatório contendo todas as dívidas do cliente, com suas respectivas datas, produtos comprados, valores totais, pagamentos efetuados e situação atual da dívida do cliente (adimplente/inadimplente). |
+| TA05.02 | Ao mostrar o relatório de histórico de um cliente, o sistema deve permitir ao cleinte escolher voltar para a tela de Relatórios para gerar um novo relatório através de um botão. |
+| TA05.03 | Ao mostrar o relatório de histórico de um cliente, o sistema deve permitir ao usuário escolher voltar para a tela principal através de um botão. |
+| TA05.04 | Ao informar o número de CPF de um cliente que não tenha dívidas cadastradas, o sistema deve exibir uma mensagem de aviso indicando que o cliente ainda não possui dívidas cadastradas. |
+
+---
 
 ## 📦 RF07 - Emitir Alerta por Limite de Dívida
 |||
