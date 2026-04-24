@@ -97,7 +97,7 @@ Requisito | Descrição | Ator |
 ----------|----------|------|
 RF07.01 - Calcular Total de Dívidas | Realizar somatório total de todos os valores das dívidas inadimplentes de um cliente | Administrador |
 RF07.02 - Verificar Limite | Verificar se a soma total dos valores de dívidas inadimplentes de um cliente ultrapassa o limite de um salário mínimo | Administrador |
-RF07.03 - Emitir Alerta | Emitir alerta quando cliente ultrapassar limite de valor de dívidas | Administrador |
+RF07.03 - Emitir Alerta de Limite | Emitir alerta quando cliente ultrapassar limite de valor de dívidas | Administrador |
 
 ---
 

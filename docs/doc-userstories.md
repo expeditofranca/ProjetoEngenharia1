@@ -200,8 +200,9 @@
 
 | **Requisitos envolvidos** |                                                    |
 | ------------- | :------------------------------------------------------------- |
-| RF07.01       | Verificar Limite          |
-| RF07.02       | Emitir Alerta de Limite   |
+| RF07.01       | Calcular Total de Dívidas |
+| RF07.02       | Verificar Limite          |
+| RF07.03       | Emitir Alerta de Limite   |
 
 | Campo               | Informação         |
 |---------------------|--------------------|
