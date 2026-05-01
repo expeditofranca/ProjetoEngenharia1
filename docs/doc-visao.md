@@ -90,6 +90,14 @@ RF05.01 - Gerar Relatório de Histórico de Dividas| Gerar relatórios de histó
 
 ---
 
+### RF06 - Gerar Relatórios Mensais de Dívidas
+O sistema deve permitir a geração de relatórios mensais contendo todos os clientes com dívidas em aberto, facilitando o acompanhamento das pendências financeiras.
+
+Requisito | Descrição | Ator |
+----------|----------|------|
+RF06.01 - Gerar Relatório Mensal | Gerar relatório mensal contendo nome do cliente, valor da dívida e data da dívida | Comerciante |
+RF06.02 - Listar Clientes com Dívidas | Listar clientes que possuem dívidas em aberto no período mensal | Comerciante |
+
 ### RF07 - Alerta de Limite de Dívida
 Após verificação, o sistema deve emitir um alerta ao comerciante informando que o valor total das dívidas inadimplentes de um cliente ultrapassou o valor de um salário mínimo.
 
