@@ -9,6 +9,7 @@
 | US03 | Controlar Pagamento | RF03 | Ivyson |
 | US04 | Gerar Relatório de Pagamento | RF04 | Gean |
 | US05 | Gerar Relatório de Histórico de Dívidas | RF05 | Júlia |
+| US06 | Gerar Relatórios Mensais | RF06.01, RF06.02 | Arthur |
 | US07 | Emitir Alerta de Limite de Dívida | RF07.01, RF07.02, RF07.03 | Expedito |
 | US08 | Emitir Alerta de Inadimplência | RF08.01, RF08.02, RF08.03 | Arthur |
 
@@ -192,6 +193,31 @@
 | TA05.05 | Ao informar o número de CPF de um cliente não cadastrado, o sistema deve exibir mensagem de erro indicando que o CPF não corresponde a nenhum cliente cadastrado no sistema. |
 
 ---
+
+## 📦 RF06 - Gerar Relatórios Mensais de Dívidas
+|||
+|-|-|
+|**Descrição:**| O sistema deve permitir gerar relatórios mensais contendo todos os clientes com dívidas em aberto, apresentando informações como nome do cliente, valor da dívida e data, facilitando o acompanhamento das pendências financeiras.|
+
+| Campo               | Informação         |
+|---------------------|--------------------|
+| Prioridade          | Importante         |
+| Estimativa          | 5h                 |
+| Tempo Gasto (real)  |                    |
+| Tamanho Funcional   |                    |
+| Analista            | Expedito             |
+| Desenvolvedor       | Júlia             |
+| Revisor             | Gean              |
+| Testador            | Ivyson               |
+
+|**Teste de Aceitação (TA)**||
+|------------|-----------|
+| Código     | Descrição |
+| TA06.01    | O usuário, na tela Gerar Relatório de Dívidas, ao clicar em "gerar relatório" recebe uma mensagem de sucesso e um arquivo com o relatório desejado. Mensagem: Relatório gerado com sucesso.|
+| TA06.02    | O usuário acessa a tela Gerar Relatório de Dívidas e não existem clientes com dívidas em aberto. O sistema exibe uma mensagem de aviso. Mensagem: Nenhum cliente com dívidas em aberto encontrado.|
+| TA06.03    | O usuário gera o relatório mensal e o sistema apresenta corretamente a lista de clientes com dívidas em aberto, incluindo nome do cliente, valor da dívida e data.|
+| TA06.04    | O usuário tenta gerar o relatório e ocorre um erro interno no sistema. O usuário é notificado com uma mensagem de erro. Mensagem: Não foi possível gerar o relatório. Tente novamente.|
+| TA06.05    | O usuário gera o relatório após a quitação de uma dívida e o sistema atualiza corretamente os dados, não exibindo clientes sem dívidas.|
 
 ## 📦 US07 - Emitir Alerta de Limite de Dívida
 
