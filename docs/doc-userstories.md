@@ -4,13 +4,13 @@
 
 | ID | Título do User Story | Requisitos Funcionais Relacionados | Responsável pelo Detalhamento |
 |:---|:---|:---|:---|
-| US01 | Manter Cliente | RF01.01, RF01.02, RF01.03, RF01.04 | Expedito |
-| US02 | Manter Dívida | RF02.01, RF02.02, RF02.03, RF02.04 | Arthur |
-| US03 | Controlar Pagamento | RF03 | Ivyson |
-| US04 | Gerar Relatório de Pagamento | RF04 | Gean |
+| US01 | Manter Cliente | RF01.01, RF01.02, RF01.03, RF01.04 | Gean |
+| US02 | Manter Dívida | RF02.01, RF02.02, RF02.03, RF02.04 | Expedito |
+| US03 | Controlar Pagamento | RF03 | Arthur |
+| US04 | Gerar Relatório de Pagamento | RF04 | Arthur |
 | US05 | Gerar Relatório de Histórico de Dívidas | RF05 | Júlia |
-| US06 | Gerar Relatórios Mensais | RF06.01, RF06.02 | Arthur |
-| US07 | Emitir Alerta de Limite de Dívida | RF07.01, RF07.02, RF07.03 | Expedito |
+| US06 | Gerar Relatórios Mensais | RF06.01, RF06.02 | Ivyson |
+| US07 | Emitir Alerta de Limite de Dívida | RF07.01, RF07.02, RF07.03 | Gean |
 | US08 | Emitir Alerta de Inadimplência | RF08.01, RF08.02, RF08.03 | Arthur |
 
 <!-- 1- Esses US não deveriam seguir uma ordem? Do US05 já pula pro US08... é assim mesmo? 
@@ -38,9 +38,9 @@
 | Tempo Gasto (real)  |                    |
 | Tamanho Funcional   |                    |
 | Analista            | Arthur             |
-| Desenvolvedor       | Expedito           |
+| Desenvolvedor       | Gean               |
 | Revisor             | Júlia              |
-| Testador            | Gean               |
+| Testador            | Expedito           |
 
 |**Teste de Aceitação (TA)**||
 |------------|-----------|
@@ -78,9 +78,9 @@
 | Tempo Gasto (real)  |                    |
 | Tamanho Funcional   |                    |
 | Analista            | Ivyson             |
-| Desenvolvedor       | Arthur             |
+| Desenvolvedor       | Expedito           |
 | Revisor             | Júlia              |
-| Testador            | Gean               |
+| Testador            | Arthur             |
 
 |**Teste de Aceitação (TA)**||
 |------------|-----------|
@@ -115,9 +115,9 @@
 | **Tempo Gasto (real):**   |                                     | 
 | **Tamanho Funcional**     |                                     | 
 | **Analista**              | Gean                                | 
-| **Desenvolvedor**         | Ivyson                              | 
-| **Revisor**               | Arthur                              | 
-| **Testador**              | Expedito                            | 
+| **Desenvolvedor**         | Arthur                              | 
+| **Revisor**               | JUlia                               | 
+| **Testador**              | Ivyson                              | 
 
 
 |**Teste de Aceitação (TA)** |  |
@@ -194,7 +194,7 @@
 
 ---
 
-## 📦 RF06 - Gerar Relatórios Mensais de Dívidas
+## 📦 US06 - Gerar Relatórios Mensais de Dívidas
 |||
 |-|-|
 |**Descrição:**| O sistema deve permitir gerar relatórios mensais contendo todos os clientes com dívidas em aberto, apresentando informações como nome do cliente, valor da dívida e data, facilitando o acompanhamento das pendências financeiras.|
@@ -205,10 +205,10 @@
 | Estimativa          | 5h                 |
 | Tempo Gasto (real)  |                    |
 | Tamanho Funcional   |                    |
-| Analista            | Expedito             |
-| Desenvolvedor       | Júlia             |
-| Revisor             | Gean              |
-| Testador            | Ivyson               |
+| Analista            | Expedito           |
+| Desenvolvedor       | Ivyson             |
+| Revisor             | Gean               |
+| Testador            | Julia              |
 
 |**Teste de Aceitação (TA)**||
 |------------|-----------|
@@ -238,9 +238,9 @@
 | Tempo Gasto (real)  |                    |
 | Tamanho Funcional   |                    |
 | Analista            | Arthur             |
-| Desenvolvedor       | Expedito           |
+| Desenvolvedor       | Gean           |
 | Revisor             | Júlia              |
-| Testador            | Gean               |
+| Testador            | Arthur               |
 
 |**Teste de Aceitação (TA)**||
 |------------|-----------|
