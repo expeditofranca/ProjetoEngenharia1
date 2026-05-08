@@ -91,3 +91,16 @@ class ClienteModelTest(TestCase):
         )
 
         self.assertTrue(cliente.status_cliente)
+
+    def test_metodo_str(self):
+        cliente = Cliente.objects.create(
+            nome="Maria",
+            telefone="84988888888",
+            cpf="98765432100",
+            profissao="Engenheira",
+            renda_familiar=5000,
+            endereco=self.endereco
+        )
+
+        # verificando a representação em string do cliente
+        self.assertEqual(str(cliente), "Maria (98765432100)")
