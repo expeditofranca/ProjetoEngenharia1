@@ -78,3 +78,16 @@ class ClienteModelTest(TestCase):
                 renda_familiar=8000,
                 endereco=outro_endereco
             )
+
+    # testando o valor padrão do campo status_cliente
+    def test_status_cliente_padrao(self):
+        cliente = Cliente.objects.create(
+            nome="Carlos",
+            telefone="84977777777",
+            cpf="11122233344",
+            profissao="Designer",
+            renda_familiar=2500,
+            endereco=self.endereco
+        )
+
+        self.assertTrue(cliente.status_cliente)
