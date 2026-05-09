@@ -52,6 +52,11 @@
                             <label for="{{ form.valor_pago.id_for_label }}" class="form-label">Valor a Pagar (R$)</label>
                             {{ form.valor_pago }}
                         </div>
+                        
+                        <div class="mb-3">
+                            <label for="{{ form.data_pagamento.id_for_label }}" class="form-label">Data do Pagamento</label>
+                            {{ form.data_pagamento }}
+                        </div>
                         <button type="submit" class="btn btn-primary">Abater Valor</button>
                     </form>
                 {% else %}
