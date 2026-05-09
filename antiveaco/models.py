@@ -31,6 +31,7 @@ class Divida(models.Model):
     cpf_funcionario = models.CharField(max_length=11, default='')
     cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
     valor = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    saldo_restante = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     data_divida = models.DateField(auto_now_add=True)
     status = models.CharField(max_length=20, default='Pendente')
     num_notafiscal = models.CharField(max_length=50, default='')
