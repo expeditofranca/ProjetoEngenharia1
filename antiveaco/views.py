@@ -1,5 +1,6 @@
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib import messages
+from django.utils import timezone
 
 from django.db import transaction
 from django.db.models import Sum
@@ -313,3 +314,14 @@ def excluir_cliente(request, cpf_cliente):
 def index_cliente(request):
     """Renderiza o menu de opções para Clientes."""
     return render(request, 'cliente/index_cliente.html')
+
+def alertas_inadimplencia(request):
+    """Gera a lista de clientes com dívidas em atraso."""
+    hoje = timezone.now().date()
+    
+    dividas_atrasadas = Divida.objects.filter(
+        data_vencimento__lt=hoje,
+        saldo_restante__gt=0
+    ).order_by('data_vencimento')
+
+    return render(request, 'divida/alertas_inadimplencia.html', {'dividas_atrasadas': dividas_atrasadas})
