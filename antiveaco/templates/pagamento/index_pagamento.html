@@ -2,19 +2,23 @@
 {% load static %}
 
 {% block content %}
-<link rel="stylesheet" href="{% static 'css/pagamento/index_pagamento.css' %}">
+<link rel="stylesheet" href="{% static 'css/pagamento/index_pagamento.css' %}?v=2">
 
-<div class="container mt-4">
-    <div class="mb-3">
-        <a href="{% url 'index' %}" class="btn btn-secondary">Voltar ao Início</a>
-    </div>
+<div class="container">
+    <form action="{% url 'index' %}" method="get" style="margin-bottom: 20px;">
+        <button type="submit" class="btn-submit">Voltar ao Início</button>
+    </form>
 
     <h1>Painel de Controle de Pagamentos</h1>
     <p>Escolha a ação desejada:</p>
 
     <div class="button-group">
-        <a href="{% url 'registrar_pagamento' %}" class="btn btn-success">Registrar Pagamento</a>
-        <a href="{% url 'lista_pagamentos' %}" class="btn btn-primary">Ver Relatório de Pagamentos</a>
+        <div class="btn-wrapper">
+            <a href="{% url 'registrar_pagamento' %}" class="btn btn-success">Registrar Pagamento</a>
+        </div>
+        <div class="btn-wrapper">
+            <a href="{% url 'lista_pagamentos' %}" class="btn btn-primary">Ver Relatório de Pagamentos</a>
+        </div>
     </div>
 </div>
 {% endblock content %}
