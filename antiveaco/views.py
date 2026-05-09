@@ -57,7 +57,11 @@ def divida_manager(request, cod_divida=None):
     if request.method == 'POST':
         form = DividaForm(request.POST, instance=divida)
         if form.is_valid():
-            form.save()
+            divida_obj = form.save(commit=False)
+            if not divida: 
+                divida_obj.saldo_restante = divida_obj.valor
+            divida_obj.save()
+
             if divida:
                 messages.success(request, 'Dívida atualizada com sucesso!')
                 return redirect('pesquisar_divida')
@@ -162,7 +166,7 @@ def registrar_pagamento(request):
             dividas_do_cliente = Divida.objects.filter(cliente=cliente, status__in=['Pendente', 'Parcial'])
             
             if dividas_do_cliente:
-                soma = dividas_do_cliente.aggregate(soma_total=Sum('valor'))['soma_total']
+                soma = dividas_do_cliente.aggregate(soma_total=Sum('saldo_restante'))['soma_total']
                 soma_total = soma or Decimal('0.00')
 
             form.fields['divida'].queryset = dividas_do_cliente
@@ -182,40 +186,48 @@ def registrar_pagamento(request):
                     Pagamento.objects.create(
                         divida=divida,
                         cliente=divida.cliente,
-                        valor_pago=divida.valor,
+                        # O valor pago agora é o que restava pagar, não o total original
+                        valor_pago=divida.saldo_restante,
                         status='Concluído'
                     )
-                    divida.valor = 0
+                    # Zeramos o saldo restante, mantendo o valor original intacto!
+                    divida.saldo_restante = 0
                     divida.status = 'Pago'
                     divida.save()
             
             messages.success(request, f'Todas as dívidas de {cliente_a_pagar.nome} foram quitadas com sucesso!')
             return redirect('lista_pagamentos')
 
-        # --- Cenário 2: Formulário de pagamento único foi enviado (LÓGICA CORRIGIDA)---
+        # Cenário 2: Formulário de pagamento único
         else:
             form = PagamentoForm(request.POST)
             if form.is_valid():
                 pagamento = form.save(commit=False)
                 divida = pagamento.divida
                 
-                if pagamento.valor_pago > divida.valor:
-                    messages.error(request, f'O valor do pagamento (R$ {pagamento.valor_pago}) não pode ser maior que o saldo da dívida (R$ {divida.valor}).')
+                # ---> ADICIONE ESTA LINHA <---
+                # Informamos ao pagamento quem é o cliente puxando a informação da dívida
+                pagamento.cliente = divida.cliente
+                
+                # Validação em cima da nova variável
+                if pagamento.valor_pago > divida.saldo_restante:
+                    messages.error(request, f'O valor do pagamento não pode ser maior que o saldo da dívida (R$ {divida.saldo_restante}).')
                 else:
                     with transaction.atomic():
-                        divida.valor -= pagamento.valor_pago
-                        if divida.valor <= 0:
-                            divida.valor = 0
+                        # A subtração ocorre APENAS no saldo restante
+                        divida.saldo_restante -= pagamento.valor_pago
+                        
+                        if divida.saldo_restante == 0:
                             divida.status = 'Pago'
                         else:
                             divida.status = 'Parcial'
-                        
+                            
                         divida.save()
-                        pagamento.cliente = divida.cliente
+                        # Agora o pagamento tem um cliente e será salvo sem erros!
                         pagamento.save()
-                    
-                    messages.success(request, f'Pagamento de R$ {pagamento.valor_pago} registrado com sucesso!')
-                    return redirect('lista_pagamentos')
+                        
+                        messages.success(request, f'Pagamento de R$ {pagamento.valor_pago} registrado com sucesso!')
+                        return redirect('lista_pagamentos')
 
     context = {
         'form': form,

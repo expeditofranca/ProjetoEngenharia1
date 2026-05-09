@@ -21,4 +21,10 @@ class ClienteForm(forms.ModelForm):
 class PagamentoForm(forms.ModelForm):
     class Meta:
         model = Pagamento
-        fields = ['divida', 'valor_pago']
+        fields = ['divida', 'valor_pago', 'data_pagamento']
+
+        widgets = {
+            'data_pagamento': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
+            'divida': forms.Select(attrs={'class': 'form-control'}),
+            'valor_pago': forms.NumberInput(attrs={'class': 'form-control'})
+        }

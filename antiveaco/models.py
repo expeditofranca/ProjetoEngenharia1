@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils import timezone
 
 
 class Endereco(models.Model):
@@ -31,6 +32,7 @@ class Divida(models.Model):
     cpf_funcionario = models.CharField(max_length=11, default='')
     cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
     valor = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    saldo_restante = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     data_divida = models.DateField(auto_now_add=True)
     status = models.CharField(max_length=20, default='Pendente')
     num_notafiscal = models.CharField(max_length=50, default='')
@@ -42,7 +44,7 @@ class Pagamento(models.Model):
     cod_pagamento = models.AutoField(primary_key=True)
     divida = models.ForeignKey(Divida, on_delete=models.CASCADE)
     cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
-    data_pagamento = models.DateField(auto_now_add=True)
+    data_pagamento = models.DateField(default=timezone.now)
     valor_pago = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     status = models.CharField(max_length=20, default='Concluído')
 
