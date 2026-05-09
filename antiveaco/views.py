@@ -316,7 +316,7 @@ def index_cliente(request):
     return render(request, 'cliente/index_cliente.html')
 
 def alertas_inadimplencia(request):
-    """Gera a lista de clientes com dívidas em atraso."""
+    """Lista clientes com dívidas vencidas e saldo pendente."""
     hoje = timezone.now().date()
     
     dividas_atrasadas = Divida.objects.filter(
@@ -324,4 +324,6 @@ def alertas_inadimplencia(request):
         saldo_restante__gt=0
     ).order_by('data_vencimento')
 
-    return render(request, 'divida/alertas_inadimplencia.html', {'dividas_atrasadas': dividas_atrasadas})
+    return render(request, 'divida/alertas_inadimplencia.html', {
+        'dividas_atrasadas': dividas_atrasadas
+    })
