@@ -4,7 +4,11 @@
 {% block content %}
 <link rel="stylesheet" href="{% static 'css/pagamento/index_pagamento.css' %}">
 
-<div class="container">
+<div class="container mt-4">
+    <div class="mb-3">
+        <a href="{% url 'index' %}" class="btn btn-secondary">Voltar ao Início</a>
+    </div>
+
     <h1>Painel de Controle de Pagamentos</h1>
     <p>Escolha a ação desejada:</p>
 
