@@ -12,9 +12,10 @@
     <div class="button-group">
 
         <!-- Botão para Dívidas -->
-        <a href="{% url 'index_divida' %}" class="btn btn-primary">Gerenciar Dívidas</a>
-        <a href="{% url 'index_pagamento' %}" class="btn btn-success">Gerenciar Pagamentos</a>
         <a href="{% url 'index_cliente' %}" class="btn btn-primary">Gerenciar Clientes</a>
+        <a href="{% url 'index_divida' %}" class="btn btn-success">Gerenciar Dívidas</a>
+        <a href="{% url 'index_pagamento' %}" class="btn btn-primary">Gerenciar Pagamentos</a>  
+        <a href="{% url 'index_relatorios' %}" class="btn btn-success">Relatórios</a>
     </div>
 </div>
 {% endblock content %}
