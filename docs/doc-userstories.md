@@ -4,12 +4,32 @@
 
 | ID | Título do User Story | Requisitos Funcionais Relacionados | Responsável pelo Detalhamento |
 |:---|:---|:---|:---|
-| US01 | Manter Cliente | RF01.01, RF01.02, RF01.03, RF01.04 | Expedito |
+| US01 | Manter Cliente | RF01.01, RF01.02, RF01.03, RF01.04 | Gean |
+| US02 | Manter Dívida | RF02.01, RF02.02, RF02.03, RF02.04 | Expedito |
+| US03 | Controlar Pagamento | RF03 | Arthur |
+| US04 | Gerar Relatório de Pagamento | RF04 | Arthur |
+| US05 | Gerar Relatório de Histórico de Dívidas | RF05 | Júlia |
+| US06 | Gerar Relatórios Mensais | RF06.01, RF06.02 | Ivyson |
+| US07 | Emitir Alerta de Limite de Dívida | RF07.01, RF07.02, RF07.03 | Gean |
+| US08 | Emitir Alerta de Inadimplência | RF08.01, RF08.02, RF08.03 | Arthur |
 
-## 📦 RF01 - Manter Cliente
-|||
-|-|-|
+<!-- 1- Esses US não deveriam seguir uma ordem? Do US05 já pula pro US08... é assim mesmo? 
+2- Em cada US abaixo, era pra colocar os requisitos também? Alguns tem, outros não...
+3- Como saber quem vai ter qual papel em cada User Story? 
+-->
+
+## 📦 US01 - Manter Cliente
+
+|               |                                                                |
+| ------------- | :------------------------------------------------------------- |
 |**Descrição:**|  O sistema deve permitir cadastrar, editar, visualizar e excluir clientes. Será possível cadastrar clientes informando os seguintes dados: nome, CPF, telefone, endereço, profissão e renda familiar. Esse módulo é essencial para o controle de quem pode comprar fiado.|
+
+| **Requisitos envolvidos** |                                                    |
+| ------------- | :------------------------------------------------------------- |
+| RF01.01       | Inserir Cliente     |
+| RF01.02       | Listar Clientes     |
+| RF01.03       | Atualizar Cliente   |
+| RF01.04       | Deletar Cliente     |
 
 | Campo               | Informação         |
 |---------------------|--------------------|
@@ -18,9 +38,9 @@
 | Tempo Gasto (real)  |                    |
 | Tamanho Funcional   |                    |
 | Analista            | Arthur             |
-| Desenvolvedor       | Expedito           |
+| Desenvolvedor       | Gean               |
 | Revisor             | Júlia              |
-| Testador            | Gean               |
+| Testador            | Expedito           |
 
 |**Teste de Aceitação (TA)**||
 |------------|-----------|
@@ -38,10 +58,178 @@
 
 ---
 
-## 📦 RF07 - Emitir Alerta por Limite de Dívida
+## 📦 US02 - Manter Dívida
+
+|               |                                                                |
+| ------------- | :------------------------------------------------------------- |
+|**Descrição:**| O sistema deve permitir cadastrar, editar, visualizar e excluir dívidas associadas a um cliente. Será possível registrar uma dívida informando o cliente, valor, data e descrição (ou cupom fiscal). Esse módulo é essencial para controlar os valores que os clientes devem ao comerciante.|
+
+| **Requisitos envolvidos** |                                                    |
+| ------------- | :------------------------------------------------------------- |
+| RF02.01       | Inserir Dívida   |
+| RF02.02       | Listar Dívidas   |
+| RF02.03       | Atualizar Dívida |
+| RF02.04       | Deletar Dívida   |
+
+| Campo               | Informação         |
+|---------------------|--------------------|
+| Prioridade          | Essencial          |
+| Estimativa          | 6h                 |
+| Tempo Gasto (real)  |                    |
+| Tamanho Funcional   |                    |
+| Analista            | Ivyson             |
+| Desenvolvedor       | Expedito           |
+| Revisor             | Júlia              |
+| Testador            | Arthur             |
+
+|**Teste de Aceitação (TA)**||
+|------------|-----------|
+| Código     | Descrição |
+| TA02.01    | O usuário informa, na tela Cadastrar Dívida, todos os dados corretamente (cliente válido, valor positivo, data). Ao clicar em salvar ele é notificado com uma mensagem de sucesso. Mensagem: Dívida cadastrada com sucesso.|
+| TA02.02    | O usuário informa, na tela Cadastrar Dívida, um cliente inexistente. Ao clicar em salvar ele é notificado com uma mensagem de erro. Mensagem: Cliente não encontrado.|
+| TA02.03    | O usuário informa, na tela Cadastrar Dívida, um valor inválido (zero ou negativo). Ao clicar em salvar ele é notificado com uma mensagem de erro. Mensagem: Valor inválido.|
+| TA02.04    | O usuário informa, na tela Editar Dívida, os dados para identificar a dívida, a dívida existe, o usuário seleciona a dívida, em seguida são mostrados os campos para edição.|
+| TA02.05    | O usuário informa, na tela Editar Dívida corretamente os dados para edição. Ao clicar em salvar ele é notificado com uma mensagem de sucesso. Mensagem: Edição realizada com sucesso.|
+| TA02.06    | O usuário informa, na tela Editar Dívida, uma dívida inexistente. O usuário é notificado com uma mensagem de erro. Mensagem: Dívida não encontrada.|
+| TA02.07    | O usuário informa, na tela Pesquisar Dívida, os dados para identificar a dívida, a dívida existe, o usuário seleciona a dívida e são exibidas suas informações.|
+| TA02.08    | O usuário informa, na tela Pesquisar Dívida, os dados para identificar a dívida, a dívida não existe. O usuário é notificado com uma mensagem de erro. Mensagem: Dívida não encontrada.|
+| TA02.09    | O usuário informa, na tela Excluir Dívida, os dados para identificar a dívida, a dívida existe. O usuário é notificado com uma mensagem de aviso. Mensagem: Deseja prosseguir com a ação?. Ao confirmar, a dívida é removida com sucesso.|
+| TA02.10    | O usuário informa, na tela Excluir Dívida, uma dívida inexistente. O usuário é notificado com uma mensagem de erro. Mensagem: Dívida não encontrada.|
+
+---
+
+## 📦 US03 - Controlar Pagamento
+
+|               |                                                                |
+| ------------- | :------------------------------------------------------------- |
+| **Descrição** |  Deve ser possível registrar pagamentos totais ou parciais de uma dívida, atualizando automaticamente o saldo restante e o status da dívida. |
+
+| **Requisitos envolvidos** |                                                    |
+| ------------- | :------------------------------------------------------------- |
+| RF03          | Controlar Pagamento |
+
+| Campo                     | Informação                          |
+| ------------------------- | ----------------------------------- | 
+| **Prioridade**            | Essencial                           | 
+| **Estimativa**            | 4h                              m   | 
+| **Tempo Gasto (real):**   |                                     | 
+| **Tamanho Funcional**     |                                     | 
+| **Analista**              | Gean                                | 
+| **Desenvolvedor**         | Arthur                              | 
+| **Revisor**               | JUlia                               | 
+| **Testador**              | Ivyson                              | 
+
+
+|**Teste de Aceitação (TA)** |  |
+| ----------- | --------- |
+| Código | Descrição |
+| TA03.01 | O usuário informa, na tela de pagamento, o valor a ser pago (total ou parcial). Ao confirmar a operação, o sistema deve exibir uma mensagem de sucesso e mostrar o valor da dívida antes e após o pagamento. |
+| TA03.02 | O sistema deve atualizar automaticamente o valor restante da dívida após o registro de um pagamento parcial. |
+| TA03.03 | O sistema deve exibir uma mensagem de erro ao tentar registrar um pagamento com valor inválido (zero ou negativo). |
+| TA03.04 | O sistema deve impedir o registro de pagamento com valor superior ao saldo da dívida. |
+| TA03.05 | O sistema deve permitir registrar múltiplos pagamentos parciais para a mesma dívida, atualizando corretamente o saldo a cada pagamento. |
+| TA03.06 | O sistema deve atualizar o status da dívida para “quitada” quando o valor do pagamento for igual ao saldo restante. |
+
+---
+
+## 📦 US04 - Gerar Relatório de Pagamento
+
+|               |                                                                |
+| ------------- | :------------------------------------------------------------- |
+|**Descrição:**| O sistema deve permitir que o comerciante gere relatórios contendo exclusivamente os registros de pagamentos realizados pelos clientes. |
+
+| **Requisitos envolvidos** |                                                    |
+| ------------- | :------------------------------------------------------------- |
+| RF04          | Gerar Relatório de Pagamento |
+
+| Campo               | Informação         |
+|---------------------|--------------------|
+| Prioridade          | Essencial          |
+| Estimativa          | 3h                 |
+| Tempo Gasto (real)  |                    |
+| Tamanho Funcional   |                    |
+| Analista            | Ivyson             |
+| Desenvolvedor       | Arthur             |
+| Revisor             | Júlia              |
+| Testador            | Gean               |
+
+|**Teste de Aceitação (TA)** |  |
+| ----------- | --------- |
+| Código | Descrição |
+|--------|-----------|
+| TA04.01 | O usuário acessa a tela de Relatórios, seleciona o filtro de "Pagamentos" e clica em gerar. O sistema exibe a lista com sucesso. |
+| TA04.02 | O usuário tenta gerar relatório para um período sem entradas. O sistema exibe: "Nenhum pagamento registrado." |
+
+---
+
+## 📦 US05 - Gerar Relatório de Histórico de Dívidas 
+
+|               |                                                                |
+| ------------- | :------------------------------------------------------------- |
+| **Descrição** |  O sistema deve possibilitar a geração de um relatório detalhado do histórico de compras fiadas (dívidas) de um cliente específico. O relatório deve incluir todas as dívidas, datas, produtos comprados, valores totais, pagamentos efetuados e situação atual da dívida do cliente (adimplente/inadimplente).|
+
+| **Requisitos envolvidos** |                                                    |
+| ------------- | :------------------------------------------------------------- |
+| RF05          | Gerar Relatório de Histórico de Dívidas |
+
+| Campo                     | Informação                          |
+| ------------------------- | ----------------------------------- | 
+| **Prioridade**            | Importante                          | 
+| **Estimativa**            | 4h                                  | 
+| **Tempo Gasto (real):**   |                                     | 
+| **Tamanho Funcional**     |                                     | 
+| **Analista**              | Arthur                              | 
+| **Desenvolvedor**         | Júlia                               | 
+| **Revisor**               | Gean                                | 
+| **Testador**              | Expedito                            |
+
+|**Teste de Aceitação (TA)** |  |
+| ----------- | --------- |
+| Código | Descrição |
+| TA05.01 | O usuário acessa a tela de Relatórios, seleciona o filtro de "Histórico de Dívidas" e informa o número de CPF do cliente para o qual deseja gerar relatório. O sistema deve gerar e exibir com sucesso um relatório contendo todas as dívidas do cliente, com suas respectivas datas, produtos comprados, valores totais, pagamentos efetuados e situação atual da dívida do cliente (adimplente/inadimplente). |
+| TA05.02 | Ao exibir o relatório de histórico de dívidas de um cliente, o sistema deve permitir ao cliente escolher voltar para a tela de Relatórios, através de um botão, caso deseje gerar um novo relatório. |
+| TA05.03 | Ao exibir o relatório de histórico de dívidas de um cliente, o sistema deve permitir ao usuário escolher voltar para a tela principal através de um botão, caso deseje retornar ao menu principal. |
+| TA05.04 | Ao informar o número de CPF de um cliente que ainda não tenha dívidas cadastradas, o sistema deve exibir uma mensagem de aviso indicando que não será possível gerar relatório de histórico de dívidas daquele cliente por não ter nenhuma dívida cadastrada. |
+| TA05.05 | Ao informar o número de CPF de um cliente não cadastrado, o sistema deve exibir mensagem de erro indicando que o CPF não corresponde a nenhum cliente cadastrado no sistema. |
+
+---
+
+## 📦 US06 - Gerar Relatórios Mensais de Dívidas
 |||
 |-|-|
+|**Descrição:**| O sistema deve permitir gerar relatórios mensais contendo todos os clientes com dívidas em aberto, apresentando informações como nome do cliente, valor da dívida e data, facilitando o acompanhamento das pendências financeiras.|
+
+| Campo               | Informação         |
+|---------------------|--------------------|
+| Prioridade          | Importante         |
+| Estimativa          | 5h                 |
+| Tempo Gasto (real)  |                    |
+| Tamanho Funcional   |                    |
+| Analista            | Expedito           |
+| Desenvolvedor       | Ivyson             |
+| Revisor             | Gean               |
+| Testador            | Julia              |
+
+|**Teste de Aceitação (TA)**||
+|------------|-----------|
+| Código     | Descrição |
+| TA06.01    | O usuário, na tela Gerar Relatório de Dívidas, ao clicar em "gerar relatório" recebe uma mensagem de sucesso e um arquivo com o relatório desejado. Mensagem: Relatório gerado com sucesso.|
+| TA06.02    | O usuário acessa a tela Gerar Relatório de Dívidas e não existem clientes com dívidas em aberto. O sistema exibe uma mensagem de aviso. Mensagem: Nenhum cliente com dívidas em aberto encontrado.|
+| TA06.03    | O usuário gera o relatório mensal e o sistema apresenta corretamente a lista de clientes com dívidas em aberto, incluindo nome do cliente, valor da dívida e data.|
+| TA06.04    | O usuário tenta gerar o relatório e ocorre um erro interno no sistema. O usuário é notificado com uma mensagem de erro. Mensagem: Não foi possível gerar o relatório. Tente novamente.|
+| TA06.05    | O usuário gera o relatório após a quitação de uma dívida e o sistema atualiza corretamente os dados, não exibindo clientes sem dívidas.|
+
+## 📦 US07 - Emitir Alerta de Limite de Dívida
+
+|               |                                                                |
+| ------------- | :------------------------------------------------------------- |
 |**Descrição:**| Caso o valor total do fiado de um cliente ultrapasse o valor de um salário mínimo, o sistema deve emitir um alerta para o comerciante.|
+
+| **Requisitos envolvidos** |                                                    |
+| ------------- | :------------------------------------------------------------- |
+| RF07.01       | Calcular Total de Dívidas |
+| RF07.02       | Verificar Limite          |
+| RF07.03       | Emitir Alerta de Limite   |
 
 | Campo               | Informação         |
 |---------------------|--------------------|
@@ -50,12 +238,47 @@
 | Tempo Gasto (real)  |                    |
 | Tamanho Funcional   |                    |
 | Analista            | Arthur             |
-| Desenvolvedor       | Expedito           |
+| Desenvolvedor       | Gean           |
 | Revisor             | Júlia              |
-| Testador            | Gean               |
+| Testador            | Arthur               |
 
 |**Teste de Aceitação (TA)**||
 |------------|-----------|
 | Código     | Descrição |
 | TA07.01    | O usuário, ao cadastrar uma dívida para um cliente, caso este ultrapasse o limite de dívidas, recebe uma mensagem de aviso. Mensagem: Cliente 'xxxxx" ultrapassou o limite de dívidas. Em seguida recebe outra mensagem de aviso. Mensagem: Deseja prosseguir com a ação?. Ao clicar em 'sim', o usuário cadastra a dívida com sucesso. Ao clicar em 'não' o usuário retorna a tela Cadastrar Dívida.|
 
+---
+
+## 📦 US08 - Emitir Alerta de Inadimplência
+
+|               |                                                                |
+| ------------- | :------------------------------------------------------------- |
+|**Descrição:**| O sistema deve permitir identificar clientes inadimplentes com base em dívidas em atraso e emitir alertas para auxiliar o comerciante no acompanhamento desses casos. Os alertas devem considerar a data de vencimento das dívidas e a ausência de pagamento, permitindo visualizar facilmente os clientes com pendências financeiras.|
+
+| **Requisitos envolvidos** |                                                    |
+| ------------- | :------------------------------------------------------------- |
+| RF08.01       | Identificar Dívidas Inadimplentes |
+| RF08.02       | Emitir Alerta de Inadimplência    |
+| RF08.03       | Listar Clientes Inadimplentes
+
+| Campo               | Informação         |
+|---------------------|--------------------|
+| Prioridade          | Importante         |
+| Estimativa          | 5h                 |
+| Tempo Gasto (real)  |                    |
+| Tamanho Funcional   |                    |
+| Analista            | Ivyson             |
+| Desenvolvedor       | Arthur             |
+| Revisor             | Júlia              |
+| Testador            | Gean               |
+
+|**Teste de Aceitação (TA)**||
+|------------|-----------|
+| Código     | Descrição |
+| TA08.01    | O sistema identifica automaticamente dívidas com data de vencimento inferior à data atual e sem pagamento registrado.|
+| TA08.02    | O usuário acessa a tela de alertas e visualiza a lista de clientes inadimplentes.|
+| TA08.03    | O sistema exibe corretamente os dados do cliente e da dívida em atraso.|
+| TA08.04    | O sistema não exibe clientes que não possuem dívidas em atraso.|
+| TA08.05    | O sistema atualiza automaticamente a lista quando uma dívida é quitada.|
+| TA08.06    | O sistema exibe mensagem informando que não há inadimplentes quando não houver registros. Mensagem: Nenhum cliente inadimplente encontrado.|
+| TA08.07    | O usuário tenta acessar a tela de alertas e o sistema carrega corretamente sem erros.|

@@ -8,3 +8,8 @@ Obvetivo: O sistema tem como objetivo principal facilitar o controle financeiro 
 # Links dos tutorias das tecnologias utilizadas
 
 # Links dos artefatos de documentação
+Artefato                      | Link |
+------------------------------|------|
+Documento de Visão            | https://github.com/expeditofranca/ProjetoEngenharia1/blob/develop/docs/doc-visao.md
+Documento de Use Stories      | https://github.com/expeditofranca/ProjetoEngenharia1/blob/develop/docs/doc-userstories.md
+Documento de Modelos de Dados | https://github.com/expeditofranca/ProjetoEngenharia1/blob/develop/docs/doc-modelodados.md
