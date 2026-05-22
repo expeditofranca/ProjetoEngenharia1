@@ -8,6 +8,7 @@ urlpatterns = [
     path('dividas/pesquisar/', views.get_dividas, name='pesquisar_divida'),
     path('dividas/atualizar/<int:cod_divida>/', views.divida_manager, name='atualizar_divida'),
     path('dividas/excluir/<int:cod_divida>/', views.divida_manager, name='excluir_divida'),
+    path('dividas/alertas/', views.alertas_inadimplencia, name='alertas_inadimplencia'),
     path('clientes/cadastrar/', views.cadastrar_cliente, name='cadastrar_cliente'),
     path('clientes/pesquisar/', views.pesquisar_cliente, name='pesquisar_cliente'),
     path('clientes/editar/<str:cpf_cliente>/', views.editar_cliente, name='editar_cliente'),
