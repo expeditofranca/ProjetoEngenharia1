@@ -7,7 +7,13 @@ from .models import Divida, Pagamento
 class DividaForm(forms.ModelForm):
     class Meta:
         model = Divida
-        fields = ['cpf_funcionario', 'cliente', 'valor', 'num_notafiscal', 'status']
+        fields = ['cpf_funcionario', 'cliente', 'valor', 'num_notafiscal', 'status', 'data_vencimento']
+
+        widgets = {
+            'data_vencimento': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
+            'valor': forms.NumberInput(attrs={'step': '0.01', 'class': 'form-control'}),
+            'cliente': forms.Select(attrs={'class': 'form-control'}),
+        }
 
 class EnderecoForm(forms.ModelForm):
     class Meta:
