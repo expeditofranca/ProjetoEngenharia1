@@ -341,6 +341,39 @@ def index_cliente(request):
     """Renderiza o menu de opções para Clientes."""
     return render(request, 'cliente/index_cliente.html')
 
+
+def index_relatorios(request):
+    return render(request, 'relatorios/index_relatorios.html')
+
+
+def relatorio_mensal_dividas(request):
+
+    mes = request.GET.get("mes")
+    ano = request.GET.get("ano")
+
+    dividas = Divida.objects.filter(status__in=["Pendente", "Parcial"])
+
+    # valida mês
+    if mes:
+        mes = int(mes)
+        if mes < 1 or mes > 12:
+            messages.error(request, "Mês inválido")
+            dividas = Divida.objects.none()
+        else:
+            dividas = dividas.filter(data_divida__month=mes)
+
+    # valida ano
+    if ano:
+        ano = int(ano)
+        dividas = dividas.filter(data_divida__year=ano)
+
+    total_dividas = dividas.aggregate(total=Sum('valor'))['total'] or 0
+
+    return render(request, "relatorios/relatorio_mensal_dividas.html", {
+        "dividas": dividas,
+        "total_dividas": total_dividas,
+        "mes": mes,
+        "ano": ano
 def alertas_inadimplencia(request):
     """Lista clientes com dívidas vencidas e saldo pendente."""
     hoje = timezone.now().date()

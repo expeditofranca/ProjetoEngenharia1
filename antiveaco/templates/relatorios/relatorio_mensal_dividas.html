@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/relatorios/relatorios.css' %}">
+
+<div class="container">
+    <h1>Relatório Mensal de Dívidas</h1>
+
+    <form method="GET">
+        <input type="number" name="mes" placeholder="Mês (1-12)">
+        <input type="number" name="ano" placeholder="Ano">
+        <button type="submit">Gerar Relatório</button>
+    </form>
+
+    <table>
+        <tr>
+            <th>Cliente</th>
+            <th>Valor</th>
+            <th>Data</th>
+            <th>Status</th>
+        </tr>
+
+        {% for divida in dividas %}
+        <tr>
+            <td>{{ divida.cliente.nome }}</td>
+            <td>{{ divida.valor }}</td>
+            <td>{{ divida.data_divida|date:"d/m/Y" }}</td>
+            <td>{{ divida.status }}</td>
+        </tr>
+
+        {% empty %}
+        <tr>
+            <td colspan="4" class="empty-message">
+                Nenhuma dívida encontrada no período.
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <h3>Total em aberto: R$ {{ total_dividas }}</h3>
+
+</div>
+
+<div class="button-group">
+
+    <a href="{% url 'index_relatorios' %}" class="btn btn-secondary">
+        Voltar para Relatórios
+    </a>
+
+    <a href="{% url 'index' %}" class="btn btn-dark">
+        Voltar ao Menu Principal
+    </a>
+
+</div>
+
+{% endblock %}
