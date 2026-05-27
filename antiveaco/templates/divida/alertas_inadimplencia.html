@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/divida/index_divida.css' %}">
+
+<div class="container">
+    <form action="{% url 'index_divida' %}" method="get" style="margin-bottom: 20px;">
+        <button type="submit" class="btn-submit">Voltar</button>
+    </form>
+
+    <h1 style="color: #dc3545;">⚠️ Alertas de Inadimplência</h1>
+    <p>Dívidas que ultrapassaram a data de vencimento.</p>
+
+    <table class="table" style="width: 100%; margin-top: 20px; border-collapse: collapse;">
+        <thead style="background-color: #f8d7da;">
+            <tr>
+                <th>Cliente</th>
+                <th>Vencimento</th>
+                <th>Valor Original</th>
+                <th>Saldo Devedor</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for d in dividas_atrasadas %}
+            <tr>
+                <td>{{ d.cliente.nome }}</td>
+                <td style="color: red; font-weight: bold;">{{ d.data_vencimento|date:"d/m/Y" }}</td>
+                <td>R$ {{ d.valor }}</td>
+                <td style="color: red;">R$ {{ d.saldo_restante }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="4" style="padding: 20px; font-weight: bold; color: #198754;">
+                    Nenhum cliente inadimplente encontrado.
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

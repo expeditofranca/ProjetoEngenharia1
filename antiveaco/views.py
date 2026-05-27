@@ -1,5 +1,6 @@
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib import messages
+from django.utils import timezone
 
 from django.db import transaction
 from django.db.models import Sum
@@ -238,9 +239,35 @@ def registrar_pagamento(request):
     return render(request, 'pagamento/registrar_pagamento.html', context)
 
 def lista_pagamentos(request):
-    """Exibe um relatório com todos os pagamentos registrados."""
+    """Exibe um relatório com todos os pagamentos registrados, com filtros."""
     pagamentos = Pagamento.objects.all().order_by('-data_pagamento')
-    return render(request, 'pagamento/lista_pagamentos.html', {'pagamentos': pagamentos})
+    data_inicio = request.GET.get('data_inicio')
+    data_fim = request.GET.get('data_fim')
+    cliente_busca = request.GET.get('cliente')
+
+    if data_inicio:
+        pagamentos = pagamentos.filter(data_pagamento__gte=data_inicio)
+        
+    if data_fim:
+        pagamentos = pagamentos.filter(data_pagamento__lte=data_fim)
+        
+    if cliente_busca:
+        pagamentos = pagamentos.filter(
+            Q(cliente__nome__icontains=cliente_busca) |
+            Q(cliente__cpf__icontains=cliente_busca)
+        )
+
+    total_filtrado = pagamentos.aggregate(total=Sum('valor_pago'))['total'] or 0
+
+    contexto = {
+        'pagamentos': pagamentos,
+        'data_inicio': data_inicio,
+        'data_fim': data_fim,
+        'cliente_busca': cliente_busca,
+        'total_filtrado': total_filtrado,
+    }
+    
+    return render(request, 'pagamento/lista_pagamentos.html', contexto)
 
 def pesquisar_cliente(request):
     clientes = None
@@ -313,3 +340,49 @@ def excluir_cliente(request, cpf_cliente):
 def index_cliente(request):
     """Renderiza o menu de opções para Clientes."""
     return render(request, 'cliente/index_cliente.html')
+
+
+def index_relatorios(request):
+    return render(request, 'relatorios/index_relatorios.html')
+
+
+def relatorio_mensal_dividas(request):
+
+    mes = request.GET.get("mes")
+    ano = request.GET.get("ano")
+
+    dividas = Divida.objects.filter(status__in=["Pendente", "Parcial"])
+
+    # valida mês
+    if mes:
+        mes = int(mes)
+        if mes < 1 or mes > 12:
+            messages.error(request, "Mês inválido")
+            dividas = Divida.objects.none()
+        else:
+            dividas = dividas.filter(data_divida__month=mes)
+
+    # valida ano
+    if ano:
+        ano = int(ano)
+        dividas = dividas.filter(data_divida__year=ano)
+
+    total_dividas = dividas.aggregate(total=Sum('valor'))['total'] or 0
+
+    return render(request, "relatorios/relatorio_mensal_dividas.html", {
+        "dividas": dividas,
+        "total_dividas": total_dividas,
+        "mes": mes,
+        "ano": ano
+def alertas_inadimplencia(request):
+    """Lista clientes com dívidas vencidas e saldo pendente."""
+    hoje = timezone.now().date()
+    
+    dividas_atrasadas = Divida.objects.filter(
+        data_vencimento__lt=hoje,
+        saldo_restante__gt=0
+    ).order_by('data_vencimento')
+
+    return render(request, 'divida/alertas_inadimplencia.html', {
+        'dividas_atrasadas': dividas_atrasadas
+    })

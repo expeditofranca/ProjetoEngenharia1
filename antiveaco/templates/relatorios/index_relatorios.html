@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/relatorios/relatorios.css' %}">
+
+<div class="container">
+    <h1>Painel de Relatórios</h1>
+    <p>Escolha o tipo de relatório:</p>
+
+    <div class="button-group">
+
+        <div class="btn-wrapper">
+            <a href="{% url 'relatorio_mensal_dividas' %}" class="btn btn-primary">
+                Relatório Mensal de Dívidas
+            </a>
+        </div>
+
+    </div>
+</div>
+
+<div class="button-group">
+    
+    <a href="{% url 'index' %}" class="btn btn-dark">
+        Voltar ao Menu Principal
+    </a>
+
+</div>
+{% endblock content %}
