@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils import timezone
+from datetime import timedelta
 
 
 class Endereco(models.Model):
@@ -26,6 +27,9 @@ class Cliente(models.Model):
     def __str__(self):
         return  f'{self.nome} ({self.cpf})'
     
+def calcular_vencimento_padrao():
+    """Calcula a data atual + 30 dias"""
+    return timezone.now().date() + timedelta(days=30)
 
 class Divida(models.Model):
     cod_divida = models.AutoField(primary_key=True)
@@ -34,6 +38,7 @@ class Divida(models.Model):
     valor = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     saldo_restante = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     data_divida = models.DateField(auto_now_add=True)
+    data_vencimento = models.DateField(default=calcular_vencimento_padrao, null=True, blank=True)
     status = models.CharField(max_length=20, default='Pendente')
     num_notafiscal = models.CharField(max_length=50, default='')
 
@@ -49,4 +54,4 @@ class Pagamento(models.Model):
     status = models.CharField(max_length=20, default='Concluído')
 
     def __str__(self):
-        return f'Pagamento {self.id} - Cliente: {self.cliente.name} - Dívida: {self.divida.id} - Valor Pago: {self.valor_pago}'
+        return f'Pagamento {self.cod_pagamento} - Cliente: {self.cliente.nome} - Dívida: {self.divida.cod_divida} - Valor Pago: {self.valor_pago}'
