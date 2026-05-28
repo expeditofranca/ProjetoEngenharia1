@@ -15,9 +15,6 @@ from .serializers import ClienteSerializer, DividaSerializer
 from django.db.models import Q
 
 from .forms import PagamentoForm
-from .models import Pagamento
-
-from .models import Cliente, Divida, Pagamento
 from .forms import DividaForm
 from .forms import ClienteForm
 from .forms import EnderecoForm
@@ -44,48 +41,44 @@ def get_dividas(request):
     return render(request, 'divida/pesquisar_divida.html', {'dividas': dividas})
 
 def divida_manager(request, cod_divida=None):
-    divida = None
-    template = 'divida/cadastrar_divida.html'
+    # 1. Definir a instância e o template de forma direta em uma linha
+    divida = get_object_or_404(Divida, pk=cod_divida) if cod_divida else None
+    template = 'divida/atualizar_divida.html' if divida else 'divida/cadastrar_divida.html'
 
-    if cod_divida:
-        divida = get_object_or_404(Divida, pk=cod_divida)
-        if 'excluir' in request.POST and divida:
-            divida.delete()
-            messages.success(request, 'Dívida excluída com sucesso!')
-            return redirect('pesquisar_divida')
-        template = 'divida/atualizar_divida.html'
-        
-    if request.method == 'POST':
-        form = DividaForm(request.POST, instance=divida)
-        if form.is_valid():
-            divida_obj = form.save(commit=False)
-            if not divida: 
-                divida_obj.saldo_restante = divida_obj.valor
-            divida_obj.save()
+    # 2. Early Return para exclusão (evita aninhamento profundo)
+    if request.method == 'POST' and 'excluir' in request.POST and divida:
+        divida.delete()
+        messages.success(request, 'Dívida excluída com sucesso!')
+        return redirect('pesquisar_divida')
 
-            if divida:
-                messages.success(request, 'Dívida atualizada com sucesso!')
-                return redirect('pesquisar_divida')
-            else:
-                messages.success(request, 'Dívida cadastrada com sucesso!')
-                return redirect('pesquisar_divida')
-        else:
-            return render(request, template, {
-                'form': form,
-                'erro': 'Erro ao salvar os dados.',
-                'divida': divida
-            })
-    else:
-        if divida:
-            template = 'divida/atualizar_divida.html'
+    # 3. Lidar com requisições GET (Apenas carregar a página)
+    if request.method == 'GET':
+        form = DividaForm(instance=divida)
+        return render(request, template, {'form': form, 'divida': divida})
+
+    # 4. Lidar com a criação/atualização no POST
+    form = DividaForm(request.POST, instance=divida)
     
-    form = DividaForm(instance=divida)
+    if form.is_valid():
+        divida_obj = form.save(commit=False)
+        
+        # Apenas para novas dívidas, iguala o saldo ao valor total
+        if not divida: 
+            divida_obj.saldo_restante = divida_obj.valor
+            
+        divida_obj.save()
+
+        # Mensagem condicional em uma única linha
+        mensagem = 'Dívida atualizada com sucesso!' if divida else 'Dívida cadastrada com sucesso!'
+        messages.success(request, mensagem)
+        return redirect('pesquisar_divida')
+
+    # 5. Fallback: Se chegou aqui, o form é inválido no POST
     return render(request, template, {
         'form': form,
+        'erro': 'Erro ao salvar os dados.',
         'divida': divida
     })
-
-# Em antiveaco/views.py
 
 def cadastrar_cliente(request):
     if request.method == 'POST':
@@ -153,90 +146,82 @@ def index_pagamento(request):
     """Renderiza o menu de opções para pagamentos."""
     return render(request, 'pagamento/index_pagamento.html')
 
-def registrar_pagamento(request):
-    cliente = None
-    dividas_do_cliente = None
-    soma_total = Decimal('0.00')
-    form = PagamentoForm()
+# lógica de quitar todas as dívidas
+def _processar_pagar_tudo(request, cpf_cliente):
+    cliente_a_pagar = get_object_or_404(Cliente, cpf=cpf_cliente)
+    dividas_a_pagar = Divida.objects.filter(cliente=cliente_a_pagar, status__in=['Pendente', 'Parcial'])
 
-    # --- Lógica de Busca do Cliente (GET) ---
+    with transaction.atomic():
+        for divida in dividas_a_pagar:
+            Pagamento.objects.create(
+                divida=divida,
+                cliente=divida.cliente,
+                valor_pago=divida.saldo_restante,
+                status='Concluído'
+            )
+            divida.saldo_restante = 0
+            divida.status = 'Pago'
+            divida.save()
+    
+    messages.success(request, f'Todas as dívidas de {cliente_a_pagar.nome} foram quitadas com sucesso!')
+    return redirect('lista_pagamentos')
+
+
+# 2. VIEW PRINCIPAL REFATORADA
+def registrar_pagamento(request):
+    """Renderiza a página e roteia as ações de pagamento."""
+    
+    # --- Cenário 1: POST -> Botão "Pagar Tudo" (Early Return) ---
+    if request.method == 'POST' and 'pagar_tudo' in request.POST:
+        return _processar_pagar_tudo(request, request.POST.get('cpf_cliente'))
+
+    # --- Cenário 2: POST -> Pagamento Único ---
+    # Instancia o form com os dados do POST (se houver) ou deixa vazio
+    form = PagamentoForm(request.POST or None)
+    
+    if request.method == 'POST' and form.is_valid():
+        pagamento = form.save(commit=False)
+        divida = pagamento.divida
+        pagamento.cliente = divida.cliente
+        
+        if pagamento.valor_pago > divida.saldo_restante:
+            messages.error(request, f'O valor do pagamento não pode ser maior que o saldo da dívida (R$ {divida.saldo_restante}).')
+        else:
+            with transaction.atomic():
+                divida.saldo_restante -= pagamento.valor_pago
+                divida.status = 'Pago' if divida.saldo_restante == 0 else 'Parcial'
+                divida.save()
+                pagamento.save()
+                
+                messages.success(request, f'Pagamento de R$ {pagamento.valor_pago} registrado com sucesso!')
+                return redirect('lista_pagamentos')
+
+    # --- Cenário 3: GET -> Busca de Cliente ---
+    cliente = dividas_do_cliente = None
+    soma_total = Decimal('0.00')
     cpf_busca = request.GET.get('cpf_cliente')
+
     if cpf_busca:
         try:
             cliente = Cliente.objects.get(cpf=cpf_busca)
             dividas_do_cliente = Divida.objects.filter(cliente=cliente, status__in=['Pendente', 'Parcial'])
             
             if dividas_do_cliente:
-                soma = dividas_do_cliente.aggregate(soma_total=Sum('saldo_restante'))['soma_total']
+                soma = dividas_do_cliente.aggregate(soma=Sum('saldo_restante'))['soma']
                 soma_total = soma or Decimal('0.00')
-
-            form.fields['divida'].queryset = dividas_do_cliente
+                form.fields['divida'].queryset = dividas_do_cliente
+                
         except Cliente.DoesNotExist:
             messages.error(request, 'Nenhum cliente encontrado com o CPF informado.')
 
-    # --- Lógica de Processamento (POST) ---
-    if request.method == 'POST':
-        # --- Cenário 1: Botão "Pagar Tudo" foi pressionado ---
-        if 'pagar_tudo' in request.POST:
-            cpf_cliente_post = request.POST.get('cpf_cliente')
-            cliente_a_pagar = get_object_or_404(Cliente, cpf=cpf_cliente_post)
-            dividas_a_pagar = Divida.objects.filter(cliente=cliente_a_pagar, status__in=['Pendente', 'Parcial'])
-
-            with transaction.atomic():
-                for divida in dividas_a_pagar:
-                    Pagamento.objects.create(
-                        divida=divida,
-                        cliente=divida.cliente,
-                        # O valor pago agora é o que restava pagar, não o total original
-                        valor_pago=divida.saldo_restante,
-                        status='Concluído'
-                    )
-                    # Zeramos o saldo restante, mantendo o valor original intacto!
-                    divida.saldo_restante = 0
-                    divida.status = 'Pago'
-                    divida.save()
-            
-            messages.success(request, f'Todas as dívidas de {cliente_a_pagar.nome} foram quitadas com sucesso!')
-            return redirect('lista_pagamentos')
-
-        # Cenário 2: Formulário de pagamento único
-        else:
-            form = PagamentoForm(request.POST)
-            if form.is_valid():
-                pagamento = form.save(commit=False)
-                divida = pagamento.divida
-                
-                # ---> ADICIONE ESTA LINHA <---
-                # Informamos ao pagamento quem é o cliente puxando a informação da dívida
-                pagamento.cliente = divida.cliente
-                
-                # Validação em cima da nova variável
-                if pagamento.valor_pago > divida.saldo_restante:
-                    messages.error(request, f'O valor do pagamento não pode ser maior que o saldo da dívida (R$ {divida.saldo_restante}).')
-                else:
-                    with transaction.atomic():
-                        # A subtração ocorre APENAS no saldo restante
-                        divida.saldo_restante -= pagamento.valor_pago
-                        
-                        if divida.saldo_restante == 0:
-                            divida.status = 'Pago'
-                        else:
-                            divida.status = 'Parcial'
-                            
-                        divida.save()
-                        # Agora o pagamento tem um cliente e será salvo sem erros!
-                        pagamento.save()
-                        
-                        messages.success(request, f'Pagamento de R$ {pagamento.valor_pago} registrado com sucesso!')
-                        return redirect('lista_pagamentos')
-
-    context = {
+    # Renderização final (para GET ou para POSTs com formulário inválido/erro)
+    return render(request, 'pagamento/registrar_pagamento.html', {
         'form': form,
         'cliente': cliente,
         'dividas_do_cliente': dividas_do_cliente,
         'soma_total': soma_total
-    }
-    return render(request, 'pagamento/registrar_pagamento.html', context)
+    })
+
 
 def lista_pagamentos(request):
     """Exibe um relatório com todos os pagamentos registrados, com filtros."""
