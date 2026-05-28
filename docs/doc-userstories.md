@@ -221,31 +221,33 @@
 
 ## 📦 US07 - Emitir Alerta de Limite de Dívida
 
-|               |                                                                |
+| | |
 | ------------- | :------------------------------------------------------------- |
-|**Descrição:**| Caso o valor total do fiado de um cliente ultrapasse o valor de um salário mínimo, o sistema deve emitir um alerta para o comerciante.|
+|**Descrição:**| Caso o valor total acumulado em dívidas de um cliente ultrapasse o valor equivalente a um salário mínimo, o sistema deve emitir um alerta em tela para o comerciante antes de concluir um novo lançamento de fiado, permitindo a confirmação forçada ou o cancelamento.|
 
-| **Requisitos envolvidos** |                                                    |
+| **Requisitos envolvidos** | |
 | ------------- | :------------------------------------------------------------- |
-| RF07.01       | Calcular Total de Dívidas |
-| RF07.02       | Verificar Limite          |
-| RF07.03       | Emitir Alerta de Limite   |
+| RF07.01 | Calcular Total de Dívidas |
+| RF07.02 | Verificar Limite |
+| RF07.03 | Emitir Alerta de Limite |
 
-| Campo               | Informação         |
+| Campo | Informação |
 |---------------------|--------------------|
-| Prioridade          | Importante         |
-| Estimativa          | 2h                 |
-| Tempo Gasto (real)  |                    |
-| Tamanho Funcional   |                    |
-| Analista            | Arthur             |
-| Desenvolvedor       | Gean           |
-| Revisor             | Júlia              |
-| Testador            | Arthur               |
+| Prioridade | Importante |
+| Estimativa | 2h |
+| Tempo Gasto (real) | |
+| Tamanho Funcional | |
+| Analista | Arthur |
+| Desenvolvedor | Gean |
+| Revisor | Júlia |
+| Testador | Arthur |
 
 |**Teste de Aceitação (TA)**||
 |------------|-----------|
-| Código     | Descrição |
-| TA07.01    | O usuário, ao cadastrar uma dívida para um cliente, caso este ultrapasse o limite de dívidas, recebe uma mensagem de aviso. Mensagem: Cliente 'xxxxx" ultrapassou o limite de dívidas. Em seguida recebe outra mensagem de aviso. Mensagem: Deseja prosseguir com a ação?. Ao clicar em 'sim', o usuário cadastra a dívida com sucesso. Ao clicar em 'não' o usuário retorna a tela Cadastrar Dívida.|
+| Código | Descrição |
+| TA07.01 | O usuário tenta cadastrar uma nova dívida para um cliente e o valor total acumulado **ultrapassa** o limite de um salário mínimo. O sistema exibe a mensagem de aviso: "Cliente 'xxxxx' ultrapassou o limite de dívidas. Deseja prosseguir com a ação?". Ao clicar em 'sim', o sistema salva a dívida com sucesso.|
+| TA07.02 | O usuário tenta cadastrar uma nova dívida para um cliente e o valor total acumulado **ultrapassa** o limite. O sistema exibe a mensagem de aviso. Ao clicar em 'não', o sistema aborta a operação e mantém o usuário na tela de cadastro com os dados preenchidos.|
+| TA07.03 | O usuário cadastra uma nova dívida para um cliente e o valor total acumulado fica **abaixo ou exatamente igual** ao limite de um salário mínimo. O sistema salva a dívida diretamente sem exibir nenhuma mensagem de alerta.|
 
 ---
 
