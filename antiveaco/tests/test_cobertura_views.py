@@ -82,3 +82,46 @@ class ViewsRefatoradasTests(TestCase):
         self.assertEqual(self.divida.saldo_restante, Decimal('0.00'))
         self.assertEqual(self.divida.status, 'Pago')
         self.assertEqual(Pagamento.objects.count(), 1)
+
+# --- TESTE 4: Acessar a página de cadastrar dívida (GET) ---
+    def test_divida_manager_get_cadastrar(self):
+        """Testa se a página de cadastro de dívida carrega corretamente"""
+        url = reverse('cadastrar_divida')
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+
+    # --- TESTE 5: Acessar a página de atualizar dívida (GET) ---
+    def test_divida_manager_get_atualizar(self):
+        """Testa se a página de edição de dívida carrega corretamente"""
+        url = reverse('atualizar_divida', args=[self.divida.cod_divida])
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+
+    # --- TESTE 6: Buscar cliente na tela de pagamentos (GET) ---
+    def test_registrar_pagamento_busca_cliente(self):
+        """Testa se a busca por CPF na tela de pagamentos funciona"""
+        url = reverse('registrar_pagamento')
+        response = self.client.get(url, {'cpf_cliente': self.cliente.cpf})
+        self.assertEqual(response.status_code, 200)
+        # Verifica se o cliente buscado apareceu no contexto da página
+        self.assertEqual(response.context['cliente'], self.cliente)
+
+    # --- TESTE 7: Erro ao tentar pagar valor maior que a dívida ---
+    def test_registrar_pagamento_valor_invalido(self):
+        """Testa se o sistema bloqueia pagamentos maiores que o saldo"""
+        url = reverse('registrar_pagamento')
+        
+        # A dívida tem saldo de 100, vamos tentar pagar 500
+        response = self.client.post(url, {
+            'divida': self.divida.cod_divida,
+            'cliente': self.cliente.cpf,
+            'data_pagamento': '2026-05-28',
+            'status': 'Concluído',
+            'valor_pago': '500.00' 
+        })
+        
+        self.divida.refresh_from_db()
+        
+        # Verifica se o saldo continuou 100 intacto e não criou pagamento
+        self.assertEqual(self.divida.saldo_restante, Decimal('100.00'))
+        self.assertEqual(Pagamento.objects.count(), 0)
