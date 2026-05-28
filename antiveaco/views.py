@@ -15,9 +15,6 @@ from .serializers import ClienteSerializer, DividaSerializer
 from django.db.models import Q
 
 from .forms import PagamentoForm
-from .models import Pagamento
-
-from .models import Cliente, Divida, Pagamento
 from .forms import DividaForm
 from .forms import ClienteForm
 from .forms import EnderecoForm
@@ -44,48 +41,44 @@ def get_dividas(request):
     return render(request, 'divida/pesquisar_divida.html', {'dividas': dividas})
 
 def divida_manager(request, cod_divida=None):
-    divida = None
-    template = 'divida/cadastrar_divida.html'
+    # 1. Definir a instância e o template de forma direta em uma linha
+    divida = get_object_or_404(Divida, pk=cod_divida) if cod_divida else None
+    template = 'divida/atualizar_divida.html' if divida else 'divida/cadastrar_divida.html'
 
-    if cod_divida:
-        divida = get_object_or_404(Divida, pk=cod_divida)
-        if 'excluir' in request.POST and divida:
-            divida.delete()
-            messages.success(request, 'Dívida excluída com sucesso!')
-            return redirect('pesquisar_divida')
-        template = 'divida/atualizar_divida.html'
-        
-    if request.method == 'POST':
-        form = DividaForm(request.POST, instance=divida)
-        if form.is_valid():
-            divida_obj = form.save(commit=False)
-            if not divida: 
-                divida_obj.saldo_restante = divida_obj.valor
-            divida_obj.save()
+    # 2. Early Return para exclusão (evita aninhamento profundo)
+    if request.method == 'POST' and 'excluir' in request.POST and divida:
+        divida.delete()
+        messages.success(request, 'Dívida excluída com sucesso!')
+        return redirect('pesquisar_divida')
 
-            if divida:
-                messages.success(request, 'Dívida atualizada com sucesso!')
-                return redirect('pesquisar_divida')
-            else:
-                messages.success(request, 'Dívida cadastrada com sucesso!')
-                return redirect('pesquisar_divida')
-        else:
-            return render(request, template, {
-                'form': form,
-                'erro': 'Erro ao salvar os dados.',
-                'divida': divida
-            })
-    else:
-        if divida:
-            template = 'divida/atualizar_divida.html'
+    # 3. Lidar com requisições GET (Apenas carregar a página)
+    if request.method == 'GET':
+        form = DividaForm(instance=divida)
+        return render(request, template, {'form': form, 'divida': divida})
+
+    # 4. Lidar com a criação/atualização no POST
+    form = DividaForm(request.POST, instance=divida)
     
-    form = DividaForm(instance=divida)
+    if form.is_valid():
+        divida_obj = form.save(commit=False)
+        
+        # Apenas para novas dívidas, iguala o saldo ao valor total
+        if not divida: 
+            divida_obj.saldo_restante = divida_obj.valor
+            
+        divida_obj.save()
+
+        # Mensagem condicional em uma única linha
+        mensagem = 'Dívida atualizada com sucesso!' if divida else 'Dívida cadastrada com sucesso!'
+        messages.success(request, mensagem)
+        return redirect('pesquisar_divida')
+
+    # 5. Fallback: Se chegou aqui, o form é inválido no POST
     return render(request, template, {
         'form': form,
+        'erro': 'Erro ao salvar os dados.',
         'divida': divida
     })
-
-# Em antiveaco/views.py
 
 def cadastrar_cliente(request):
     if request.method == 'POST':
