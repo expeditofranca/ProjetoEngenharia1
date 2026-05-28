@@ -374,6 +374,7 @@ def relatorio_mensal_dividas(request):
         "total_dividas": total_dividas,
         "mes": mes,
         "ano": ano
+    })
 def alertas_inadimplencia(request):
     """Lista clientes com dívidas vencidas e saldo pendente."""
     hoje = timezone.now().date()

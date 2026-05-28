@@ -54,4 +54,4 @@ class Pagamento(models.Model):
     status = models.CharField(max_length=20, default='Concluído')
 
     def __str__(self):
-        return f'Pagamento {self.id} - Cliente: {self.cliente.name} - Dívida: {self.divida.id} - Valor Pago: {self.valor_pago}'
+        return f'Pagamento {self.cod_pagamento} - Cliente: {self.cliente.nome} - Dívida: {self.divida.cod_divida} - Valor Pago: {self.valor_pago}'
