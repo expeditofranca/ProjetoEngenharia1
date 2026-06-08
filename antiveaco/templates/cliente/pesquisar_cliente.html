@@ -8,6 +8,9 @@
 </head>
 <body>
   <div class="container">
+    <form action="{% url 'index_cliente' %}" method="get" style="margin-bottom: 20px;">
+        <button type="submit" style="width: auto; padding: 10px 20px;">Voltar</button>
+    </form>
     <h1>Pesquisar Clientes</h1>
     
     <form method="get" action="{% url 'pesquisar_cliente' %}">
