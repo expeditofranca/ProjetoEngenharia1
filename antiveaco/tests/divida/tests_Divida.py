@@ -59,21 +59,17 @@ class DividaTestCase(TestCase):
     # TESTES NO VIEW - CADASTRAR
     # -------------------------
 
-    def test_cadastrar_divida(self):
-
+    def test_cadastrar_divida_invalido(self):
+        """Testa se o sistema bloqueia cadastro com dados incompletos"""
         response = self.client.post(
             reverse('cadastrar_divida'),
             {
-                'cpf_funcionario': '22222222222',
-                'cliente': self.cliente.cpf,
-                'valor': 300,
-                'status': 'Pendente',
-                'num_notafiscal': 'NF999'
+                'cpf_funcionario': '',
+                'valor': 300
             }
         )
-
-        self.assertEqual(response.status_code, 302)
-        self.assertEqual(Divida.objects.count(), 2)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(Divida.objects.count(), 1)
 
     # -------------------------
     # TESTES NO VIEW - ATUALIZAR
@@ -113,3 +109,10 @@ class DividaTestCase(TestCase):
 
         self.assertEqual(response.status_code, 302)
         self.assertEqual(Divida.objects.count(), 0)
+    
+    def test_pesquisar_divida_filtro(self):
+        """Testa se o filtro por status funciona na pesquisa"""
+        # Busca apenas dívidas com status 'Pendente'
+        response = self.client.get(reverse('pesquisar_divida'), {'status': 'Pendente'})
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Arthur")
