@@ -1,3 +1,7 @@
 {
-    "python-envs.pythonProjects": []
+    "python-envs.pythonProjects": [],
+    "sonarlint.connectedMode.project": {
+        "connectionId": "http-labens-dct-ufrn-br-sonarqube",
+        "projectKey": "caderneta-dividas-key"
+    }
 }
