@@ -1,3 +1,4 @@
+---
 version: '3.8'
 
 services:
@@ -5,7 +6,7 @@ services:
     container_name: postgres-caderneta
     image: postgres:latest
     volumes:
-    - ./postgres_data:/var/lib/postgresql
+    -  ./postgres_data:/var/lib/postgresql
     environment:
       - POSTGRES_DB=caderneta_db
       - POSTGRES_USER=admin_caderneta

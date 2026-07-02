@@ -10,12 +10,11 @@ ENV PYTHONUNBUFFERED=1
 LABEL description="Caderneta de Dividas - Implantação"
 
 COPY requirements.txt .
-RUN python -m pip install --upgrade pip
-RUN python -m pip install -r requirements.txt
-
-RUN apt-get update && apt-get install -y postgresql-client && rm -rf /var/lib/apt/lists/*
+RUN python -m pip install --upgrade pip && \
+    python -m pip install -r requirements.txt && \
+    apt-get update && apt-get install -y postgresql-client && rm -rf /var/lib/apt/lists/*
 WORKDIR /code
-ADD . /code
+COPY . /code
 
 RUN useradd appuser && chown -R appuser /code
 USER appuser
