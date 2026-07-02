@@ -19,18 +19,18 @@
             <form method="get" action="">
                 <div class="row">
                     <div class="col-md-3 mb-3">
-                        <label class="form-label">Data Início:</label>
-                        <input type="date" name="data_inicio" class="form-control" value="{{ data_inicio|default:'' }}">
+                        <label class="form-label" for="data_inicio">Data Início:</label>
+                        <input type="date" id="data_inicio" name="data_inicio" class="form-control" value="{{ data_inicio|default:'' }}">
                     </div>
                     
                     <div class="col-md-3 mb-3">
-                        <label class="form-label">Data Fim:</label>
-                        <input type="date" name="data_fim" class="form-control" value="{{ data_fim|default:'' }}">
+                        <label class="form-label" for="data_fim">Data Fim:</label>
+                        <input type="date" id="data_fim" name="data_fim" class="form-control" value="{{ data_fim|default:'' }}">
                     </div>
                     
                     <div class="col-md-4 mb-3">
-                        <label class="form-label">Cliente (Nome ou CPF):</label>
-                        <input type="text" name="cliente" class="form-control" placeholder="Ex: João ou 123..." value="{{ cliente_busca|default:'' }}">
+                        <label class="form-label" for="cliente">Cliente (Nome ou CPF):</label>
+                        <input type="text" id="cliente" name="cliente" class="form-control" placeholder="Ex: João ou 123..." value="{{ cliente_busca|default:'' }}">
                     </div>
                     
                     <div class="col-md-2 mb-3 d-flex align-items-end">
