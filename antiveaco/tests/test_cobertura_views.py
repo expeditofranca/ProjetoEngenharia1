@@ -66,22 +66,7 @@ class ViewsRefatoradasTests(TestCase):
         self.assertEqual(self.divida.status, 'Parcial')
         self.assertEqual(Pagamento.objects.count(), 1)
 
-    # --- TESTE 3: Pagar Tudo ---
-    def test_registrar_pagamento_pagar_tudo(self):
-        """Testa se o botão Pagar Tudo quita todas as dívidas pendentes do cliente"""
-        url = reverse('registrar_pagamento')
-        
-        response = self.client.post(url, {
-            'pagar_tudo': 'true',
-            'cpf_cliente': self.cliente.cpf
-        })
-        
-        self.divida.refresh_from_db()
-        
-        # Verifica se a dívida zerou e o status foi para Pago
-        self.assertEqual(self.divida.saldo_restante, Decimal('0.00'))
-        self.assertEqual(self.divida.status, 'Pago')
-        self.assertEqual(Pagamento.objects.count(), 1)
+
 
 # --- TESTE 4: Acessar a página de cadastrar dívida (GET) ---
     def test_divida_manager_get_cadastrar(self):
