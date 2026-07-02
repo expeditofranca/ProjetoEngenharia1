@@ -167,34 +167,33 @@ def _processar_pagar_tudo(request, cpf_cliente):
     return redirect('lista_pagamentos')
 
 
-# 2. VIEW PRINCIPAL REFATORADA
-def registrar_pagamento(request):
-    """Renderiza a página e roteia as ações de pagamento."""
-    
-    # --- Cenário 1: POST -> Botão "Pagar Tudo" (Early Return) ---
-    if request.method == 'POST' and 'pagar_tudo' in request.POST:
-        return _processar_pagar_tudo(request, request.POST.get('cpf_cliente'))
+def _salvar_pagamento_unico(request, form):
+    """Extraído para reduzir complexidade cognitiva do registrar_pagamento"""
+    pagamento = form.save(commit=False)
+    divida = pagamento.divida
+    pagamento.cliente = divida.cliente
 
-    # --- Cenário 2: POST -> Pagamento Único ---
-    # Instancia o form com os dados do POST (se houver) ou deixa vazio
+    if pagamento.valor_pago > divida.saldo_restante:
+        messages.error(request, f'O valor do pagamento não pode ser maior que o saldo da dívida (R$ {divida.saldo_restante}).')
+    else:
+        with transaction.atomic():
+            divida.saldo_restante -= pagamento.valor_pago
+            divida.status = 'Pago' if divida.saldo_restante == 0 else 'Parcial'
+            divida.save()
+            pagamento.save()
+        messages.success(request, f'Pagamento de R$ {pagamento.valor_pago} registrado com sucesso!')
+        return redirect('lista_pagamentos')
+    return None
+
+
+def registrar_pagamento(request):
     form = PagamentoForm(request.POST or None)
-    
+
     if request.method == 'POST' and form.is_valid():
-        pagamento = form.save(commit=False)
-        divida = pagamento.divida
-        pagamento.cliente = divida.cliente
-        
-        if pagamento.valor_pago > divida.saldo_restante:
-            messages.error(request, f'O valor do pagamento não pode ser maior que o saldo da dívida (R$ {divida.saldo_restante}).')
-        else:
-            with transaction.atomic():
-                divida.saldo_restante -= pagamento.valor_pago
-                divida.status = 'Pago' if divida.saldo_restante == 0 else 'Parcial'
-                divida.save()
-                pagamento.save()
-                
-                messages.success(request, f'Pagamento de R$ {pagamento.valor_pago} registrado com sucesso!')
-                return redirect('lista_pagamentos')
+        resultado = _salvar_pagamento_unico(request, form)
+        if resultado:
+            return resultado
+            
 
     # --- Cenário 3: GET -> Busca de Cliente ---
     cliente = dividas_do_cliente = None
@@ -214,7 +213,6 @@ def registrar_pagamento(request):
         except Cliente.DoesNotExist:
             messages.error(request, 'Nenhum cliente encontrado com o CPF informado.')
 
-    # Renderização final (para GET ou para POSTs com formulário inválido/erro)
     return render(request, 'pagamento/registrar_pagamento.html', {
         'form': form,
         'cliente': cliente,
