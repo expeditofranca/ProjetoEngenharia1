@@ -187,6 +187,12 @@ def _salvar_pagamento_unico(request, form):
 
 
 def registrar_pagamento(request):
+    # --- NOVO: Intercepta o clique no botão "Pagar Tudo" ANTES de validar o form normal ---
+    if request.method == 'POST' and 'pagar_tudo' in request.POST:
+        cpf = request.POST.get('cpf_cliente')
+        return _processar_pagar_tudo(request, cpf)
+
+    # --- Fluxo normal de pagamento único ---
     form = PagamentoForm(request.POST or None)
 
     if request.method == 'POST' and form.is_valid():
