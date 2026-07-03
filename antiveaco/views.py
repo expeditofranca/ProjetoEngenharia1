@@ -210,42 +210,50 @@ def _processar_pagamento_multiplo(request, form, cliente):
     return redirect('lista_pagamentos')
 
 
-def registrar_pagamento(request):
-    cpf_busca = request.POST.get('cpf_cliente') or request.GET.get('cpf_cliente')
-
-    if request.method == 'POST' and 'pagar_tudo' in request.POST:
-        return _processar_pagar_tudo(request, cpf_busca)
-
+def _obter_contexto_cliente(cpf_busca, form):
+    """Auxiliar para extrair a lógica de busca do cliente."""
     cliente = dividas_do_cliente = None
     soma_total = Decimal('0.00')
-    clientes = Cliente.objects.all()
-
+    
     if cpf_busca:
         try:
             cliente = Cliente.objects.get(cpf=cpf_busca)
             dividas_do_cliente = Divida.objects.filter(cliente=cliente, status__in=['Pendente', 'Parcial'])
             if dividas_do_cliente:
                 soma_total = dividas_do_cliente.aggregate(soma=Sum('saldo_restante'))['soma'] or Decimal('0.00')
+                form.fields['dividas'].queryset = dividas_do_cliente
         except Cliente.DoesNotExist:
-            messages.error(request, 'Nenhum cliente encontrado com o CPF informado.')
+            pass
+    return cliente, dividas_do_cliente, soma_total
 
-    form = PagamentoForm(request.POST or None)
+def registrar_pagamento(request):
+    cpf_busca = request.POST.get('cpf_cliente') or request.GET.get('cpf_cliente')
     
-    if dividas_do_cliente is not None:
-        form.fields['dividas'].queryset = dividas_do_cliente
-
-    if request.method == 'POST' and 'pagar_tudo' not in request.POST:
+    if request.method == 'POST':
+        if 'pagar_tudo' in request.POST:
+            return _processar_pagar_tudo(request, cpf_busca)
+            
+        form = PagamentoForm(request.POST)
+        # Recarrega o queryset antes de validar
+        _, _, _ = _obter_contexto_cliente(cpf_busca, form) 
+        
         if form.is_valid():
-            resultado = _processar_pagamento_multiplo(request, form, cliente)
-            if resultado:
-                return resultado
+            cliente = Cliente.objects.get(cpf=cpf_busca)
+            return _processar_pagamento_multiplo(request, form, cliente)
+    else:
+        form = PagamentoForm()
+
+    cliente, dividas, soma = _obter_contexto_cliente(cpf_busca, form)
+    
+    if cpf_busca and not cliente:
+        messages.error(request, 'Nenhum cliente encontrado com o CPF informado.')
 
     return render(request, 'pagamento/registrar_pagamento.html', {
         'form': form,
         'cliente': cliente,
-        'dividas_do_cliente': dividas_do_cliente,
-        'soma_total': soma_total,
-        'clientes': clientes
+        'dividas_do_cliente': dividas,
+        'soma_total': soma,
+        'clientes': Cliente.objects.all()
     })
 
 
