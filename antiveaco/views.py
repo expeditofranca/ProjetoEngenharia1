@@ -24,13 +24,17 @@ import json
 def get_dividas(request):
     dividas = Divida.objects.all()
 
-    cpf = request.GET.get('cpf_cliente')
+    busca_cliente = request.GET.get('busca_cliente')
     status = request.GET.get('status')
     valor_min = request.GET.get('valor_min')
     valor_max = request.GET.get('valor_max')
 
-    if cpf:
-        dividas = dividas.filter(cliente__cpf__icontains=cpf)
+    if busca_cliente:
+        dividas = dividas.filter(
+            Q(cliente__nome__icontains=busca_cliente) | 
+            Q(cliente__cpf__icontains=busca_cliente)
+        )
+        
     if status:
         dividas = dividas.filter(status=status)
     if valor_min:
@@ -167,63 +171,96 @@ def _processar_pagar_tudo(request, cpf_cliente):
     return redirect('lista_pagamentos')
 
 
-def _salvar_pagamento_unico(request, form):
-    """Extraído para reduzir complexidade cognitiva do registrar_pagamento"""
-    pagamento = form.save(commit=False)
-    divida = pagamento.divida
-    pagamento.cliente = divida.cliente
+def _processar_pagamento_multiplo(request, form, cliente):
+    """Algoritmo Guloso para distribuir o valor pago entre as dívidas selecionadas."""
+    dividas_selecionadas = form.cleaned_data['dividas']
+    valor_total_pago = form.cleaned_data['valor_pago']
+    data_pagamento = form.cleaned_data['data_pagamento']
 
-    if pagamento.valor_pago > divida.saldo_restante:
-        messages.error(request, f'O valor do pagamento não pode ser maior que o saldo da dívida (R$ {divida.saldo_restante}).')
-    else:
-        with transaction.atomic():
-            divida.saldo_restante -= pagamento.valor_pago
+    saldo_total_selecionadas = sum(d.saldo_restante for d in dividas_selecionadas)
+    
+    if valor_total_pago > saldo_total_selecionadas:
+        messages.error(request, f'O valor (R$ {valor_total_pago}) ultrapassa o saldo das dívidas selecionadas (R$ {saldo_total_selecionadas}).')
+        return None
+
+    with transaction.atomic():
+        dinheiro_em_maos = valor_total_pago
+        
+        for divida in dividas_selecionadas.order_by('data_vencimento'):
+            if dinheiro_em_maos <= 0:
+                break
+            
+            abatimento = min(dinheiro_em_maos, divida.saldo_restante)
+            
+            Pagamento.objects.create(
+                divida=divida,
+                cliente=cliente,
+                data_pagamento=data_pagamento,
+                valor_pago=abatimento,
+                status='Concluído'
+            )
+            
+            divida.saldo_restante -= abatimento
             divida.status = 'Pago' if divida.saldo_restante == 0 else 'Parcial'
             divida.save()
-            pagamento.save()
-        messages.success(request, f'Pagamento de R$ {pagamento.valor_pago} registrado com sucesso!')
-        return redirect('lista_pagamentos')
-    return None
-
-
-def registrar_pagamento(request):
-    # --- NOVO: Intercepta o clique no botão "Pagar Tudo" ANTES de validar o form normal ---
-    if request.method == 'POST' and 'pagar_tudo' in request.POST:
-        cpf = request.POST.get('cpf_cliente')
-        return _processar_pagar_tudo(request, cpf)
-
-    # --- Fluxo normal de pagamento único ---
-    form = PagamentoForm(request.POST or None)
-
-    if request.method == 'POST' and form.is_valid():
-        resultado = _salvar_pagamento_unico(request, form)
-        if resultado:
-            return resultado
             
+            dinheiro_em_maos -= abatimento
+            
+    messages.success(request, f'Pagamento de R$ {valor_total_pago} distribuído com sucesso!')
+    return redirect('lista_pagamentos')
 
-    # --- Cenário 3: GET -> Busca de Cliente ---
+
+def _obter_contexto_cliente(cpf_busca, form):
+    """Auxiliar para extrair a lógica de busca do cliente."""
     cliente = dividas_do_cliente = None
     soma_total = Decimal('0.00')
-    cpf_busca = request.GET.get('cpf_cliente')
-
+    
     if cpf_busca:
         try:
             cliente = Cliente.objects.get(cpf=cpf_busca)
             dividas_do_cliente = Divida.objects.filter(cliente=cliente, status__in=['Pendente', 'Parcial'])
-            
             if dividas_do_cliente:
-                soma = dividas_do_cliente.aggregate(soma=Sum('saldo_restante'))['soma']
-                soma_total = soma or Decimal('0.00')
-                form.fields['divida'].queryset = dividas_do_cliente
-                
+                soma_total = dividas_do_cliente.aggregate(soma=Sum('saldo_restante'))['soma'] or Decimal('0.00')
+                form.fields['dividas'].queryset = dividas_do_cliente
         except Cliente.DoesNotExist:
-            messages.error(request, 'Nenhum cliente encontrado com o CPF informado.')
+            pass
+    return cliente, dividas_do_cliente, soma_total
 
+def _processar_post_pagamento(request, cpf_busca):
+    """Extraído para limpar a lógica de POST."""
+    if 'pagar_tudo' in request.POST:
+        return _processar_pagar_tudo(request, cpf_busca)
+    
+    form = PagamentoForm(request.POST)
+    cliente = Cliente.objects.filter(cpf=cpf_busca).first()
+    
+    if cliente:
+        form.fields['dividas'].queryset = Divida.objects.filter(cliente=cliente, status__in=['Pendente', 'Parcial'])
+    
+    if form.is_valid() and cliente:
+        return _processar_pagamento_multiplo(request, form, cliente)
+    
+    messages.error(request, 'Erro ao processar formulário.')
+    return None
+
+def registrar_pagamento(request):
+    cpf_busca = request.POST.get('cpf_cliente') or request.GET.get('cpf_cliente')
+    
+    if request.method == 'POST':
+        resultado = _processar_post_pagamento(request, cpf_busca)
+        if resultado:
+            return resultado
+
+    # 2. Se for GET ou o POST falhou, carrega a tela
+    form = PagamentoForm(request.POST or None)
+    cliente, dividas, soma = _obter_contexto_cliente(cpf_busca, form)
+    
     return render(request, 'pagamento/registrar_pagamento.html', {
         'form': form,
         'cliente': cliente,
-        'dividas_do_cliente': dividas_do_cliente,
-        'soma_total': soma_total
+        'dividas_do_cliente': dividas,
+        'soma_total': soma,
+        'clientes': Cliente.objects.all()
     })
 
 
@@ -356,7 +393,7 @@ def relatorio_mensal_dividas(request):
         ano = int(ano)
         dividas = dividas.filter(data_divida__year=ano)
 
-    total_dividas = dividas.aggregate(total=Sum('valor'))['total'] or 0
+    total_dividas = dividas.aggregate(total=Sum('saldo_restante'))['total'] or 0
 
     return render(request, "relatorios/relatorio_mensal_dividas.html", {
         "dividas": dividas,
@@ -364,6 +401,7 @@ def relatorio_mensal_dividas(request):
         "mes": mes,
         "ano": ano
     })
+
 def alertas_inadimplencia(request):
     """Lista clientes com dívidas vencidas e saldo pendente."""
     hoje = timezone.now().date()

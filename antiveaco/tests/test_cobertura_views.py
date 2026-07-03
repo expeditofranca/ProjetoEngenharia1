@@ -37,47 +37,36 @@ class ViewsRefatoradasTests(TestCase):
 
 # --- TESTE 1: Exclusão de Dívida no divida_manager ---
     def test_divida_manager_excluir(self):
-        """Testa se o envio de POST com 'excluir' deleta a dívida"""
-        # Agora estamos usando o nome correto definido no seu urls.py!
         url = reverse('excluir_divida', args=[self.divida.cod_divida]) 
-        
         response = self.client.post(url, {'excluir': 'true'})
-        
-        # Verificamos se a dívida sumiu do banco de dados (0 restantes)
+        self.assertEqual(response.status_code, 302)
         self.assertEqual(Divida.objects.count(), 0)
-    # --- TESTE 2: Pagamento Parcial caindo no ELSE ---
+
     def test_registrar_pagamento_parcial(self):
-        """Testa se um pagamento menor que o saldo atualiza o status para Parcial"""
         url = reverse('registrar_pagamento') 
-        
-        # Adicionamos os campos que o PagamentoForm provavelmente exige
         response = self.client.post(url, {
-            'divida': self.divida.cod_divida,
-            'cliente': self.cliente.cpf,           # <-- Adicionado
-            'data_pagamento': '2026-05-28',        # <-- Adicionado
-            'status': 'Concluído',                 # <-- Adicionado
+            'dividas': [self.divida.cod_divida],
+            'cpf_cliente': self.cliente.cpf,
+            'data_pagamento': '2026-05-28',
             'valor_pago': '40.00'
         })
+        self.assertEqual(response.status_code, 302)
         
         self.divida.refresh_from_db()
-        
-        # Verifica se o saldo caiu de 100 para 60 e o status mudou para Parcial
         self.assertEqual(self.divida.saldo_restante, Decimal('60.00'))
         self.assertEqual(self.divida.status, 'Parcial')
         self.assertEqual(Pagamento.objects.count(), 1)
     
     # --- TESTE 3: Pagar Tudo ---
     def test_registrar_pagamento_pagar_tudo(self):
-        """Testa se o botão Pagar Tudo quita todas as dívidas pendentes do cliente"""
         url = reverse('registrar_pagamento')
-        
         response = self.client.post(url, {
             'pagar_tudo': 'true',
             'cpf_cliente': self.cliente.cpf
         })
         
+        self.assertEqual(response.status_code, 302)
         self.divida.refresh_from_db()
-    
         self.assertEqual(self.divida.saldo_restante, Decimal('0.00'))
         self.assertEqual(self.divida.status, 'Pago')
         self.assertEqual(Pagamento.objects.count(), 1)
@@ -109,22 +98,16 @@ class ViewsRefatoradasTests(TestCase):
 
     # --- TESTE 7: Erro ao tentar pagar valor maior que a dívida ---
     def test_registrar_pagamento_valor_invalido(self):
-        """Testa se o sistema bloqueia pagamentos maiores que o saldo"""
         url = reverse('registrar_pagamento')
-        
-        # A dívida tem saldo de 100, vamos tentar pagar 500
         response = self.client.post(url, {
-            'divida': self.divida.cod_divida,
-            'cliente': self.cliente.cpf,
+            'dividas': [self.divida.cod_divida],
+            'cpf_cliente': self.cliente.cpf,
             'data_pagamento': '2026-05-28',
-            'status': 'Concluído',
             'valor_pago': '500.00' 
         })
         
+        self.assertEqual(response.status_code, 200)
         self.divida.refresh_from_db()
-        
-        # Verifica se o saldo continuou 100 intacto e não criou pagamento
         self.assertEqual(self.divida.saldo_restante, Decimal('100.00'))
         self.assertEqual(Pagamento.objects.count(), 0)
-    
     
