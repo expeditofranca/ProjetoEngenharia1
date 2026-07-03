@@ -226,28 +226,35 @@ def _obter_contexto_cliente(cpf_busca, form):
             pass
     return cliente, dividas_do_cliente, soma_total
 
+def _processar_post_pagamento(request, cpf_busca):
+    """Extraído para limpar a lógica de POST."""
+    if 'pagar_tudo' in request.POST:
+        return _processar_pagar_tudo(request, cpf_busca)
+    
+    form = PagamentoForm(request.POST)
+    cliente = Cliente.objects.filter(cpf=cpf_busca).first()
+    
+    if cliente:
+        form.fields['dividas'].queryset = Divida.objects.filter(cliente=cliente, status__in=['Pendente', 'Parcial'])
+    
+    if form.is_valid() and cliente:
+        return _processar_pagamento_multiplo(request, form, cliente)
+    
+    messages.error(request, 'Erro ao processar formulário.')
+    return None
+
 def registrar_pagamento(request):
     cpf_busca = request.POST.get('cpf_cliente') or request.GET.get('cpf_cliente')
     
     if request.method == 'POST':
-        if 'pagar_tudo' in request.POST:
-            return _processar_pagar_tudo(request, cpf_busca)
-            
-        form = PagamentoForm(request.POST)
-        # Recarrega o queryset antes de validar
-        _, _, _ = _obter_contexto_cliente(cpf_busca, form) 
-        
-        if form.is_valid():
-            cliente = Cliente.objects.get(cpf=cpf_busca)
-            return _processar_pagamento_multiplo(request, form, cliente)
-    else:
-        form = PagamentoForm()
+        resultado = _processar_post_pagamento(request, cpf_busca)
+        if resultado:
+            return resultado
 
+    # 2. Se for GET ou o POST falhou, carrega a tela
+    form = PagamentoForm(request.POST or None)
     cliente, dividas, soma = _obter_contexto_cliente(cpf_busca, form)
     
-    if cpf_busca and not cliente:
-        messages.error(request, 'Nenhum cliente encontrado com o CPF informado.')
-
     return render(request, 'pagamento/registrar_pagamento.html', {
         'form': form,
         'cliente': cliente,
