@@ -79,3 +79,15 @@
 
               <td><form method="post" action="{% url 'excluir_divida' d.cod_divida %}">
                 {% csrf_token %}
+                <button type="submit" name="excluir">Excluir</button>
+              </form></td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <p class="no-results">Nenhuma dívida encontrada com os filtros informados.</p>
+    {% endif %}
+  </div>
+</body>
+</html>

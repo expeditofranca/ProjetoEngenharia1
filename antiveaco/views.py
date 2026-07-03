@@ -24,13 +24,17 @@ import json
 def get_dividas(request):
     dividas = Divida.objects.all()
 
-    cpf = request.GET.get('cpf_cliente')
+    busca_cliente = request.GET.get('busca_cliente')
     status = request.GET.get('status')
     valor_min = request.GET.get('valor_min')
     valor_max = request.GET.get('valor_max')
 
-    if cpf:
-        dividas = dividas.filter(cliente__cpf__icontains=cpf)
+    if busca_cliente:
+        dividas = dividas.filter(
+            Q(cliente__nome__icontains=busca_cliente) | 
+            Q(cliente__cpf__icontains=busca_cliente)
+        )
+        
     if status:
         dividas = dividas.filter(status=status)
     if valor_min:
