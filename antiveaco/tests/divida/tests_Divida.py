@@ -1,7 +1,7 @@
 from django.test import TestCase
 from django.urls import reverse
 
-from .models import Cliente, Divida, Endereco
+from antiveaco.models import Cliente, Divida, Endereco
 
 
 class DividaTestCase(TestCase):

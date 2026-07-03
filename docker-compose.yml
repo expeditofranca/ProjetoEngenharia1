@@ -1,0 +1,54 @@
+---
+services:
+  postgres:
+    container_name: postgres-caderneta
+    image: postgres:16
+    environment:
+      - POSTGRES_DB=caderneta_db
+      - POSTGRES_USER=admin_caderneta
+      - POSTGRES_PASSWORD=senha_super_segura
+    restart: always
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data_volume:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U admin_caderneta -d caderneta_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  pgadmin:
+    container_name: pgadmin-caderneta
+    image: dpage/pgadmin4:latest
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@caderneta.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "5050:80"
+    depends_on:
+      - postgres
+
+  web:
+    container_name: app-caderneta
+    build: .
+    environment:
+      - POSTGRES_DB=caderneta_db
+      - POSTGRES_USER=admin_caderneta
+      - POSTGRES_PASSWORD=senha_super_segura
+      - POSTGRES_HOST=postgres
+    command: >
+      sh -c "python manage.py collectstatic --noinput &&
+             python manage.py migrate --noinput &&
+             python manage.py runserver 0.0.0.0:8001"
+    volumes:
+      - .:/code
+    ports:
+      - "8001:8001"
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+volumes:
+  postgres_data_volume: {}
