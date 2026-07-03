@@ -191,7 +191,6 @@ def _salvar_pagamento_unico(request, form):
 
 
 def registrar_pagamento(request):
-    # --- NOVO: Intercepta o clique no botão "Pagar Tudo" ANTES de validar o form normal ---
     if request.method == 'POST' and 'pagar_tudo' in request.POST:
         cpf = request.POST.get('cpf_cliente')
         return _processar_pagar_tudo(request, cpf)
@@ -204,11 +203,12 @@ def registrar_pagamento(request):
         if resultado:
             return resultado
             
-
     # --- Cenário 3: GET -> Busca de Cliente ---
     cliente = dividas_do_cliente = None
     soma_total = Decimal('0.00')
     cpf_busca = request.GET.get('cpf_cliente')
+    
+    clientes = Cliente.objects.all()
 
     if cpf_busca:
         try:
@@ -227,7 +227,8 @@ def registrar_pagamento(request):
         'form': form,
         'cliente': cliente,
         'dividas_do_cliente': dividas_do_cliente,
-        'soma_total': soma_total
+        'soma_total': soma_total,
+        'clientes': clientes
     })
 
 
