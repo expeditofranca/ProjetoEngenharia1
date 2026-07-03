@@ -17,8 +17,9 @@
 
     <form method="get" action="{% url 'pesquisar_divida' %}">
       {% csrf_token %}
-      <label for="cpf_cliente">CPF do Cliente</label>
-      <input type="text" id="cpf_cliente" name="cpf_cliente" value="{{ request.GET.cpf_cliente }}" placeholder="Ex: 12345678901">
+      
+      <label for="busca_cliente">Nome ou CPF do Cliente</label>
+      <input type="text" id="busca_cliente" name="busca_cliente" value="{{ request.GET.busca_cliente }}" placeholder="Ex: João da Silva ou 12345678901">
 
       <label for="status">Status</label>
       <select id="status" name="status">
@@ -42,6 +43,7 @@
 
       <button type="submit">Pesquisar</button>
     </form>
+    
     {% if messages %}
       {% for msg in messages %}
         <div class="success">{{ msg }}</div>
@@ -77,15 +79,3 @@
 
               <td><form method="post" action="{% url 'excluir_divida' d.cod_divida %}">
                 {% csrf_token %}
-                <button type="submit" name="excluir">Excluir</button>
-              </form></td>
-            </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-    {% else %}
-      <p class="no-results">Nenhuma dívida encontrada com os filtros informados.</p>
-    {% endif %}
-  </div>
-</body>
-</html>
