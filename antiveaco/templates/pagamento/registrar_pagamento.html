@@ -7,11 +7,10 @@
 
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 <style>
-    /* Ajuste para o Select2 se alinhar perfeitamente com o input-group do Bootstrap */
     .select2-container .select2-selection--single {
         height: 38px !important;
         border: 1px solid #ced4da !important;
-        border-radius: 0.375rem 0 0 0.375rem !important; /* Arredonda só o lado esquerdo */
+        border-radius: 0.375rem 0 0 0.375rem !important;
     }
     .select2-container--default .select2-selection--single .select2-selection__rendered {
         line-height: 36px !important;
@@ -19,6 +18,21 @@
     }
     .select2-container--default .select2-selection--single .select2-selection__arrow {
         height: 36px !important;
+    }
+    
+    .caixa-dividas {
+        background-color: #ffffff !important; 
+        border: 2px solid #dee2e6 !important; 
+        padding: 15px !important;
+        border-radius: 8px !important;
+        max-height: 200px; 
+        overflow-y: auto;
+    }
+
+    .form-check:hover {
+        background-color: #f8f9fa;
+        border-radius: 4px;
+        transition: 0.2s;
     }
 </style>
 
@@ -88,31 +102,51 @@
                         </div>
                     </div>
                 </form>
-                </div>
+            </div>
         </div>
 
         <div class="card shadow-sm">
             <div class="card-header">
-                <h3>Ou Pague uma Dívida Específica</h3>
+                <h3>Ou Pague Dívidas Específicas</h3>
             </div>
             <div class="card-body">
                 {% if dividas_do_cliente %}
                     <form method="post" action="">
                         {% csrf_token %}
+                        
                         <div class="mb-3">
-                            <label for="{{ form.divida.id_for_label }}" class="form-label">Selecione a Dívida</label>
-                            {{ form.divida }}
+                        <label class="form-label fw-bold">Selecione as Dívidas para Pagar:</label>
+                        
+                        <div class="caixa-dividas shadow-sm">
+                            
+                            {% for checkbox in form.dividas %}
+                                <div class="form-check mb-2 d-flex align-items-center">
+                                    {{ checkbox.tag }}
+                                    
+                                    <label class="form-check-label ms-2" for="{{ checkbox.id_for_label }}" style="cursor: pointer;">
+                                        {{ checkbox.choice_label }}
+                                    </label>
+                                </div>
+                            {% endfor %}
+
                         </div>
+                        
+                        <div class="mt-2 text-end">
+                            <h5 class="mb-0">Total Selecionado: <span id="total-dinamico" class="text-primary fw-bold">R$ 0.00</span></h5>
+                        </div>
+                    </div>
+
                         <div class="mb-3">
-                            <label for="{{ form.valor_pago.id_for_label }}" class="form-label">Valor a Pagar (R$)</label>
+                            <label for="{{ form.valor_pago.id_for_label }}" class="form-label fw-bold">Valor a Pagar (R$)</label>
                             {{ form.valor_pago }}
+                            <small class="text-muted">Digite o valor que o cliente vai abater no momento.</small>
                         </div>
                         
                         <div class="mb-3">
-                            <label for="{{ form.data_pagamento.id_for_label }}" class="form-label">Data do Pagamento</label>
+                            <label for="{{ form.data_pagamento.id_for_label }}" class="form-label fw-bold">Data do Pagamento</label>
                             {{ form.data_pagamento }}
                         </div>
-                        <button type="submit" class="btn btn-primary">Abater Valor</button>
+                        <button type="submit" class="btn btn-primary btn-lg w-100">Registrar Abatimento</button>
                     </form>
                 {% else %}
                     <div class="alert alert-info">Este cliente não possui dívidas pendentes.</div>
@@ -123,16 +157,38 @@
 </div>
 
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
 <script>
     $(document).ready(function() {
         $('#id_busca_cliente').select2({
-            placeholder: "🔍 Digite o nome ou o CPF do cliente...",
+            placeholder: " Digite o nome ou o CPF do cliente...",
             allowClear: true,
             width: '100%'
+        });
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const checkboxes = document.querySelectorAll('input[name="dividas"]');
+        const displayTotal = document.getElementById('total-dinamico');
+
+        function atualizarSoma() {
+            let soma = 0;
+            checkboxes.forEach(function(box) {
+                if (box.checked) {
+                    const textoLabel = box.parentElement.textContent;
+                    const match = textoLabel.match(/Saldo:\s*R\$\s*([0-9.]+)/);
+                    if (match) {
+                        soma += parseFloat(match[1]);
+                    }
+                }
+            });
+            displayTotal.textContent = `R$ ${soma.toFixed(2)}`;
+        }
+
+        checkboxes.forEach(function(box) {
+            box.addEventListener('change', atualizarSoma);
         });
     });
 </script>
