@@ -1,3 +1,4 @@
+---
 version: '3.8'
 
 services:
@@ -46,4 +47,5 @@ services:
       - postgres
 
 volumes:
-  postgres_data_volume:
+  postgres_data_volume: {}
+
