@@ -24,7 +24,7 @@
         {% for divida in dividas %}
         <tr>
             <td>{{ divida.cliente.nome }}</td>
-            <td>{{ divida.valor }}</td>
+            <td>R$ {{ divida.saldo_restante|floatformat:2 }}</td>
             <td>{{ divida.data_divida|date:"d/m/Y" }}</td>
             <td>{{ divida.status }}</td>
         </tr>

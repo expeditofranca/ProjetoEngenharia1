@@ -393,7 +393,7 @@ def relatorio_mensal_dividas(request):
         ano = int(ano)
         dividas = dividas.filter(data_divida__year=ano)
 
-    total_dividas = dividas.aggregate(total=Sum('valor'))['total'] or 0
+    total_dividas = dividas.aggregate(total=Sum('saldo_restante'))['total'] or 0
 
     return render(request, "relatorios/relatorio_mensal_dividas.html", {
         "dividas": dividas,
