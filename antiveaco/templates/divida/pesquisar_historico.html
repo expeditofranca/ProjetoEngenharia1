@@ -17,8 +17,8 @@
 
     <form method="get" action="{% url 'pesquisar_historico' %}">
       {% csrf_token %}
-      <label for="cpf_cliente">CPF do Cliente</label>
-      <input type="text" id="cpf_cliente" name="cpf_cliente" value="{{ request.GET.cpf_cliente }}" placeholder="Ex: 12345678901">
+      <label for="cpf_cliente">Nome ou CPF do Cliente</label>
+      <input type="text" id="cpf_cliente" name="cpf_cliente" value="{{ request.GET.cpf_cliente }}" placeholder="Ex: joao ou 12345678901">
 
       <button type="submit">Pesquisar</button>
     </form>

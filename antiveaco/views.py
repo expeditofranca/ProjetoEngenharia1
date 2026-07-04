@@ -1,6 +1,7 @@
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib import messages
 from django.utils import timezone
+from django.db.models import Q
 
 from django.db import transaction
 from django.db.models import Sum
@@ -12,7 +13,6 @@ from rest_framework import status
 
 from .models import Cliente, Divida, Pagamento, Endereco
 from .serializers import ClienteSerializer, DividaSerializer
-from django.db.models import Q
 
 from .forms import PagamentoForm
 from .forms import DividaForm
@@ -85,12 +85,19 @@ def divida_manager(request, cod_divida=None):
     })
 
 def pesquisar_historico(request):
-    cpf = request.GET.get('cpf_cliente')
+    termo_busca = request.GET.get('cpf_cliente')
     template = 'divida/pesquisar_historico.html'
 
-    if cpf:
-        return redirect('gerar_historico_dividas', cpf_cliente=cpf)
-    
+    if termo_busca:
+        cliente = Cliente.objects.filter(
+            Q(cpf__icontains=termo_busca) | Q(nome__icontains=termo_busca)
+        ).first()
+
+        if cliente:
+            return redirect('gerar_historico_dividas', cpf_cliente=cliente.cpf)
+        else:
+            messages.error(request, 'Nenhum cliente encontrado com o Nome ou CPF informado.')
+
     return render(request, template)
 
 def gerar_historico_dividas(request, cpf_cliente):
@@ -448,4 +455,17 @@ def alertas_inadimplencia(request):
 
     return render(request, 'divida/alertas_inadimplencia.html', {
         'dividas_atrasadas': dividas_atrasadas
+    })
+
+def detalhes_pagamentos(request, cod_divida):
+    """Busca o extrato de pagamentos de uma dívida específica para exibir os detalhes."""
+    # Busca a dívida específica
+    divida = get_object_or_404(Divida, cod_divida=cod_divida)
+    
+    # Busca todos os pagamentos atrelados a ela, ordenados do mais recente para o mais antigo
+    pagamentos = Pagamento.objects.filter(divida=divida).order_by('-data_pagamento')
+    
+    return render(request, 'divida/detalhes_pagamentos.html', {
+        'divida': divida,
+        'pagamentos': pagamentos
     })
