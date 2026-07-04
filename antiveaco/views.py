@@ -93,6 +93,39 @@ def pesquisar_historico(request):
     
     return render(request, template)
 
+def gerar_historico_dividas(request, cpf_cliente):
+    cliente = Cliente.objects.filter(cpf=cpf_cliente).first()
+    dividas = None
+
+    template = 'divida/historico_divida.html'
+
+
+    if cliente:   # aqui verifica-se se o cliente com o cpf passado existe
+            
+        dividas = Divida.objects.filter(cliente=cliente).order_by('cod_divida')
+
+        if dividas:  # se existem dívida para esse cliente
+                for divida in dividas:
+                    # Soma todos os 'valor_pago' da classe Pagamento vinculados a esta divida
+                    total_pago = Pagamento.objects.filter(divida=divida).aggregate(Sum('valor_pago'))['valor_pago__sum'] or 0
+
+                    # Criamos atributos temporários no objeto para usar no HTML
+                    divida.valor_original = divida.valor + total_pago # valor total da dívida é a soma de valor + somatório dos pagamentos daquela divida
+                    #divida.saldo_restante = divida.valor # o valor que falta a pagar é valor_original - total_pago = divida.valor
+                    divida.total_pago = divida.valor_original - divida.valor
+
+        else:
+            dividas = None
+    else:
+        # se não existe cliente com aquele cpf, mensagem de erro
+        cliente = None
+        messages.error(request, 'Nenhum cliente encontrado com o CPF informado.')
+
+    return render(request, template, {
+        'cliente': cliente,
+        'dividas': dividas
+    })
+
 def cadastrar_cliente(request):
     if request.method == 'POST':
         # Se for um POST, preenchemos os forms com os dados enviados
