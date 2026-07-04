@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4" style="max-width: 800px;">
+    
+    <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+            <h3 class="mb-0">Extrato de Pagamentos - Dívida #{{ divida.cod_divida }}</h3>
+        </div>
+        
+        <div class="card-body">
+            <h5 class="mb-4">Cliente: <strong>{{ divida.cliente.nome }}</strong></h5>
+            
+            <table class="table table-hover border">
+                <thead class="table-light">
+                    <tr>
+                        <th>Data do Pagamento</th>
+                        <th>Valor Abatido</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for pagamento in pagamentos %}
+                    <tr>
+                        <td>{{ pagamento.data_pagamento|date:"d/m/Y" }}</td>
+                        <td class="text-success fw-bold">R$ {{ pagamento.valor_pago|floatformat:2 }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="2" class="text-center text-muted py-3">
+                            Nenhum pagamento foi registrado para esta dívida ainda.
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="card-footer bg-white text-end">
+            <button onclick="history.back()" class="btn btn-secondary">Voltar ao Histórico</button>
+        </div>
+    </div>
+    
+</div>
+{% endblock %}

@@ -12,6 +12,9 @@ urlpatterns = [
     path('dividas/pesquisar/', views.get_dividas, name='pesquisar_divida'),
     path('dividas/atualizar/<int:cod_divida>/', views.divida_manager, name='atualizar_divida'),
     path('dividas/excluir/<int:cod_divida>/', views.divida_manager, name='excluir_divida'),
+    path('dividas/historico/', views.pesquisar_historico, name='pesquisar_historico'),
+    path('dividas/historico/<str:cpf_cliente>/', views.gerar_historico_dividas, name='gerar_historico_dividas'),
+    path('dividas/historico/detalhes/<int:cod_divida>/', views.detalhes_pagamentos, name='detalhes_pagamentos'),
 
     # =========================
     # CLIENTES
