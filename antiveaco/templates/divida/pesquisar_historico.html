@@ -1,0 +1,27 @@
+{% load static %}
+<!doctype html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8">
+  <title>Pesquisar Dívidas</title>
+  <link rel="stylesheet" href="{% static 'css/divida/pesquisar_historico.css' %}">
+</head>
+<body>
+  <div class="container">
+    
+    <form action="{% url 'index_divida' %}" method="get" style="margin-bottom: 20px;">
+        <button type="submit" class="btn-submit">Voltar</button>
+    </form>
+
+    <h1> Pesquisar CPF de cliente para Histórico de Dívidas</h1>
+
+    <form method="get" action="{% url 'pesquisar_historico' %}">
+      {% csrf_token %}
+      <label for="cpf_cliente">CPF do Cliente</label>
+      <input type="text" id="cpf_cliente" name="cpf_cliente" value="{{ request.GET.cpf_cliente }}" placeholder="Ex: 12345678901">
+
+      <button type="submit">Pesquisar</button>
+    </form>
+  </div>
+</body>
+</html>

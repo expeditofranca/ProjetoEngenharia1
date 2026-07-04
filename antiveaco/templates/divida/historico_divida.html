@@ -1,0 +1,70 @@
+{% load static %}
+<!doctype html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8">
+  <title> Relatório de Histórico de Dívidas</title>
+  <link rel="stylesheet" href="{% static 'css/divida/historico_divida.css' %}">
+</head>
+<body>
+  <div class="container">
+    
+    <form action="{% url 'pesquisar_historico' %}" method="get" style="margin-bottom: 20px;">
+        <button type="submit" class="btn-submit">Voltar</button>
+    </form>
+
+    <h1> Relatório de Histórico de Dívidas</h1>
+
+    {% if not cliente %}
+        <p class="no-results">Nenhum cliente cadastrado foi encontrado com o CPF informado.</p>
+
+    {% elif not dividas %}
+        <p class="no-results">O cliente {{cliente.nome}} ainda não cadastrou nenhuma dívida.</p>
+
+    {% else %}
+        <div class="container mt-4">
+        <h2>Cliente: {{ cliente.nome }}</h2>
+        <h3>CPF: {{cliente.cpf}}</h3>
+            <table class="table table-hover">
+                <thead class="table-dark">
+                    <tr>
+                        <th>ID Dívida</th>
+                        <th>Data da dívida</th>
+                        <th>Valor Total</th>
+                        <th>Valor Já Pago</th>
+                        <th>Status</th>
+                        <th>Prazo Final</th>
+                        <th>Pagamentos</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for divida in dividas %}
+                    <tr>
+                        <td>#{{ divida.cod_divida }}</td>
+                        <td> {{divida.data_divida}} </td>
+                        <td>R$ {{ divida.valor_original }}</td>
+                        <td class="{% if divida.saldo_restante > 0 %}text-danger{% else %}text-muted{% endif %}">
+                        R$ {{ divida.total_pago }}
+                        </td>
+                        <td>
+                            {% if divida.valor <= 0 %}
+                                <span class="badge bg-success">Pago</span>
+                            {% elif divida.valor == divida.valor_original %}
+                                <span class="badge bg-warning text-dark">Pendente</span>
+                            {% else %}
+                                <span class="badge bg-warning text-dark">Parcial</span>
+                            {% endif %}
+                        </td>
+                            <td>31/05/2026</td>
+                            <td><a href="">Ver Detalhes</a></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% endif %}
+
+            
+  </div>
+</body>
+</html>
