@@ -2,6 +2,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib import messages
 from django.utils import timezone
 from django.db.models import Q
+from django.views.decorators.http import require_GET
 
 from django.db import transaction
 from django.db.models import Sum
@@ -84,6 +85,7 @@ def divida_manager(request, cod_divida=None):
         'divida': divida
     })
 
+@require_GET
 def pesquisar_historico(request):
     termo_busca = request.GET.get('cpf_cliente')
     template = 'divida/pesquisar_historico.html'
@@ -100,6 +102,7 @@ def pesquisar_historico(request):
 
     return render(request, template)
 
+@require_GET
 def gerar_historico_dividas(request, cpf_cliente):
     cliente = Cliente.objects.filter(cpf=cpf_cliente).first()
     template = 'divida/historico_divida.html'
@@ -457,6 +460,7 @@ def alertas_inadimplencia(request):
         'dividas_atrasadas': dividas_atrasadas
     })
 
+@require_GET
 def detalhes_pagamentos(request, cod_divida):
     """Busca o extrato de pagamentos de uma dívida específica para exibir os detalhes."""
     # Busca a dívida específica
