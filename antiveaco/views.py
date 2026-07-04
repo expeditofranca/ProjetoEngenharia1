@@ -84,6 +84,15 @@ def divida_manager(request, cod_divida=None):
         'divida': divida
     })
 
+def pesquisar_historico(request):
+    cpf = request.GET.get('cpf_cliente')
+    template = 'divida/pesquisar_historico.html'
+
+    if cpf:
+        return redirect('gerar_historico_dividas', cpf_cliente=cpf)
+    
+    return render(request, template)
+
 def cadastrar_cliente(request):
     if request.method == 'POST':
         # Se for um POST, preenchemos os forms com os dados enviados
