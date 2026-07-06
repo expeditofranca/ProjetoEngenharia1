@@ -84,7 +84,9 @@ class DividaTestCase(TestCase):
                 'cliente': self.cliente.cpf,
                 'valor': 800,
                 'status': 'Parcial',
-                'num_notafiscal': 'NF123'
+                'num_notafiscal': 'NF123',
+                'data_divida': '2026-07-06',
+                'data_vencimento': '2026-08-05' 
             }
         )
 
