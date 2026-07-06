@@ -55,7 +55,7 @@
                                 <span class="badge bg-warning text-dark">Parcial</span>
                             {% endif %}
                         </td>
-                            <td>31/05/2026</td>
+                            <td>{{ divida.data_vencimento|date:"d/m/Y" }}</td>
                             <td><a href="{% url 'detalhes_pagamentos' divida.cod_divida %}">Ver Detalhes</a></td>
                     </tr>
                     {% endfor %}
