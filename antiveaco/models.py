@@ -37,7 +37,7 @@ class Divida(models.Model):
     cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
     valor = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     saldo_restante = models.DecimalField(max_digits=10, decimal_places=2, default=0)
-    data_divida = models.DateField(auto_now_add=True)
+    data_divida = models.DateField(default=timezone.now)
     data_vencimento = models.DateField(default=calcular_vencimento_padrao, null=True, blank=True)
     status = models.CharField(max_length=20, default='Pendente')
     num_notafiscal = models.CharField(max_length=50, default='')
