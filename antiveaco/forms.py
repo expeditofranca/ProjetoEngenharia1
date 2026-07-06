@@ -1,4 +1,5 @@
 from django import forms
+from django.utils import timezone
 from .models import Divida
 from .models import Endereco
 from .models import Cliente
@@ -24,13 +25,18 @@ class ClienteForm(forms.ModelForm):
     class Meta:
         model = Cliente
         fields = ['nome', 'cpf', 'profissao', 'renda_familiar', 'status_cliente']
-class PagamentoForm(forms.ModelForm):
-    class Meta:
-        model = Pagamento
-        fields = ['divida', 'valor_pago', 'data_pagamento']
-
-        widgets = {
-            'data_pagamento': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
-            'divida': forms.Select(attrs={'class': 'form-control'}),
-            'valor_pago': forms.NumberInput(attrs={'class': 'form-control'})
-        }
+class PagamentoForm(forms.Form):
+    dividas = forms.ModelMultipleChoiceField(
+        queryset=Divida.objects.none(),
+        widget=forms.CheckboxSelectMultiple(attrs={'class': 'form-check-input ms-2'}),
+        label="Selecione as Dívidas"
+    )
+    valor_pago = forms.DecimalField(
+        max_digits=10, 
+        decimal_places=2,
+        widget=forms.NumberInput(attrs={'class': 'form-control', 'step': '0.01'})
+    )
+    data_pagamento = forms.DateField(
+        widget=forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
+        initial=timezone.now
+    )
