@@ -13,21 +13,10 @@
     <p>Escolha a ação desejada:</p>
 
     <div class="button-group">
-<<<<<<< HEAD
-        <div class="btn-wrapper"><a href="{% url 'cadastrar_divida' %}" class="btn btn-primary">Cadastrar Dívida</a></div>
-        <div class="btn-wrapper"><a href="{% url 'pesquisar_divida' %}" class="btn btn-primary">Pesquisar / Listar Dívidas</a></div>
-        <div class="btn-wrapper"><a href="{% url 'pesquisar_historico' %}" class="btn btn-primary"> Gerar Relatório de Histórico de Dívidas de Cliente </a></div>
-        <div class="btn-wrapper">
-            <a href="{% url 'alertas_inadimplencia' %}" class="btn btn-primary" style="background-color: #dc3545;">Ver Alertas de Inadimplência</a>
-        </div>
-        <div class="btn-wrapper">
-            <a href="{% url 'index' %}" class="btn btn-secondary" style="background-color: #6c757d; color: white;">Voltar ao Menu Principal</a>
-        </div>
-=======
+        <a href="{% url 'pesquisar_historico' %}" class="btn btn-primary"> Gerar Relatório de Histórico de Dívidas de Cliente </a>
         <a href="{% url 'cadastrar_divida' %}" class="btn btn-primary">Cadastrar Dívida</a>
         <a href="{% url 'pesquisar_divida' %}" class="btn btn-primary">Pesquisar / Listar Dívidas</a>
         <a href="{% url 'alertas_inadimplencia' %}" class="btn btn-primary">Ver Alertas de Inadimplência</a>
->>>>>>> c80feb2 (padronização das páginas)
     </div>
 </div>
 {% endblock content %}
