@@ -1,12 +1,8 @@
+{% extends 'base.html' %}
 {% load static %}
-<!doctype html>
-<html lang="pt-br">
-<head>
-  <meta charset="utf-8">
-  <title>Pesquisar Dívidas</title>
-  <link rel="stylesheet" href="{% static 'css/divida/pesquisar_divida.css' %}">
-</head>
-<body>
+
+{% block content %}
+  <link rel="stylesheet" href="{% static 'css/divida/pesquisar_divida.css' %}?v=1">
   <div class="container">
     
     <form action="{% url 'index_divida' %}" method="get" style="margin-bottom: 20px;">
@@ -89,5 +85,4 @@
       <p class="no-results">Nenhuma dívida encontrada com os filtros informados.</p>
     {% endif %}
   </div>
-</body>
-</html>
+{% endblock content%}

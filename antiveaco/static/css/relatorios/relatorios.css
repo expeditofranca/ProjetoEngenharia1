@@ -1,13 +1,11 @@
 body {
     font-family: 'Segoe UI', Arial, sans-serif;
     background: #f5f7fb;
-    margin: 0;
-    padding: 40px;
 }
 
 .container {
     max-width: 1000px;
-    margin: 0 auto;
+    margin-top: 50px;
     background: #fff;
     padding: 25px;
     border-radius: 12px;

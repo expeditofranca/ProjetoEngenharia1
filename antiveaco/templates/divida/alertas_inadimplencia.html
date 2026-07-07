@@ -2,14 +2,14 @@
 {% load static %}
 
 {% block content %}
-<link rel="stylesheet" href="{% static 'css/divida/index_divida.css' %}">
+<link rel="stylesheet" href="{% static 'css/index.css' %}?v=1">
 
 <div class="container">
     <form action="{% url 'index_divida' %}" method="get" style="margin-bottom: 20px;">
         <button type="submit" class="btn-submit">Voltar</button>
     </form>
 
-    <h1 style="color: #dc3545;">⚠️ Alertas de Inadimplência</h1>
+    <h2 style="color: #dc3545;">⚠️ Alertas de Inadimplência</h2>
     <p>Dívidas que ultrapassaram a data de vencimento.</p>
 
     <table class="table" style="width: 100%; margin-top: 20px; border-collapse: collapse;">

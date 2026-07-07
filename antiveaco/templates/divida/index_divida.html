@@ -2,13 +2,18 @@
 {% load static %}
 
 {% block content %}
-<link rel="stylesheet" href="{% static 'css/divida/index_divida.css' %}">
+<link rel="stylesheet" href="{% static 'css/index.css' %}?v=2">
 
 <div class="container">
-    <h1>Painel de Controle de Dívidas</h1>
+    <form action="{% url 'index' %}" method="get" style="margin-bottom: 20px;">
+        <button type="submit" class="btn-submit">Voltar</button>
+    </form>
+
+    <h2>Painel de Controle de Dívidas</h2>
     <p>Escolha a ação desejada:</p>
 
     <div class="button-group">
+<<<<<<< HEAD
         <div class="btn-wrapper"><a href="{% url 'cadastrar_divida' %}" class="btn btn-primary">Cadastrar Dívida</a></div>
         <div class="btn-wrapper"><a href="{% url 'pesquisar_divida' %}" class="btn btn-primary">Pesquisar / Listar Dívidas</a></div>
         <div class="btn-wrapper"><a href="{% url 'pesquisar_historico' %}" class="btn btn-primary"> Gerar Relatório de Histórico de Dívidas de Cliente </a></div>
@@ -18,6 +23,11 @@
         <div class="btn-wrapper">
             <a href="{% url 'index' %}" class="btn btn-secondary" style="background-color: #6c757d; color: white;">Voltar ao Menu Principal</a>
         </div>
+=======
+        <a href="{% url 'cadastrar_divida' %}" class="btn btn-primary">Cadastrar Dívida</a>
+        <a href="{% url 'pesquisar_divida' %}" class="btn btn-primary">Pesquisar / Listar Dívidas</a>
+        <a href="{% url 'alertas_inadimplencia' %}" class="btn btn-primary">Ver Alertas de Inadimplência</a>
+>>>>>>> c80feb2 (padronização das páginas)
     </div>
 </div>
 {% endblock content %}
