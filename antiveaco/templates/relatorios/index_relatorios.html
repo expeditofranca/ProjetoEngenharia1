@@ -1,23 +1,38 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
 {% load static %}
 
 {% block content %}
-<link rel="stylesheet" href="{% static 'css/index.css' %}?v=2">
+<link rel="stylesheet" href="{% static 'css/relatorios/index_relatorios.css' %}">
 
-<div class="container">
-    <form action="{% url 'index' %}" method="get" style="margin-bottom: 20px;">
-        <button type="submit" style="width: auto; padding: 10px 20px;">Voltar</button>
-    </form>
+<div class="container" style="padding-top: 20px;">
+    
+    <div style="width: 100%; display: flex; justify-content: flex-start; margin-bottom: 20px;">
+        <form action="{% url 'index' %}" method="get" style="margin: 0;">
+            <button type="submit" class="btn btn-primary" style="width: auto; padding: 8px 20px;">Voltar</button>
+        </form>
+    </div>
 
-    <h2>Painel de Relatórios</h2>
-    <p>Escolha o relatório desejado:</p>
+    <h2 style="text-align: center; margin-top: 0; margin-bottom: 10px;">Painel de Relatórios</h2>
+    <p style="text-align: center; color: #555; margin-bottom: 30px;">Escolha o relatório desejado:</p>
 
-    <div class="button-group">
-        <a href="{% url 'relatorio_mensal_dividas' %}" class="btn btn-primary">Relatório Mensal de Dívidas</a>
-        <a href="#" class="btn btn-primary">Relatório Semanal de Dívidas</a>
+    <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
+        
+        <a href="{% url 'relatorio_mensal_dividas' %}" class="btn btn-primary" style="flex: 1 1 40%; min-width: 250px; padding: 15px; text-align: center; font-weight: bold;">
+            Relatório Mensal de Dívidas
+        </a>
+        
+        <a href="{% url 'lista_pagamentos' %}" class="btn btn-primary" style="flex: 1 1 40%; min-width: 250px; padding: 15px; text-align: center; font-weight: bold;">
+            Relatório de Pagamentos Recebidos
+        </a>
+
+        <a href="{% url 'pesquisar_historico' %}" class="btn btn-primary" style="flex: 1 1 40%; min-width: 250px; padding: 15px; text-align: center; font-weight: bold;">
+            Histórico de Dívidas por Cliente
+        </a>
+        
+        <a href="{% url 'alertas_inadimplencia' %}" class="btn btn-primary" style="flex: 1 1 40%; min-width: 250px; padding: 15px; text-align: center; font-weight: bold;">
+            Relatório de Inadimplência
+        </a>
+
     </div>
 </div>
-
-    
-
 {% endblock content %}
