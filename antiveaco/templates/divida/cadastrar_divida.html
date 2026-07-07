@@ -1,41 +1,8 @@
 {% extends 'base.html' %}
 {% load static %}
-<<<<<<< HEAD
-<!doctype html>
-<html lang="pt-br">
-<head>
-  <meta charset="utf-8">
-  <title>Cadastrar Dívida</title>
-  <link rel="stylesheet" href="{% static 'css/divida/cadastrar_divida.css' %}">
-  
-  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-  
-  <style>
-    .select2-container .select2-selection--single {
-        height: 38px !important;
-        border: 1px solid #ccc !important;
-        border-radius: 4px !important;
-    }
-    .select2-container--default .select2-selection--single .select2-selection__rendered {
-        line-height: 36px !important;
-        padding-left: 12px !important;
-    }
-    .select2-container--default .select2-selection--single .select2-selection__arrow {
-        height: 36px !important;
-    }
-    /* Espaçamento extra para se alinhar ao form.as_p do Django */
-    .select2-container {
-        margin-bottom: 15px; 
-    }
-  </style>
-</head>
-<body>
-=======
 
 {% block content %}
   <link rel="stylesheet" href="{% static 'css/divida/cadastrar_divida.css' %}?v=1">
-
->>>>>>> c80feb2 (padronização das páginas)
   <div class="container">
     <form action="{% url 'index_divida' %}" method="get" style="margin-bottom: 20px;">
         <button type="submit" class="btn-submit">Voltar</button>
@@ -53,7 +20,6 @@
       <p style="color:green; margin-top:15px;">{{ mensagem }}</p>
     {% endif %}
   </div>
-<<<<<<< HEAD
 
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
@@ -67,8 +33,4 @@
           });
       });
   </script>
-</body>
-</html>
-=======
 {% endblock %}
->>>>>>> c80feb2 (padronização das páginas)
