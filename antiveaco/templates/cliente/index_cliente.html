@@ -2,24 +2,18 @@
 {% load static %}
 
 {% block content %}
-<link rel="stylesheet" href="{% static 'css/cliente/index_cliente.css' %}">
+<link rel="stylesheet" href="{% static 'css/index.css' %}?v=2">
+<div class="container">
+    <form action="{% url 'index' %}" method="get" style="margin-bottom: 20px;">
+        <button type="submit" class="btn-submit">Voltar</button>
+    </form>
 
-<div class="container text-center mt-4">
-    <h1>Painel de Controle de Clientes</h1>
-    <p class="mb-4">Escolha a ação desejada:</p>
+    <h2>Painel de Controle de Clientes</h2>
+    <p>Escolha a ação desejada:</p>
 
-    <div class="d-grid gap-3 col-md-8 mx-auto">
-        <a href="{% url 'cadastrar_cliente' %}" class="btn btn-primary btn-lg py-3 fw-bold">
-            Cadastrar Novo Cliente
-        </a>
-        
-        <a href="{% url 'pesquisar_cliente' %}" class="btn btn-primary btn-lg py-3 fw-bold">
-            Pesquisar / Gerenciar Clientes
-        </a>
-        
-        <a href="{% url 'index' %}" class="btn btn-dark btn-lg py-3 fw-bold" style="background-color: #6c757d; border: none;">
-            Voltar ao Menu Principal
-        </a>
-    </div>
+    <div class="button-group">
+        <a href="{% url 'cadastrar_cliente' %}" class="btn btn-primary">Cadastrar Novo Cliente</a>
+        <a href="{% url 'pesquisar_cliente' %}" class="btn btn-primary">Pesquisar / Gerenciar Clientes</a>
+    </div>
 </div>
 {% endblock content %}

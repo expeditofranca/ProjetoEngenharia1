@@ -3,48 +3,15 @@
 
 {% block content %}
 
-<link rel="stylesheet" href="{% static 'css/pagamento/registrar_pagamento.css' %}">
-
-<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-<style>
-    .select2-container .select2-selection--single {
-        height: 38px !important;
-        border: 1px solid #ced4da !important;
-        border-radius: 0.375rem 0 0 0.375rem !important;
-    }
-    .select2-container--default .select2-selection--single .select2-selection__rendered {
-        line-height: 36px !important;
-        padding-left: 12px !important;
-    }
-    .select2-container--default .select2-selection--single .select2-selection__arrow {
-        height: 36px !important;
-    }
-    
-    .caixa-dividas {
-        background-color: #ffffff !important; 
-        border: 2px solid #dee2e6 !important; 
-        padding: 15px !important;
-        border-radius: 8px !important;
-        max-height: 200px; 
-        overflow-y: auto;
-    }
-
-    .form-check:hover {
-        background-color: #f8f9fa;
-        border-radius: 4px;
-        transition: 0.2s;
-    }
-</style>
-
-<div class="container mt-4">
+<link rel="stylesheet" href="{% static 'css/pagamento/registrar_pagamento.css' %}?v=2">
+<div class="container">
     <div class="mb-3">
-        <a href="{% url 'index_pagamento' %}" class="btn btn-secondary">Voltar ao Menu</a>
+        <a href="{% url 'index_pagamento' %}" class="btn btn-primary">Voltar</a>
     </div>
 
+    <h1>Registrar Pagamento</h1>
+
     <div class="card shadow-sm mb-4">
-        <div class="card-header">
-            <h3>Buscar Cliente</h3>
-        </div>
         <div class="card-body">
             <form method="get" action="">
                 <div class="input-group">

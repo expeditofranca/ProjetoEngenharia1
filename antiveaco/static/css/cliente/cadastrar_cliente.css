@@ -1,9 +1,6 @@
 body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    background-color: #f4f7f6;
-    color: #333;
-    margin: 0;
-    padding: 20px;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #f5f7fb;
 }
 
 .container {
@@ -15,22 +12,7 @@ body {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
-h1, h2 {
-    border-bottom: 2px solid #eee;
-    padding-bottom: 10px;
-    margin-bottom: 20px;
-}
-
-h1 {
-    font-size: 2em;
-    color: #2c3e50;
-}
-
-h2 {
-    font-size: 1.5em;
-    color: #34495e;
-    margin-top: 30px;
-}
+h1 { text-align: center; margin-bottom: 24px; }
 
 p {
     font-size: 1.1em;
@@ -85,21 +67,12 @@ p {
     font-weight: 600;
 }
 
-.btn-submit {
-    display: inline-block;
-    width: 100%;
-    padding: 15px;
-    font-size: 1.2em;
-    font-weight: bold;
-    color: #fff;
-    background-color: #1e7e34;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.2s ease-in-out;
-    margin-top: 20px;
-}
-
-.btn-submit:hover {
-    background-color: #218838;
+button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background: #0b6efd;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
 }

@@ -2,28 +2,22 @@
 {% load static %}
 
 {% block content %}
-<link rel="stylesheet" href="{% static 'css/relatorios/relatorios.css' %}">
+<link rel="stylesheet" href="{% static 'css/index.css' %}?v=2">
 
 <div class="container">
-    <h1>Painel de Relatórios</h1>
-    <p>Escolha o tipo de relatório:</p>
+    <form action="{% url 'index' %}" method="get" style="margin-bottom: 20px;">
+        <button type="submit" style="width: auto; padding: 10px 20px;">Voltar</button>
+    </form>
+
+    <h2>Painel de Relatórios</h2>
+    <p>Escolha o relatório desejado:</p>
 
     <div class="button-group">
-
-        <div class="btn-wrapper">
-            <a href="{% url 'relatorio_mensal_dividas' %}" class="btn btn-primary">
-                Relatório Mensal de Dívidas
-            </a>
-        </div>
-
+        <a href="{% url 'relatorio_mensal_dividas' %}" class="btn btn-primary">Relatório Mensal de Dívidas</a>
+        <a href="#" class="btn btn-primary">Relatório Semanal de Dívidas</a>
     </div>
 </div>
 
-<div class="button-group">
     
-    <a href="{% url 'index' %}" class="btn btn-dark">
-        Voltar ao Menu Principal
-    </a>
 
-</div>
 {% endblock content %}

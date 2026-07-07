@@ -1,13 +1,9 @@
+{% extends 'base.html' %}
 {% load static %}
-<!doctype html>
-<html lang="pt-br">
-<head>
-  <meta charset="utf-8">
-  <title>Pesquisar Clientes</title>
-    <link rel="stylesheet" href="{% static 'css/cliente/pesquisar_cliente.css' %}">
-</head>
-<body>
-  <div class="container">
+
+{% block content %}
+  <link rel="stylesheet" href="{% static 'css/cliente/pesquisar_cliente.css' %}?v=2">
+  <div class="container">
     <form action="{% url 'index_cliente' %}" method="get" style="margin-bottom: 20px;">
         <button type="submit" style="width: auto; padding: 10px 20px;">Voltar</button>
     </form>
@@ -23,55 +19,50 @@
       <button type="submit">Pesquisar</button>
     </form>
 
-    {% if clientes %}
-      <div style="overflow-x: auto;">
-        <table>
-          <thead>
-            <tr>
-              <th>Nome</th>
-              <th>CPF</th>
-              <th>Profissão</th>
-              <th>Status</th>
-              <th>Endereço</th>
-              <th>Ações</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for c in clientes %}
-              <tr>
-                <td>{{ c.nome }}</td>
-                <td>{{ c.cpf }}</td>
-                <td>{{ c.profissao }}</td>
-                <td>{{ c.status_cliente|yesno:"Ativo,Inativo" }}</td>
-                <td>{{ c.endereco }}</td>
-                
-                <td class="acoes-cell">
-                  
-                  {% if c.cpf %}
-                    <div style="display: flex; gap: 10px;">
-                      <a href="{% url 'editar_cliente' c.cpf %}" class="btn-acao btn-editar">Editar</a>
-                      
-                      <form method="post" action="{% url 'excluir_cliente' c.cpf %}" style="margin: 0;">
-                        {% csrf_token %}
-                        <button type="submit" class="btn-acao btn-excluir">Excluir</button>
-                      </form>
-                    </div>
-                  {% else %}
-                    <span style="color: red; font-size: 12px;">CPF Inválido</span>
-                  {% endif %}
-                  
+    {% if clientes %}
+      <table>
+        <thead>
+          <tr>
+            <th>Nome</th>
+            <th>CPF</th>
+            <th>Profissão</th>
+            <th>Status</th>
+            <th>Endereço</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for c in clientes %}
+            <tr>
+              <td>{{ c.nome }}</td>
+              <td>{{ c.cpf }}</td>
+              <td>{{ c.profissao }}</td>
+              <td>{{ c.status_cliente|yesno:"Ativo,Inativo" }}</td>
+              <td>{{ c.endereco }}</td>
+              
+              {% if c.cpf %}
+                <td class="acoes-cell">  
+                    <form method="post" action="{% url 'editar_cliente' c.cpf %}">
+                        {% csrf_token %}
+                        <button type="submit" class="btn-acao btn-editar">Editar</button>
+                    </form>
+                    <form method="post" action="{% url 'excluir_cliente' c.cpf %}">
+                        {% csrf_token %}
+                        <button type="submit" class="btn-acao btn-excluir">Excluir</button>
+                    </form>
                 </td>
-              </tr>
-            {% endfor %}
-          </tbody>
-        </table>
-      </div> 
-      
-    {% elif clientes is None %}
-      <p class="no-results">Digite um nome ou CPF para iniciar a pesquisa.</p>
-    {% else %}
-      <p class="no-results">Nenhum cliente encontrado com os filtros informados.</p>
-    {% endif %}
-  </div>
-</body>
-</html>
+              {% else %}
+                <span style="color: red; font-size: 12px;">CPF Inválido</span>
+              {% endif %}
+                
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% elif clientes is None %}
+      <p class="no-results">Digite um nome ou CPF para iniciar a pesquisa.</p>
+    {% else %}
+      <p class="no-results">Nenhuma cliente encontrado com os filtros informados.</p>
+    {% endif %}
+  </div>
+{% endblock content %}
