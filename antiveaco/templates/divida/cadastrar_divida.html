@@ -3,21 +3,60 @@
 
 {% block content %}
   <link rel="stylesheet" href="{% static 'css/divida/cadastrar_divida.css' %}?v=1">
+  
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
+  <style>
+      .select2-container .select2-selection--single {
+          height: 38px !important;
+          border: 1px solid #ced4da !important;
+          border-radius: 5px !important;
+          display: flex !important;
+          align-items: center !important;
+      }
+      .select2-container--default .select2-selection--single .select2-selection__arrow {
+          height: 36px !important;
+      }
+      .select2-container--default .select2-selection--single .select2-selection__rendered {
+          color: #495057 !important;
+          line-height: normal !important;
+      }
+  </style>
+
   <div class="container">
-    <form action="{% url 'index_divida' %}" method="get" style="margin-bottom: 20px;">
-        <button type="submit" class="btn-submit">Voltar</button>
-    </form>
+    
+    <button type="button" onclick="window.history.back()" class="btn btn-primary" style="margin-bottom: 20px; width: auto; padding: 8px 20px; border: none; border-radius: 4px; cursor: pointer;">Voltar</button>
     
     <h1>Cadastrar Dívida</h1>
 
     <form method="post" action="{% url 'cadastrar_divida' %}">
       {% csrf_token %}
+      
       {{ form.as_p }}
-      <button type="submit">Salvar</button>
+      
+      <button type="submit" class="btn btn-success" style="margin-top: 15px; width: 100%; padding: 10px; font-weight: bold; border-radius: 4px; border: none;">Salvar</button>
     </form>
 
     {% if mensagem %}
-      <p style="color:green; margin-top:15px;">{{ mensagem }}</p>
+      <p style="color:green; margin-top:15px; font-weight: bold;">{{ mensagem }}</p>
     {% endif %}
   </div>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+  <script>
+      $(document).ready(function() {
+          // Aplica o Select2 no campo de cliente gerado pelo form.as_p (id_cliente)
+          $('#id_cliente').select2({
+              width: '100%', 
+              placeholder: "Digite o nome para buscar...",
+              language: {
+                  noResults: function () {
+                      return "Cliente não encontrado";
+                  }
+              }
+          });
+      });
+  </script>
 {% endblock %}
