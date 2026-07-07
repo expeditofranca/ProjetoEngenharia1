@@ -47,42 +47,47 @@
     {% endif %}
 
     {% if dividas %}
-      <table>
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Cliente</th>
-            <th>CPF Funcionário</th>
-            <th>Valor (R$)</th>
-            <th>Status</th>
-            <th>Data</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for d in dividas %}
+      <div style="overflow-x: auto;">
+        <table>
+          <thead>
             <tr>
-              <td>{{ d.cod_divida }}</td>
-              <td>{{ d.cliente }}</td>
-              <td>{{ d.cpf_funcionario }}</td>
-              <td>{{ d.valor }}</td>
-              <td>{{ d.status }}</td>
-              <td>{{ d.data_divida|date:"d/m/Y" }}</td>
-              <td>
-                <form action="{% url 'atualizar_divida' d.cod_divida %}" method="get">
-                  <button type="submit">Editar</button>
-                </form>
-              </td>
+              <th>ID</th>
+              <th>Cliente</th>
+              <th>CPF Funcionário</th>
+              <th>Valor (R$)</th>
+              <th>Status</th>
+              <th>Data</th>
+              <th>Ações</th> </tr>
+          </thead>
+          <tbody>
+            {% for d in dividas %}
+              <tr>
+                <td>{{ d.cod_divida }}</td>
+                <td>{{ d.cliente }}</td>
+                <td>{{ d.cpf_funcionario }}</td>
+                <td>{{ d.valor }}</td>
+                <td>{{ d.status }}</td>
+                <td>{{ d.data_divida|date:"d/m/Y" }}</td>
+                
+                <td>
+                  <div style="display: flex; gap: 10px;">
+                    <form action="{% url 'atualizar_divida' d.cod_divida %}" method="get" style="margin: 0;">
+                      <button type="submit" style="padding: 8px 16px; cursor: pointer; background-color: #0d6efd; color: white; border: none; border-radius: 4px;">Editar</button>
+                    </form>
 
-              <td><form method="post" action="{% url 'excluir_divida' d.cod_divida %}">
-                {% csrf_token %}
-                <button type="submit" name="excluir">Excluir</button>
-              </form></td>
-            </tr>
-          {% endfor %}
-        </tbody>
-      </table>
+                    <form method="post" action="{% url 'excluir_divida' d.cod_divida %}" style="margin: 0;">
+                      {% csrf_token %}
+                      <button type="submit" name="excluir" style="padding: 8px 16px; cursor: pointer; background-color: #0d6efd; color: white; border: none; border-radius: 4px;">Excluir</button>
+                    </form>
+                  </div>
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
     {% else %}
       <p class="no-results">Nenhuma dívida encontrada com os filtros informados.</p>
     {% endif %}
   </div>
-{% endblock content%}
+{% endblock content %}
